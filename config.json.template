@@ -2,6 +2,12 @@
 	"discord": {
 		"token": "YOUR_TOKEN"
 	},
+	"ntfy": {
+		"enabled": true,
+		"server": "https://Example.com",
+		"token": "ntfy_access_token",
+		"prefix": "iem-"
+	},
 	"iem": {
 		"channels": [
 			{
