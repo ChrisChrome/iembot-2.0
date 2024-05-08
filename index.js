@@ -52,6 +52,17 @@ const convertDate = function (date) {
 	return new Date(Date.UTC(year, month - 1, day, hours, mins));
 }
 
+// Get number of unique channels in the database
+const getUniqueChannels = function () {
+	return new Promise((resolve, reject) => {
+		db.all(`SELECT DISTINCT channelid FROM channels`, (err, rows) => {
+			if (err) {
+				console.error(err.message);
+			}
+			resolve(rows.length);
+		});
+	});
+}
 
 
 
@@ -65,12 +76,16 @@ const xmpp = client({
 xmpp.on("error", (err) => {
 	console.log("ERROR")
 	console.error(err);
-	start();
+	setTimeout(() => {
+		start();
+	}, 5000);
 });
 
 xmpp.on("offline", () => {
 	console.log("offline");
-	start();
+	setTimeout(() => {
+		start();
+	}, 5000);
 });
 
 
@@ -251,7 +266,7 @@ discord.on('ready', async () => {
 });
 
 discord.on("interactionCreate", async (interaction) => {
-	switch(interaction.type) {
+	switch (interaction.type) {
 		case Discord.InteractionType.ApplicationCommand:
 			if (!interaction.channel) return interaction.reply({ content: "This command can only be run in a text channel", ephemeral: true });
 			if (interaction.channel.type !== Discord.ChannelType.GuildText && interaction.channel.type !== Discord.ChannelType.GuildAnnouncement) {
@@ -328,8 +343,13 @@ discord.on("interactionCreate", async (interaction) => {
 					// Send an embed showing info about the bot, including number of guilds, number of subscribed rooms, etc
 					let guilds = discord.guilds.cache.size;
 					let channels = 0;
-					await db.get(`SELECT COUNT(*) as count FROM channels`, (err, row) => {
+					let uniques = 0;
+					await db.get(`SELECT COUNT(*) as count FROM channels`, async (err, row) => {
 						channels = row.count
+						
+						await getUniqueChannels().then((unique) => {
+							uniques = unique;
+						});
 						const embed = {
 							title: "About Me!",
 							thumbnail: {
@@ -344,6 +364,10 @@ discord.on("interactionCreate", async (interaction) => {
 								{
 									name: "Subscribed Rooms",
 									value: channels
+								},
+								{
+									name: "Unique Channels",
+									value: uniques
 								}
 							],
 							color: 0x00ff00,
@@ -352,7 +376,7 @@ discord.on("interactionCreate", async (interaction) => {
 								icon_url: discord.users.cache.get("289884287765839882").avatarURL()
 							}
 						}
-						interaction.reply({ embeds: [embed]});
+						interaction.reply({ embeds: [embed] });
 					});
 			}
 			break;
