@@ -466,7 +466,7 @@ discord.on("interactionCreate", async (interaction) => {
 						description: roomList,
 						color: 0x00ff00
 					}
-					interaction.reply({ embeds: [roomEmbed] });
+					interaction.reply({ embeds: [roomEmbed], ephemeral: true });
 					break;
 
 					
