@@ -209,7 +209,9 @@ xmpp.on("stanza", (stanza) => {
 				}
 				).then((msg) => {
 					if (msg.channel.type === Discord.ChannelType.GuildAnnouncement) msg.crosspost();
-				})
+				}).catch((err) => {
+					console.log(`Failed to send message to ${row.channelid}, ${err}`);
+				});
 			});
 		});
 	}
