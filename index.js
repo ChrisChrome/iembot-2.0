@@ -35,6 +35,7 @@ const db = new sqlite3.Database("channels.db", (err) => {
 var startup = true;
 var startTimestap = new Date();
 var messages = 0;
+var errCount = 0;
 // Random funcs
 const parseProductID = function (product_id) {
 	const [timestamp, station, wmo, pil] = product_id.split("-");
@@ -258,6 +259,7 @@ xmpp.on("stanza", (stanza) => {
 
 
 xmpp.on("online", async (address) => {
+	errCount = 0;
 	// Start listening on all channels, (dont ban me funny man)
 	// for (const channel in config.iem.channels) {
 	// 	console.log(`Joining ${channel.name}`)
@@ -280,6 +282,11 @@ xmpp.on("online", async (address) => {
 
 const start = () => {
 	xmpp.start().catch((err) => {
+		errCount++;
+		if (errCount >= 5) {
+			console.log(`${colors.red("[ERROR]")} XMPP failed to start after 5 attempts, exiting...`);
+			process.exit(1);
+		}
 		console.log(`${colors.red("[ERROR]")} XMPP failed to start: ${err}. Trying again in 5 seconds...`);
 		setTimeout(() => {
 			start();
