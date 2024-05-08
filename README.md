@@ -1,4 +1,19 @@
 ## Warning
-This project is still in development and is not yet ready for use. Please check back later for updates.
+This is SUPER tossed together. Might bother cleaning it up later.
 
-It has a lot of hard-coded things, that will eventually be made more flexible via a config/.env file.
+## What is this?
+This hooks up to the weather.im XMPP server and lets you push messages from iembot to a discord webhook and/or ntfy server topic.
+
+## How do I use this?
+1. Clone the repo
+2. Install the requirements
+3. Copy `config.example.json` to `config.json` and fill in the values
+4. Run `node .`
+5. Profit?
+
+## TODO
+- [ ] Clean up the code
+- [ ] Add more error handling
+- [ ] Add more logging
+- [ ] Add more features
+- [ ] Add more documentation
