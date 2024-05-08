@@ -171,7 +171,6 @@ xmpp.on("stanza", (stanza) => {
 			ntfyBody = {
 				"topic": `${config.ntfy.prefix}${fromChannel}`,
 				"message": bodyData.string,
-				"title": "New Alert",
 				"tags": [`Timestamp: ${product_id.timestamp}`, `Station: ${product_id.station}`, `WMO: ${product_id.wmo}`, `PIL: ${product_id.pil}`, `Channel: ${fromChannel}`],
 				"priority": 3,
 				"actions": [{ "action": "view", "label": "Product", "url": bodyData.url }, { "action": "view", "label": "Product Text", "url": `https://mesonet.agron.iastate.edu/api/1/nwstext/${product_id_raw}` }]
@@ -196,7 +195,6 @@ xmpp.on("stanza", (stanza) => {
 
 		// Send discord msg
 		let embed = {
-			title: "New Alert",
 			description: bodyData.string,
 			color: 0x00ff00,
 			timestamp: product_id.timestamp,
