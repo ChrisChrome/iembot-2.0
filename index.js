@@ -5,12 +5,14 @@ const { client, xml } = require("@xmpp/client");
 const fetch = require("node-fetch");
 const html = require("html-entities")
 const Discord = require("discord.js");
+const dVC = require("@discordjs/voice");
 const colors = require("colors");
 const sqlite3 = require("sqlite3").verbose();
 // Setup Discord
 const discord = new Discord.Client({
 	intents: [
-		"Guilds"
+		"Guilds",
+		"GuildVoiceStates"
 	]
 });
 const {
@@ -111,6 +113,62 @@ function getWFOByRoom(room) {
 		location: room,
 		room: room
 	};
+}
+
+// Voice funcs
+function JoinChannel(channel, track, volume) {
+	return new Promise((resolve, reject) => {
+		connection = dVC.joinVoiceChannel({
+			channelId: channel.id,
+			guildId: channel.guild.id,
+			adapterCreator: channel.guild.voiceAdapterCreator,
+			selfDeaf: true
+		});
+
+
+		resource = dVC.createAudioResource(track, { inlineVolume: true, silencePaddingFrames: 5 });
+		player = dVC.createAudioPlayer();
+		resource.volume.setVolume(2);
+		connection.subscribe(player)
+		player.play(resource);
+
+		connection.on(dVC.VoiceConnectionStatus.Ready, () => { player.play(resource); })
+		connection.on(dVC.VoiceConnectionStatus.Disconnected, async (oldState, newState) => {
+			try {
+				await Promise.race([
+					dVC.entersState(connection, VoiceConnectionStatus.Signalling, 5_000),
+					dVC.entersState(connection, VoiceConnectionStatus.Connecting, 5_000),
+				]);
+			} catch (error) {
+				resolve(false);
+				connection.destroy();
+			}
+		});
+		player.on('error', error => {
+			console.error(`Error: ${error.message} with resource ${error.resource.metadata.title}`);
+			resolve({status:false, message: error.message});
+			player.stop();
+		});
+		player.on(dVC.AudioPlayerStatus.Playing, () => {
+			resolve({status:true, message: "Playing..."})
+		});
+		player.on('idle', () => {
+			resolve({status:true, message: "Idle"})
+			connection.destroy();
+		})
+	});
+}
+
+function LeaveVoiceChannel(channel) {
+	return new Promise((resolve, reject) => {
+		// Get resource, player, etc, and destroy them
+		const connection = dVC.getVoiceConnection(channel.guild.id);
+		if (connection) {
+			connection.destroy();
+			return resolve(true);
+		}
+		return resolve(false);
+	});
 }
 
 
@@ -385,6 +443,29 @@ discord.on('ready', async () => {
 		}
 	];
 
+	if (config.broadcastify.enabled) {
+		// Add commands to join vc, leave vc, and play stream
+		commands.push(
+			{
+				"name": "leave",
+				"description": "Leave the current voice chat",
+				"default_member_permissions": 0
+			},
+			{
+				"name": "play",
+				"description": "Play the broadcastify stream",
+				"options": [
+					{
+						"name": "id",
+						"description": "The ID of the stream to play",
+						"type": 3,
+						"required": true
+					}
+				]
+			}
+		)
+	}
+
 	await (async () => {
 		try {
 			//Global
@@ -608,7 +689,38 @@ discord.on("interactionCreate", async (interaction) => {
 					interaction.reply({ embeds: [embed] });
 					break;
 
+				case "play": // Play broadcastify stream
+					if (!config.broadcastify.enabled) return interaction.reply({ content: "Broadcastify is not enabled", ephemeral: true });
+					const streamID = interaction.options.getString("id");
+					// Check if the stream ID is valid (up to 10 digit alphanumeric)
+					if (!streamID.match(/^[a-zA-Z0-9]{1,10}$/)) return interaction.reply({ content: "Invalid stream ID", ephemeral: true });
+					// Get the stream URL
+					const url = `https://${config.broadcastify.username}:${config.broadcastify.password}@audio.broadcastify.com/${streamID}.mp3`;
+					// Get the channel
+					channel = interaction.member.voice.channel;
+					if (!channel) return interaction.reply({ content: "You need to be in a voice channel", ephemeral: true });
+					// Join the channel and play the stream
+					JoinChannel(channel, url, 2).then((res) => {
+						if (res.status) {
+							interaction.reply({ content: res.message, ephemeral: true });
+						} else {
+							interaction.reply({ content: `Failed to play stream: ${res.message}`, ephemeral: true });
+						}
+					});
+					break;
 
+				case "leave": // Leave broadcastify stream
+					if (!config.broadcastify.enabled) return interaction.reply({ content: "Broadcastify is not enabled", ephemeral: true });
+					channel = interaction.member.voice.channel;
+					if (!channel) return interaction.reply({ content: "You need to be in a voice channel", ephemeral: true });
+					LeaveVoiceChannel(channel).then((res) => {
+						if (res) {
+							interaction.reply({ content: "Left voice channel", ephemeral: true });
+						} else {
+							interaction.reply({ content: "Failed to leave voice channel (Was i ever in one?)", ephemeral: true });
+						}
+					});
+					break;
 
 			}
 			break;
