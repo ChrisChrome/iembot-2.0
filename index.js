@@ -226,7 +226,7 @@ xmpp.on("online", async (address) => {
 
 	// Join all channels
 	config.iem.channels.forEach((channel => {
-		console.log(`Joining ${channel.name}`)
+		console.log(`Joining ${channel.jid.split("@")[0]}:${channel.name}`)
 		xmpp.send(xml("presence", { to: `${channel.jid}/${channel.jid.split("@")[0]}` }));
 	}))
 
