@@ -115,8 +115,18 @@ xmpp.on("stanza", (stanza) => {
 			}
 			rows.forEach((row) => {
 				const channel = discord.channels.cache.get(row.channelid);
-				if (!channel) return;
-				channel.send({ content: row.custommessage, embeds: [embed] });
+				if (!channel) {
+					// Delete the channel from the database and return
+					return db.run(`DELETE FROM channels WHERE channelid = ?`, [row.channelid], (err) => {
+						if (err) {
+							console.error(err.message);
+						}
+						console.log(`Deleted channel ${row.channelid} from database`)
+					});
+				};
+				channel.send({ content: row.custommessage, embeds: [embed] }).then((msg) => {
+					if (msg.channel.type === Discord.ChannelType.GuildAnnouncement) msg.crosspost();
+				})
 			});
 		});
 	}
@@ -232,12 +242,18 @@ discord.on('ready', async () => {
 			console.error(error);
 		}
 	})();
+
 	start();
 });
 
 discord.on("interactionCreate", async (interaction) => {
 	switch(interaction.type) {
 		case Discord.InteractionType.ApplicationCommand:
+			if (!interaction.channel) return interaction.reply({ content: "This command can only be run in a text channel", ephemeral: true });
+			if (interaction.channel.type !== Discord.ChannelType.GuildText && interaction.channel.type !== Discord.ChannelType.GuildAnnouncement) {
+				interaction.reply({ content: "This command can only be run in a text channel", ephemeral: true });
+				return;
+			}
 			switch (interaction.commandName) {
 				case "subscribe":
 					room = interaction.options.getString("room");
