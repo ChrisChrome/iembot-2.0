@@ -349,8 +349,8 @@ discord.on("interactionCreate", async (interaction) => {
 								name: "Subscribed Rooms",
 								value: channels
 							}
-						]
-						color: 0x00ff00
+						],
+						color: 0x00ff00,
 						footer: {
 							text: "Made by @chrischrome with <3",
 							icon_url: discord.users.cache.get("289884287765839882").avatarURL()
