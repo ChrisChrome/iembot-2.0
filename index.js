@@ -377,6 +377,11 @@ discord.on('ready', async () => {
 			"description": "[OWNER ONLY] Setup channels in a category for all rooms",
 			"default_member_permissions": 0,
 			"type": 1
+		},
+		{
+			"name": "support",
+			"description": "Get support for the bot",
+			"type": 1
 		}
 	];
 
@@ -546,10 +551,8 @@ discord.on("interactionCreate", async (interaction) => {
 					interaction.reply({ embeds, ephemeral: true });
 					break;
 				case "setupall":
-					if (!interaction.member.user.id === config.discord.owner) {
-						interaction.reply({ content: "You are not the bot owner", ephemeral: true });
-						return;
-					};
+					if (!config.discord.owner) return interaction.reply({ content: "Owner not set in config", ephemeral: true });
+					if (interaction.user.id !== config.discord.owner) return interaction.reply({ content: "You are not the owner", ephemeral: true });
 					interaction.deferReply({ ephemeral: true })
 					var category;
 
@@ -593,6 +596,16 @@ discord.on("interactionCreate", async (interaction) => {
 						});
 					});
 					interaction.editReply({ content: "Setup complete", ephemeral: true });
+					break;
+				case "support":
+					// Generate an invite link to the support server (use widget channel)
+					const invite = await discord.guilds.cache.get(config.discord.mainGuild).channels.cache.get(config.discord.inviteChannel).createInvite();
+					const embed = {
+						title: "Support Server",
+						description: `Need help with the bot? Join the support server [here](${invite.url})`,
+						color: 0x00ff00
+					}
+					interaction.reply({ embeds: [embed] });
 					break;
 
 

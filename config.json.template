@@ -1,7 +1,9 @@
 {
 	"discord": {
 		"token": "YOUR_TOKEN",
-		"owner": "289884287765839882"
+		"owner": "your_user_id",
+		"mainGuild": "your_guild_id",
+		"inviteChannel": "your_channel_id"
 	},
 	"ntfy": {
 		"enabled": true,
