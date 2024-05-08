@@ -17,6 +17,7 @@
     "html-entities": "^2.5.2",
     "sodium": "^3.0.2",
     "sqlite3": "^5.1.7",
+    "ts-node": "^10.9.2",
     "xml2json": "^0.12.0"
   }
 }
