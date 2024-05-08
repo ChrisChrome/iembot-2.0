@@ -545,7 +545,7 @@ discord.on("interactionCreate", async (interaction) => {
 					}
 					// Retruns raw text, paginate it into multiple embeds if needed
 					res.text().then((text) => {
-						const pages = text.match(/[\s\S]{1,2000}(?=\s|$)/g);
+						const pages = text.match(/[\s\S]{1,2000}(?=\n|$)/g);
 						const embeds = pages.map((page, ind) => ({
 							title: `Product Text for ${product_id} Pg ${ind + 1}/${pages.length}`,
 							description: `\`\`\`${page}\`\`\``,
