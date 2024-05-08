@@ -90,7 +90,7 @@ xmpp.on("offline", () => {
 
 
 xmpp.on("stanza", (stanza) => {
-	if(config.debug) console.log(stanza.toString());
+	if (config.debug >= 2) console.log(stanza.toString());
 	// Stops spam from getting old messages
 	if (startup) return;
 	// Get new messages and log them, ignore old messages
@@ -110,6 +110,37 @@ xmpp.on("stanza", (stanza) => {
 		const now = new Date();
 		const diff = (now - product_id.timestamp) / 1000 / 60;
 		if (diff > 3) return;
+		if (config.debug >= 1) console.log(`New message from ${fromChannel}`);
+		// Handle NTFY
+		if (config.ntfy.enabled) {
+			if(config.debug >= 1) console.log(`Sending NTFY for ${config.ntfy.prefix}${fromChannel}`)
+			ntfyBody = {
+				"topic": `${config.ntfy.prefix}${fromChannel}`,
+				"message": body,
+				"title": "New Alert",
+				"tags": [`Timestamp: ${product_id.timestamp}`, `Station: ${product_id.station}`, `WMO: ${product_id.wmo}`, `PIL: ${product_id.pil}`, `Channel: ${fromChannel}`],
+				"priority": 3,
+
+			}
+			if (stanza.getChild("x").attrs.twitter_media) {
+				ntfyBody.attach = stanza.getChild("x").attrs.twitter_media;
+			}
+			fetch(config.ntfy.server, {
+				method: 'POST',
+				body: JSON.stringify(ntfyBody),
+				headers: {
+					'Authorization': `Bearer ${config.ntfy.token}`
+				}
+			}).then((res) => {
+				if (config.debug >= 1) console.log(res.status)
+
+			}).catch((err) => {
+				console.error(err)
+			})
+		}
+
+
+		// Send discord msg
 		let embed = {
 			title: "New Alert",
 			description: body,
@@ -347,7 +378,7 @@ discord.on("interactionCreate", async (interaction) => {
 					let uniques = 0;
 					await db.get(`SELECT COUNT(*) as count FROM channels`, async (err, row) => {
 						channels = row.count
-						
+
 						await getUniqueChannels().then((unique) => {
 							uniques = unique;
 						});
