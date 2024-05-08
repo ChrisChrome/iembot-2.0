@@ -126,8 +126,8 @@ xmpp.on("online", async (address) => {
 });
 
 const start = () => {
-	xmpp.start().catch(() => {
-		console.error("start failed, trying again in a few seconds");
+	xmpp.start().catch((err) => {
+		console.error(`start failed, ${err}\nGonna try again in 5 seconds...`);
 		xmpp.stop();
 		setTimeout(() => {
 			start();
