@@ -10,6 +10,7 @@
   "license": "GPL-3.0",
   "dependencies": {
     "@discordjs/opus": "^0.9.0",
+    "@discordjs/voice": "^0.17.0",
     "@xmpp/client": "^0.13.1",
     "@xmpp/debug": "^0.13.0",
     "colors": "^1.4.0",
