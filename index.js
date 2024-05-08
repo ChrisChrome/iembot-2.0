@@ -107,8 +107,12 @@ function getWFOByRoom(room) {
 			return wfos[key];
 		}
 	}
-	return "Unknown";
+	return {
+		location: room,
+		room: room
+	};
 }
+
 
 const xmpp = client({
 	service: "xmpp://conference.weather.im",
