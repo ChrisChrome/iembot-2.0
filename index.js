@@ -624,12 +624,19 @@ discord.on("interactionCreate", async (interaction) => {
 					// Retruns raw text, paginate it into multiple embeds if needed
 					res.text().then((text) => {
 						const pages = text.match(/[\s\S]{1,2000}(?=\n|$)/g);
-						const embeds = pages.map((page, ind) => ({
-							title: `Product Text for ${product_id} Pg ${ind + 1}/${pages.length}`,
-							description: `\`\`\`${page}\`\`\``,
-							color: 0x00ff00
-						}));
-						interaction.reply({ embeds, ephemeral: true });
+						// const embeds = pages.map((page, ind) => ({
+						// 	title: `Product Text for ${product_id} Pg ${ind + 1}/${pages.length}`,
+						// 	description: `\`\`\`${page}\`\`\``,
+						// 	color: 0x00ff00
+						// }));
+						const messages = pages.map((page, ind) => {
+							return {
+								content: `\`\`\`${page}\`\`\``,
+							}
+						})
+						messages.forEach((message) => {
+							interaction.followUp({content: message, ephemeral: true});
+						})
 					});
 				});
 			}
