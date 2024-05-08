@@ -427,7 +427,7 @@ discord.on("interactionCreate", async (interaction) => {
 							thumbnail: {
 								url: discord.user.avatarURL()
 							},
-							description: `I am a bot that listens to weather.im alerts and sends them to discord channels.\nI am open source, you can find my code [here!](https://github.com/ChrisChrome/iembot-2.0)`,
+							description: `I listen to all the weather.im rooms and send them to discord channels.\nI am open source, you can find my code [here!](https://github.com/ChrisChrome/iembot-2.0)\n\nThough this is definitely a spiritual successor to NWSBot, we are not affiliated with NWSBot or the National Weather Service.`,
 							fields: [
 								{
 									name: "Guilds",
