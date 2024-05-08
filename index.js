@@ -85,17 +85,20 @@ const xmpp = client({
 //debug(xmpp, true);
 
 xmpp.on("error", (err) => {
-	console.log("ERROR")
-	console.error(err);
+	console.log(`ERR: ${err}`);
 	setTimeout(() => {
-		start();
+		xmpp.stop().then(() => {
+			start();
+		});
 	}, 5000);
 });
 
 xmpp.on("offline", () => {
 	console.log("offline");
 	setTimeout(() => {
-		start();
+		xmpp.stop().then(() => {
+			start();
+		});
 	}, 5000);
 });
 
@@ -127,14 +130,14 @@ xmpp.on("stanza", (stanza) => {
 		messages++;
 		// Handle NTFY
 		if (config.ntfy.enabled) {
-			if(config.debug >= 1) console.log(`Sending NTFY for ${config.ntfy.prefix}${fromChannel}`)
+			if (config.debug >= 1) console.log(`Sending NTFY for ${config.ntfy.prefix}${fromChannel}`)
 			ntfyBody = {
 				"topic": `${config.ntfy.prefix}${fromChannel}`,
 				"message": bodyData.string,
 				"title": "New Alert",
 				"tags": [`Timestamp: ${product_id.timestamp}`, `Station: ${product_id.station}`, `WMO: ${product_id.wmo}`, `PIL: ${product_id.pil}`, `Channel: ${fromChannel}`],
 				"priority": 3,
-				"actions": [{ "action": "view", "label": "Product", "url": bodyData.url }, { "action": "view", "label": "Product Text", "url": `https://mesonet.agron.iastate.edu/api/1/nwstext/${product_id_raw}`}]
+				"actions": [{ "action": "view", "label": "Product", "url": bodyData.url }, { "action": "view", "label": "Product Text", "url": `https://mesonet.agron.iastate.edu/api/1/nwstext/${product_id_raw}` }]
 			}
 			if (stanza.getChild("x").attrs.twitter_media) {
 				ntfyBody.attach = stanza.getChild("x").attrs.twitter_media;
@@ -244,14 +247,12 @@ xmpp.on("online", async (address) => {
 });
 
 const start = () => {
-	xmpp.stop().then(() => {
-		xmpp.start().catch((err) => {
-			console.error(`start failed, ${err}\nGonna try again in 5 seconds...`);
-			setTimeout(() => {
-				start();
-			}, 5000);
-		});
-	}); // Do this just in case
+	xmpp.start().catch((err) => {
+		console.error(`start failed, ${err}\nGonna try again in 5 seconds...`);
+		setTimeout(() => {
+			start();
+		}, 5000);
+	});
 }
 
 // END XMPP
@@ -438,7 +439,7 @@ discord.on("interactionCreate", async (interaction) => {
 							fields: [
 								{
 									name: "Uptime",
-									value: `Since <t:${Math.floor(startTimestap/1000)}>, Started <t:${Math.floor(startTimestap/1000)}:R>`,
+									value: `Since <t:${Math.floor(startTimestap / 1000)}>, Started <t:${Math.floor(startTimestap / 1000)}:R>`,
 								},
 								{
 									name: "Caught Messages",
@@ -483,7 +484,7 @@ discord.on("interactionCreate", async (interaction) => {
 					interaction.reply({ embeds: [roomEmbed], ephemeral: true });
 					break;
 
-					
+
 			}
 			break;
 		case Discord.InteractionType.MessageComponent:
@@ -511,5 +512,14 @@ discord.on("interactionCreate", async (interaction) => {
 	}
 
 });
+
+process.on("unhandledRejection", (error) => {
+	console.error("Unhandled promise rejection:", error);
+});
+
+process.on("uncaughtException", (error) => {
+	console.error("Uncaught exception:", error);
+});
+
 // Login to discord
 discord.login(config.discord.token);
