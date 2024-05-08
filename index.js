@@ -4,6 +4,7 @@ const { client, xml } = require("@xmpp/client");
 const fetch = require("node-fetch");
 const html = require("html-entities")
 const Discord = require("discord.js");
+const colors = require("colors");
 const sqlite3 = require("sqlite3").verbose();
 // Setup Discord
 const discord = new Discord.Client({
@@ -22,9 +23,9 @@ const rest = new REST({
 // Setup SQlite DB
 const db = new sqlite3.Database("channels.db", (err) => {
 	if (err) {
-		console.error(err.message);
+		console.log(`${colors.red("[ERROR]")} Error connecting to database: ${err.message}`);
 	}
-	console.log("Connected to the channels database.");
+	console.log(`${colors.cyan("[INFO]")} Connected to the database`);
 	// Create tables if they dont exist
 	db.run(`CREATE TABLE IF NOT EXISTS channels (channelid TEXT, iemchannel TEXT, custommessage TEXT)`);
 });
@@ -85,7 +86,7 @@ const xmpp = client({
 //debug(xmpp, true);
 
 xmpp.on("error", (err) => {
-	console.log(`ERR: ${err}`);
+	console.log(`${colors.red("[ERROR]")} XMPP Error: ${err}. Trying to reconnect...`);
 	setTimeout(() => {
 		xmpp.stop().then(() => {
 			start();
@@ -94,7 +95,7 @@ xmpp.on("error", (err) => {
 });
 
 xmpp.on("offline", () => {
-	console.log("offline");
+	console.log(`${colors.yellow("[WARN]")} XMPP offline, trying to reconnect...`);
 	setTimeout(() => {
 		xmpp.stop().then(() => {
 			start();
@@ -104,7 +105,7 @@ xmpp.on("offline", () => {
 
 
 xmpp.on("stanza", (stanza) => {
-	if (config.debug >= 2) console.log(stanza.toString());
+	if (config.debug >= 2) console.log(`${colors.magenta("[DEBUG]")} Stanza: ${stanza.toString()}`);
 	// Stops spam from getting old messages
 	if (startup) return;
 	// Get new messages and log them, ignore old messages
@@ -126,11 +127,11 @@ xmpp.on("stanza", (stanza) => {
 		const now = new Date();
 		const diff = (now - product_id.timestamp) / 1000 / 60;
 		if (diff > 3) return;
-		if (config.debug >= 1) console.log(`New message from ${fromChannel}`);
+		if (config.debug >= 1) console.log(`${colors.magenta("[DEBUG]")} New message from ${fromChannel}`);
 		messages++;
 		// Handle NTFY
 		if (config.ntfy.enabled) {
-			if (config.debug >= 1) console.log(`Sending NTFY for ${config.ntfy.prefix}${fromChannel}`)
+			if (config.debug >= 1) console.log(`${colors.magenta("[DEBUG]")} Sending NTFY for ${config.ntfy.prefix}${fromChannel}`)
 			ntfyBody = {
 				"topic": `${config.ntfy.prefix}${fromChannel}`,
 				"message": bodyData.string,
@@ -149,7 +150,7 @@ xmpp.on("stanza", (stanza) => {
 					'Authorization': `Bearer ${config.ntfy.token}`
 				}
 			}).then((res) => {
-				if (config.debug >= 1) console.log(res.status)
+				if (config.debug >= 1) console.log(`${colors.magenta("[DEBUG]")} NTFY sent for ${config.ntfy.prefix}${fromChannel} with status ${res.status}`);
 
 			}).catch((err) => {
 				console.error(err)
@@ -185,7 +186,7 @@ xmpp.on("stanza", (stanza) => {
 						if (err) {
 							console.error(err.message);
 						}
-						console.log(`Deleted channel ${row.channelid} from database`)
+						console.log(`${colors.cyan("[INFO]")} Deleted channel ${row.channelid} from database`);
 					});
 				};
 				channel.send({
@@ -216,7 +217,7 @@ xmpp.on("stanza", (stanza) => {
 				).then((msg) => {
 					if (msg.channel.type === Discord.ChannelType.GuildAnnouncement) msg.crosspost();
 				}).catch((err) => {
-					console.log(`Failed to send message to ${row.channelid}, ${err}`);
+					console.log(`${colors.red("[ERROR]")} Failed to send message to channel ${row.channelid}: ${err.message}`);
 				});
 			});
 		});
@@ -234,21 +235,21 @@ xmpp.on("online", async (address) => {
 
 	// Join all channels
 	config.iem.channels.forEach((channel => {
-		console.log(`Joining ${channel.jid.split("@")[0]}:${channel.name}`)
+		console.log(`${colors.cyan("[INFO]")} Joining ${channel.jid.split("@")[0]}:${channel.name}`)
 		xmpp.send(xml("presence", { to: `${channel.jid}/${channel.jid.split("@")[0]}` }));
 	}))
 
-	console.log("online as", address.toString());
+	console.log(`${colors.cyan("[INFO]")} Connected to XMPP server as ${address.toString()}`);
 
 	setTimeout(() => {
 		startup = false;
-		console.log("Startup complete, forwarding messages now");
+		console.log(`${colors.cyan("[INFO]")} Startup complete, listening for messages...`);
 	}, 1000)
 });
 
 const start = () => {
 	xmpp.start().catch((err) => {
-		console.error(`start failed, ${err}\nGonna try again in 5 seconds...`);
+		console.log(`${colors.red("[ERROR]")} XMPP failed to start: ${err}. Trying again in 5 seconds...`);
 		setTimeout(() => {
 			start();
 		}, 5000);
@@ -260,7 +261,7 @@ const start = () => {
 // START DISCORD
 
 discord.on('ready', async () => {
-	console.log(`Logged in as ${discord.user.tag}!`);
+	console.log(`${colors.cyan("[INFO]")} Logged in as ${discord.user.tag}`);
 	// Do slash command stuff
 	const commands = [
 		{
@@ -514,11 +515,11 @@ discord.on("interactionCreate", async (interaction) => {
 });
 
 process.on("unhandledRejection", (error) => {
-	console.error("Unhandled promise rejection:", error);
+	console.log(`${colors.red("[ERROR]")} Unhandled Rejection: ${error.message}`);
 });
 
 process.on("uncaughtException", (error) => {
-	console.error("Uncaught exception:", error);
+	console.log(`${colors.red("[ERROR]")} Uncaught Exception: ${error.message}`);
 });
 
 // Login to discord
