@@ -239,13 +239,14 @@ xmpp.on("online", async (address) => {
 });
 
 const start = () => {
-	xmpp.start().catch((err) => {
-		console.error(`start failed, ${err}\nGonna try again in 5 seconds...`);
-		xmpp.stop();
-		setTimeout(() => {
-			start();
-		}, 5000);
-	});
+	xmpp.stop().then(() => {
+		xmpp.start().catch((err) => {
+			console.error(`start failed, ${err}\nGonna try again in 5 seconds...`);
+			setTimeout(() => {
+				start();
+			}, 5000);
+		});
+	}); // Do this just in case
 }
 
 // END XMPP
