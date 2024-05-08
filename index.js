@@ -76,7 +76,8 @@ xmpp.on("stanza", (stanza) => {
 				"topic": config.ntfy.topic,
 				"message": body,
 				"title": "New Alert",
-				"priority": config.ntfy.priority
+				"priority": config.ntfy.priority,
+				"tags": [`Station:${product_id.station}`, `WMO:${product_id.wmo}`, `PIL:${product_id.pil}`, `Channel:${channel}`],
 			}
 
 			if (stanza.getChild("x").attrs.twitter_media) {
@@ -98,7 +99,7 @@ xmpp.on("stanza", (stanza) => {
 				color: 0x00ff00,
 				timestamp: product_id.timestamp,
 				footer: {
-					text: `Station: ${product_id.station} WMO: ${product_id.wmo} PIL: ${product_id.pil}`
+					text: `Station: ${product_id.station} WMO: ${product_id.wmo} PIL: ${product_id.pil} Channel: ${channel}`
 				}
 			}
 			if (stanza.getChild("x").attrs.twitter_media) {
