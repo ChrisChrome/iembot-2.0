@@ -234,6 +234,7 @@ xmpp.on("online", async (address) => {
 
 	setTimeout(() => {
 		startup = false;
+		console.log("Startup complete, forwarding messages now");
 	}, 1000)
 });
 
