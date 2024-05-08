@@ -31,6 +31,8 @@ const db = new sqlite3.Database("channels.db", (err) => {
 
 // Setup stuff
 var startup = true;
+var startTimestap = new Date();
+var messages = 0;
 // Random funcs
 const parseProductID = function (product_id) {
 	const [timestamp, station, wmo, pil] = product_id.split("-");
@@ -122,6 +124,7 @@ xmpp.on("stanza", (stanza) => {
 		const diff = (now - product_id.timestamp) / 1000 / 60;
 		if (diff > 3) return;
 		if (config.debug >= 1) console.log(`New message from ${fromChannel}`);
+		messages++;
 		// Handle NTFY
 		if (config.ntfy.enabled) {
 			if(config.debug >= 1) console.log(`Sending NTFY for ${config.ntfy.prefix}${fromChannel}`)
@@ -434,16 +437,27 @@ discord.on("interactionCreate", async (interaction) => {
 							description: `I listen to all the weather.im rooms and send them to discord channels.\nI am open source, you can find my code [here!](https://github.com/ChrisChrome/iembot-2.0)\n\nThough this is definitely a spiritual successor to NWSBot, we are not affiliated with NWSBot or the National Weather Service.`,
 							fields: [
 								{
+									name: "Uptime",
+									value: `Since <t:${Math.floor(startTimestap/1000)}>, Started <t:${Math.floor(startTimestap/1000)}:R>`,
+								},
+								{
+									name: "Caught Messages",
+									value: `Got ${messages} messages since startup`,
+								},
+								{
 									name: "Guilds",
-									value: guilds
+									value: guilds,
+									inline: true
 								},
 								{
 									name: "Subscribed Rooms",
-									value: channels
+									value: channels,
+									inline: true
 								},
 								{
 									name: "Unique Channels",
-									value: uniques
+									value: uniques,
+									inline: true
 								}
 							],
 							color: 0x00ff00,
