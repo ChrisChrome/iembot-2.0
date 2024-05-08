@@ -90,6 +90,7 @@ xmpp.on("offline", () => {
 
 
 xmpp.on("stanza", (stanza) => {
+	if(config.debug) console.log(stanza.toString());
 	// Stops spam from getting old messages
 	if (startup) return;
 	// Get new messages and log them, ignore old messages
