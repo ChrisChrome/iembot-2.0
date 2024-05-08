@@ -1,5 +1,6 @@
 // Requires
 const config = require("./config.json");
+const wfos = require("./wfos.json");
 const { client, xml } = require("@xmpp/client");
 const fetch = require("node-fetch");
 const html = require("html-entities")
@@ -76,7 +77,37 @@ const getFirstURL = function (string) {
 	return { string: newString, url: url[0] };
 }
 
+// Function to get the room name from the WFO code
+const getWFOroom = function (code) {
+	code = code.toLowerCase();
+	if (wfos[code]) {
+		return wfos[code].room;
+	} else {
+		return code;
+	}
+}
 
+// Function to get WFO data
+const getWFO = function (code) {
+	code = code.toLowerCase();
+	if (wfos[code]) {
+		return wfos[code];
+	} else {
+		return null;
+	}
+}
+
+// Get WFO data from room name
+
+function getWFOByRoom(room) {
+	room = room.toLowerCase();
+	for (const key in wfos) {
+		if (wfos.hasOwnProperty(key) && wfos[key].room === room) {
+			return wfos[key];
+		}
+	}
+	return "Unknown";
+}
 
 const xmpp = client({
 	service: "xmpp://conference.weather.im",
@@ -271,7 +302,7 @@ discord.on('ready', async () => {
 			"options": [
 				{
 					"name": "room",
-					"description": "The room you want to subscribe to",
+					"description": "The room/WFO you want to subscribe to",
 					"type": 3,
 					"required": true,
 					"autocomplete": false
@@ -291,7 +322,7 @@ discord.on('ready', async () => {
 			"options": [
 				{
 					"name": "room",
-					"description": "The room you want to set a message for",
+					"description": "The room/WFO you want to set a message for",
 					"type": 3,
 					"required": true,
 					"autocomplete": false
@@ -311,7 +342,7 @@ discord.on('ready', async () => {
 			"options": [
 				{
 					"name": "room",
-					"description": "The room you want to unsubscribe from",
+					"description": "The room/WFO you want to unsubscribe from",
 					"type": 3,
 					"required": true,
 					"autocomplete": false
@@ -356,7 +387,7 @@ discord.on("interactionCreate", async (interaction) => {
 			}
 			switch (interaction.commandName) {
 				case "subscribe":
-					room = interaction.options.getString("room");
+					room = getWFOroom(interaction.options.getString("room"));
 					if (!config.iem.channels.find((channel) => channel.jid.split("@")[0] === room)) {
 						interaction.reply({ content: "Invalid room", ephemeral: true });
 						return;
@@ -367,13 +398,13 @@ discord.on("interactionCreate", async (interaction) => {
 							console.error(err.message);
 							interaction.reply({ content: "Failed to subscribe to room", ephemeral: true });
 						} else {
-							interaction.reply({ content: "Subscribed to room", ephemeral: true });
+							interaction.reply({ content: `Subscribed to \`${getWFOByRoom(room).location}\``, ephemeral: true });
 						}
 					});
 					break;
 				case "unsubscribe":
 					// Check that the room is valid
-					room = interaction.options.getString("room");
+					room = getWFOroom(interaction.options.getString("room"));
 					if (!config.iem.channels.find((channel) => channel.jid.split("@")[0] === room)) {
 						interaction.reply({ content: "Invalid room", ephemeral: true });
 						return;
@@ -383,7 +414,7 @@ discord.on("interactionCreate", async (interaction) => {
 							console.error(err.message);
 							interaction.reply({ content: "Failed to unsubscribe from room", ephemeral: true });
 						} else {
-							interaction.reply({ content: "Unsubscribed from room", ephemeral: true });
+							interaction.reply({ content: `Unsubscribed from \`${getWFOByRoom(room).location}\``, ephemeral: true });
 						}
 					});
 					break;
@@ -395,7 +426,7 @@ discord.on("interactionCreate", async (interaction) => {
 						} else {
 							let message = "";
 							rows.forEach((row) => {
-								message += `Room: \`${row.iemchannel}\` Custom Message: \`\`${row.custommessage}\`\`\n`;
+								message += `\`${row.iemchannel}\`: ${getWFOByRoom(row.iemchannel).location || "Unknown"} Custom Message: \`${row.custommessage || "None"}\`\n`;
 							});
 							if (message === "") {
 								message = "No subscribed rooms";
@@ -405,7 +436,7 @@ discord.on("interactionCreate", async (interaction) => {
 					});
 					break;
 				case "setmessage":
-					room = interaction.options.getString("room");
+					room = getWFOroom(interaction.options.getString("room"));
 					if (!config.iem.channels.find((channel) => channel.jid.split("@")[0] === room)) {
 						interaction.reply({ content: "Invalid room", ephemeral: true });
 						return;
@@ -416,7 +447,7 @@ discord.on("interactionCreate", async (interaction) => {
 							console.error(err.message);
 							interaction.reply({ content: "Failed to set message", ephemeral: true });
 						} else {
-							interaction.reply({ content: "Set message", ephemeral: true });
+							interaction.reply({ content: `Message for ${getWFOByRoom(room).location} to \`${message}\``, ephemeral: true });
 						}
 					});
 					break;
@@ -472,17 +503,32 @@ discord.on("interactionCreate", async (interaction) => {
 					});
 					break;
 				case "rooms":
-					// Send an embed showing all the available rooms
+					// // Send an embed showing all the available rooms
+					// let roomList = "";
+					// config.iem.channels.forEach((channel) => {
+					// 	room = channel.jid.split("@")[0]
+					// 	console.log(getWFOByRoom(room))
+					// 	roomList += `\`${room}\`: ${getWFOByRoom(room).location}\n`;
+					// });
+					// const roomEmbed = {
+					// 	title: "Available Rooms",
+					// 	description: roomList,
+					// 	color: 0x00ff00
+					// }
+					// interaction.reply({ embeds: [roomEmbed], ephemeral: true });
+					// Do the above, but paginate like the product text
 					let roomList = "";
 					config.iem.channels.forEach((channel) => {
-						roomList += `\`${channel.jid.split("@")[0]}\`: ${channel.name}\n`;
+						room = channel.jid.split("@")[0]
+						roomList += `\`${room}\`: ${getWFOByRoom(room).location || "Unknown"}\n`;
 					});
-					const roomEmbed = {
-						title: "Available Rooms",
-						description: roomList,
+					const pages = roomList.match(/[\s\S]{1,2000}(?=\n|$)/g);
+					const embeds = pages.map((page, ind) => ({
+						title: `Available Rooms Pg ${ind + 1}/${pages.length}`,
+						description: page,
 						color: 0x00ff00
-					}
-					interaction.reply({ embeds: [roomEmbed], ephemeral: true });
+					}));
+					interaction.reply({ embeds, ephemeral: true });
 					break;
 
 
