@@ -64,6 +64,14 @@ const getUniqueChannels = function () {
 	});
 }
 
+// Get first url in a string, return object {string, url} remove the url from the string
+const getFirstURL = function (string) {
+	const url = string.match(/(https?:\/\/[^\s]+)/g);
+	if (!url) return { string, url: null };
+	const newString = string.replace(url[0], "");
+	return { string: newString, url: url[0] };
+}
+
 
 
 const xmpp = client({
@@ -104,6 +112,7 @@ xmpp.on("stanza", (stanza) => {
 
 		// Get body of message
 		const body = html.decode(stanza.getChildText("body"));
+		const bodyData = getFirstURL(body);
 		// get product id from "x" tag
 		const product_id = parseProductID(stanza.getChild("x").attrs.product_id);
 		// Check timestamp, if not within 3 minutes, ignore it
@@ -116,11 +125,11 @@ xmpp.on("stanza", (stanza) => {
 			if(config.debug >= 1) console.log(`Sending NTFY for ${config.ntfy.prefix}${fromChannel}`)
 			ntfyBody = {
 				"topic": `${config.ntfy.prefix}${fromChannel}`,
-				"message": body,
+				"message": bodyData.string,
 				"title": "New Alert",
 				"tags": [`Timestamp: ${product_id.timestamp}`, `Station: ${product_id.station}`, `WMO: ${product_id.wmo}`, `PIL: ${product_id.pil}`, `Channel: ${fromChannel}`],
 				"priority": 3,
-
+				"actions": [{ "action": "view", "label": "Product", "url": bodyData.url }]
 			}
 			if (stanza.getChild("x").attrs.twitter_media) {
 				ntfyBody.attach = stanza.getChild("x").attrs.twitter_media;
@@ -143,7 +152,7 @@ xmpp.on("stanza", (stanza) => {
 		// Send discord msg
 		let embed = {
 			title: "New Alert",
-			description: body,
+			description: bodyData.string,
 			color: 0x00ff00,
 			timestamp: product_id.timestamp,
 			footer: {
@@ -171,7 +180,23 @@ xmpp.on("stanza", (stanza) => {
 						console.log(`Deleted channel ${row.channelid} from database`)
 					});
 				};
-				channel.send({ content: row.custommessage, embeds: [embed] }).then((msg) => {
+				channel.send({
+					content: row.custommessage, embeds: [embed],
+					components: [
+						{
+							type: 1,
+							components: [
+								{
+									type: 2,
+									label: "Product",
+									style: 5,
+									url: bodyData.url
+								}
+							]
+						}
+					]
+				}
+				).then((msg) => {
 					if (msg.channel.type === Discord.ChannelType.GuildAnnouncement) msg.crosspost();
 				})
 			});
