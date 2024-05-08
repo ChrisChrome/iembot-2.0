@@ -231,6 +231,10 @@ discord.on('ready', async () => {
 			"name": "list",
 			"description": "List all subscribed rooms for this channel",
 			"default_member_permissions": 0
+		},
+		{
+			"name": "about",
+			"description": "About this bot"
 		}
 	];
 
@@ -320,6 +324,38 @@ discord.on("interactionCreate", async (interaction) => {
 						}
 					});
 					break;
+				case "about":
+					// Send an embed showing info about the bot, including number of guilds, number of subscribed rooms, etc
+					let guilds = discord.guilds.cache.size;
+					let channels = 0;
+					await db.run(`SELECT COUNT(*) FROM channels`, (err, row) => {
+						if (err) {
+							console.error(err.message);
+						}
+						channels = row[0];
+					});
+					const embed = {
+						title: "About Me!",
+						thumbnail: {
+							url: discord.user.avatarURL()
+						},
+						description: `I am a bot that listens to weather.im alerts and sends them to discord channels.\nI am open source, you can find my code [here!](https://github.com/ChrisChrome/iembot-2.0)`,
+						fields: [
+							{
+								name: "Guilds",
+								value: guilds
+							},
+							{
+								name: "Subscribed Rooms",
+								value: channels
+							}
+						]
+						color: 0x00ff00
+						footer: {
+							text: "Made by @chrischrome with <3",
+							icon_url: discord.users.cache.get("289884287765839882").avatarURL()
+						}
+					}
 			}
 			break;
 	}

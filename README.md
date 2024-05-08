@@ -2,7 +2,7 @@
 This is SUPER tossed together. Might bother cleaning it up later.
 
 ## What is this?
-This hooks up to the weather.im XMPP server and lets you push messages from iembot to a discord webhook and/or ntfy server topic.
+This is meant to be a public Discord bot. It connects via XMPP to Weather.IM and allows server owners to subscribe a channel to any number of weather alerts.
 
 ## How do I use this?
 1. Clone the repo
