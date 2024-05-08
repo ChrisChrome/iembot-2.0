@@ -322,6 +322,10 @@ discord.on('ready', async () => {
 		{
 			"name": "about",
 			"description": "About this bot"
+		},
+		{
+			"name": "rooms",
+			"description": "List all available rooms"
 		}
 	];
 
@@ -450,6 +454,22 @@ discord.on("interactionCreate", async (interaction) => {
 						}
 						interaction.reply({ embeds: [embed] });
 					});
+					break;
+				case "rooms":
+					// Send an embed showing all the available rooms
+					let roomList = "";
+					config.iem.channels.forEach((channel) => {
+						roomList += `\`${channel.jid.split("@")[0]}\`: ${channel.name}\n`;
+					});
+					const roomEmbed = {
+						title: "Available Rooms",
+						description: roomList,
+						color: 0x00ff00
+					}
+					interaction.reply({ embeds: [roomEmbed] });
+					break;
+
+					
 			}
 			break;
 		case Discord.InteractionType.MessageComponent:
