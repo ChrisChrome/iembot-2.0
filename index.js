@@ -616,7 +616,7 @@ discord.on("interactionCreate", async (interaction) => {
 			if (interaction.customId) {
 				const product_id = interaction.customId;
 				const url = `https://mesonet.agron.iastate.edu/api/1/nwstext/${product_id}`;
-				interaction.deferReply({ ephemeral: true });
+				await interaction.deferReply({ ephemeral: true });
 				fetch(url).then((res) => {
 					if (res.status !== 200) {
 						interaction.reply({ content: "Failed to get product text", ephemeral: true });
