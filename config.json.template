@@ -1,6 +1,7 @@
 {
 	"discord": {
-		"token": "YOUR_TOKEN"
+		"token": "YOUR_TOKEN",
+		"owner": "289884287765839882"
 	},
 	"ntfy": {
 		"enabled": true,

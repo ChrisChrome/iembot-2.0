@@ -369,6 +369,12 @@ discord.on('ready', async () => {
 		{
 			"name": "rooms",
 			"description": "List all available rooms"
+		},
+		{
+			"name": "setupall",
+			"description": "[OWNER ONLY] Setup channels in a category for all rooms",
+			"default_member_permissions": 0,
+			"type": 1
 		}
 	];
 
@@ -537,6 +543,56 @@ discord.on("interactionCreate", async (interaction) => {
 					}));
 					interaction.reply({ embeds, ephemeral: true });
 					break;
+				case "setupall":
+					if (!interaction.member.user.id === config.discord.owner) {
+						interaction.reply({ content: "You are not the bot owner", ephemeral: true });
+						return;
+					};
+					interaction.deferReply({ ephemeral: true })
+					var category;
+
+					// Create channels for all rooms
+					const chunks = [];
+					const chunkSize = 50;
+					const totalRooms = config.iem.channels.length;
+					for (let i = 0; i < totalRooms; i += chunkSize) {
+						chunks.push(config.iem.channels.slice(i, i + chunkSize));
+					}
+
+					chunks.forEach((chunk, index) => {
+						const categoryName = `Rooms ${index + 1}`;
+						interaction.guild.channels.create({
+							name: categoryName,
+							type: Discord.ChannelType.GuildCategory
+						}).then((newCategory) => {
+							console.log(`${colors.cyan("[INFO]")} Created category ${newCategory.name}`);
+							chunk.forEach((channel) => {
+								channelName = getWFOByRoom(channel.jid.split("@")[0]).location
+								if (channelName == "Unknown") channelName = channel.jid.split("@")[0]
+								newCategory.guild.channels.create({
+									name: channelName,
+									type: Discord.ChannelType.GuildText,
+									parent: newCategory,
+									topic: `Weather.im room for ${getWFOByRoom(channel.jid.split("@")[0]).location} - ${channel.jid.split("@")[0]}`
+								}).then((newChannel) => {
+									console.log(`${colors.cyan("[INFO]")} Created channel ${newChannel.name}`);
+									db.run(`INSERT INTO channels (channelid, iemchannel, custommessage) VALUES (?, ?, ?)`, [newChannel.id, channel.jid.split("@")[0], null], (err) => {
+										if (err) {
+											console.error(err.message);
+										}
+										console.log(`${colors.cyan("[INFO]")} Added channel ${newChannel.id} to database`);
+									});
+								}).catch((err) => {
+									console.log(`${colors.red("[ERROR]")} Failed to create channel: ${err.message}`);
+								});
+							});
+						}).catch((err) => {
+							console.log(`${colors.red("[ERROR]")} Failed to create category: ${err.message}`);
+						});
+					});
+					interaction.editReply({ content: "Setup complete", ephemeral: true });
+					break;
+
 
 
 			}
