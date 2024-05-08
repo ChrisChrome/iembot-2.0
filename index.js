@@ -1,8 +1,14 @@
+const config = require("./config.json");
 const { client, xml } = require("@xmpp/client");
 const fetch = require("node-fetch");
 const html = require("html-entities")
+const Discord = require("discord.js");
+var hook;
+if (config.discord.enabled) {
+	hook = new Discord.WebhookClient({ url: config.discord.webhook })
+}
 var startup = true;
-const channel = "botstalk"
+const channel = config.iem.channel
 // Random funcs
 const parseProductID = function (product_id) {
 	const [timestamp, station, wmo, pil] = product_id.split("-");
@@ -51,7 +57,6 @@ xmpp.on("offline", () => {
 // Simple echo bot example
 xmpp.on("stanza", (stanza) => {
 	if (startup) return;
-	console.log(`new msg`)
 	// Get new messages and log them, ignore old messages
 	if (stanza.is("message") && stanza.attrs.type === "groupchat") {
 		if (!stanza.getChild("x")) return; // No PID, ignore it
@@ -63,26 +68,47 @@ xmpp.on("stanza", (stanza) => {
 		// Check timestamp, if not within 2 minutes, ignore it
 		const now = new Date();
 		const diff = (now - product_id.timestamp) / 1000 / 60;
-		console.log(diff)
 		if (diff > 3) return;
-		//
-		ntfyBody = {
-			"topic": "iem",
-			"message": body,
-			"title": "New Alert",
-			"priority": 3
+
+		// Handle NTFY
+		if (config.ntfy.enabled) {
+			ntfyBody = {
+				"topic": config.ntfy.topic,
+				"message": body,
+				"title": "New Alert",
+				"priority": config.ntfy.priority
+			}
+
+			if (stanza.getChild("x").attrs.twitter_media) {
+				ntfyBody.attach = stanza.getChild("x").attrs.twitter_media;
+			}
+			if (body) {
+				fetch(config.ntfy.server, {
+					method: 'POST',
+					body: JSON.stringify(ntfyBody)
+				})
+			}
 		}
-		console.log(stanza.getChild("x"))
-		if (stanza.getChild("x").attrs.twitter_media) {
-			ntfyBody.attach = stanza.getChild("x").attrs.twitter_media;
-			console.log("Image attached")
-		}
-		if (body) {
-			console.log(body)
-			fetch('https://ntfy.chrischro.me', {
-				method: 'POST',
-				body: JSON.stringify(ntfyBody)
-			})
+
+		// Handle Discord
+		if (config.discord.enabled) {
+			let embed = {
+				title: "New Alert",
+				description: body,
+				color: 0x00ff00,
+				timestamp: product_id.timestamp,
+				footer: {
+					text: `Station: ${product_id.station} WMO: ${product_id.wmo} PIL: ${product_id.pil}`
+				}
+			}
+			if (stanza.getChild("x").attrs.twitter_media) {
+				embed.image = {
+					url: stanza.getChild("x").attrs.twitter_media
+				}
+			}
+			hook.send({
+				embeds: [embed]
+			});
 		}
 	}
 });
@@ -98,4 +124,13 @@ xmpp.on("online", async (address) => {
 	}, 1000)
 });
 
-xmpp.start().catch(console.error);
+const start = () => {
+	xmpp.start().catch(() => {
+		console.error("start failed, trying again in a few seconds");
+		xmpp.stop();
+		setTimeout(() => {
+			start();
+		}, 5000);
+	});
+}
+start();

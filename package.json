@@ -11,6 +11,7 @@
   "dependencies": {
     "@xmpp/client": "^0.13.1",
     "@xmpp/debug": "^0.13.0",
+    "discord.js": "^14.15.2",
     "html-entities": "^2.5.2"
   }
 }

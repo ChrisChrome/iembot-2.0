@@ -1,0 +1,15 @@
+{
+	"iem": {
+		"channel": "botstalk"
+	},
+	"ntfy": {
+		"enabled": true,
+		"server": "",
+		"topic": "",
+		"priority": 3
+	},
+	"discord": {
+		"enabled": true,
+		"webhook": ""
+	}
+}
