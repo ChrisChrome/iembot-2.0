@@ -36,6 +36,7 @@ const parseProductID = function (product_id) {
 	const [timestamp, station, wmo, pil] = product_id.split("-");
 	return {
 		timestamp: convertDate(timestamp),
+		originalTimestamp: timestamp,
 		station,
 		wmo,
 		pil
@@ -115,6 +116,7 @@ xmpp.on("stanza", (stanza) => {
 		const bodyData = getFirstURL(body);
 		// get product id from "x" tag
 		const product_id = parseProductID(stanza.getChild("x").attrs.product_id);
+		const product_id_raw = stanza.getChild("x").attrs.product_id;
 		// Check timestamp, if not within 3 minutes, ignore it
 		const now = new Date();
 		const diff = (now - product_id.timestamp) / 1000 / 60;
@@ -129,7 +131,7 @@ xmpp.on("stanza", (stanza) => {
 				"title": "New Alert",
 				"tags": [`Timestamp: ${product_id.timestamp}`, `Station: ${product_id.station}`, `WMO: ${product_id.wmo}`, `PIL: ${product_id.pil}`, `Channel: ${fromChannel}`],
 				"priority": 3,
-				"actions": [{ "action": "view", "label": "Product", "url": bodyData.url }]
+				"actions": [{ "action": "view", "label": "Product", "url": bodyData.url }, { "action": "view", "label": "Product Text", "url": `https://mesonet.agron.iastate.edu/api/1/nwstext/${product_id_raw}`}]
 			}
 			if (stanza.getChild("x").attrs.twitter_media) {
 				ntfyBody.attach = stanza.getChild("x").attrs.twitter_media;
@@ -191,6 +193,15 @@ xmpp.on("stanza", (stanza) => {
 									label: "Product",
 									style: 5,
 									url: bodyData.url
+								},
+								{
+									type: 2,
+									style: 1,
+									custom_id: product_id_raw,
+									label: "Product Text",
+									emoji: {
+										name: "📄"
+									}
 								}
 							]
 						}
@@ -435,6 +446,28 @@ discord.on("interactionCreate", async (interaction) => {
 						}
 						interaction.reply({ embeds: [embed] });
 					});
+			}
+			break;
+		case Discord.InteractionType.MessageComponent:
+			if (interaction.customId) {
+				const product_id = interaction.customId;
+				const url = `https://mesonet.agron.iastate.edu/api/1/nwstext/${product_id}`;
+				fetch(url).then((res) => {
+					if (res.status !== 200) {
+						interaction.reply({ content: "Failed to get product text", ephemeral: true });
+						return;
+					}
+					// Retruns raw text, paginate it into multiple embeds if needed
+					res.text().then((text) => {
+						const pages = text.match(/[\s\S]{1,2000}(?=\s|$)/g);
+						const embeds = pages.map((page, ind) => ({
+							title: `Product Text Pg ${ind + 1}/${pages.length}`,
+							description: `\`\`\`${page}\`\`\``,
+							color: 0x00ff00
+						}));
+						interaction.reply({ embeds });
+					});
+				});
 			}
 			break;
 	}
