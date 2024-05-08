@@ -465,7 +465,7 @@ discord.on("interactionCreate", async (interaction) => {
 							description: `\`\`\`${page}\`\`\``,
 							color: 0x00ff00
 						}));
-						interaction.reply({ embeds });
+						interaction.reply({ embeds, ephemeral: true });
 					});
 				});
 			}
