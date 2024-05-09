@@ -746,7 +746,7 @@ discord.on("interactionCreate", async (interaction) => {
 					channel = interaction.member.voice.channel;
 					if (!channel) return interaction.reply({ content: "You need to be in a voice channel", ephemeral: true });
 					// Join the channel and play the stream
-					JoinChannel(channel, url, 2).then((res) => {
+					JoinChannel(channel, url, 2, interaction).then((res) => {
 						if (res.status) {
 							interaction.reply({ content: res.message, ephemeral: true });
 						} else {
@@ -764,7 +764,7 @@ discord.on("interactionCreate", async (interaction) => {
 					channel = interaction.member.voice.channel;
 					if (!channel) return interaction.reply({ content: "You need to be in a voice channel", ephemeral: true });
 					// Join the channel and play the stream
-					JoinChannel(channel, url, 2).then((res) => {
+					JoinChannel(channel, url, 2, interaction).then((res) => {
 						if (res.status) {
 							interaction.reply({ content: res.message, ephemeral: true });
 						} else {
