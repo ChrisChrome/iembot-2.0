@@ -1,6 +1,7 @@
 // Requires
 const config = require("./config.json");
 const wfos = require("./wfos.json");
+const events = require("./events.json");
 const { client, xml } = require("@xmpp/client");
 const fetch = require("node-fetch");
 const html = require("html-entities")
@@ -216,6 +217,11 @@ xmpp.on("stanza", (stanza) => {
 		const bodyData = getFirstURL(body);
 		// get product id from "x" tag
 		const product_id = parseProductID(stanza.getChild("x").attrs.product_id);
+		var evt = events[product_id.pil.substring(0, 3)];
+		if (!evt) {
+			evt = { name: "Unknown", priority: 3}
+			console.log(`${colors.red("[ERROR]")} Unknown event type: ${product_id.pil.substring(0, 3)}. Fix me`);
+		}
 		const product_id_raw = stanza.getChild("x").attrs.product_id;
 		// Check timestamp, if not within 3 minutes, ignore it
 		const now = new Date();
@@ -230,7 +236,7 @@ xmpp.on("stanza", (stanza) => {
 				"topic": `${config.ntfy.prefix}${fromChannel}`,
 				"message": bodyData.string,
 				"tags": [`Timestamp: ${product_id.timestamp}`, `Station: ${product_id.station}`, `WMO: ${product_id.wmo}`, `PIL: ${product_id.pil}`, `Channel: ${fromChannel}`],
-				"priority": 3,
+				"priority": evt.priority,
 				"actions": [{ "action": "view", "label": "Product", "url": bodyData.url }, { "action": "view", "label": "Product Text", "url": `https://mesonet.agron.iastate.edu/api/1/nwstext/${product_id_raw}` }]
 			}
 			if (stanza.getChild("x").attrs.twitter_media) {
@@ -254,7 +260,7 @@ xmpp.on("stanza", (stanza) => {
 		// Send discord msg
 		let embed = {
 			description: bodyData.string,
-			color: 0x00ff00,
+			color: parseInt(config.priorityColors[evt.priority].replace("#", ""), 16) || 0x000000,
 			timestamp: product_id.timestamp,
 			footer: {
 				text: `Station: ${product_id.station} WMO: ${product_id.wmo} PIL: ${product_id.pil} Channel: ${fromChannel}`

@@ -1,0 +1,1510 @@
+{
+	"ABV": {
+		"priority": 1,
+		"text": "Rawinsonde Data Above 100 Millibars"
+	},
+	"ADA": {
+		"priority": 1,
+		"text": "Alarm/Alert Administrative Msg"
+	},
+	"ADM": {
+		"priority": 1,
+		"text": "Alert Administrative Message"
+	},
+	"ADR": {
+		"text": "Administrative Message",
+		"priority": 5
+	},
+	"ADV": {
+		"priority": 1,
+		"text": "Generic Space Environment Advisory"
+	},
+	"AFD": {
+		"priority": 1,
+		"text": "Area Forecast Discussion"
+	},
+	"AFM": {
+		"priority": 1,
+		"text": "Area Forecast Matrices"
+	},
+	"AFP": {
+		"priority": 1,
+		"text": "Area Forecast Product"
+	},
+	"AFW": {
+		"priority": 1,
+		"text": "Fire Weather Matrix"
+	},
+	"AGF": {
+		"priority": 1,
+		"text": "Agricultural Forecast"
+	},
+	"AGO": {
+		"priority": 1,
+		"text": "Agricultural Observations"
+	},
+	"ALT": {
+		"priority": 1,
+		"text": "Space Environment Alert"
+	},
+	"AQA": {
+		"priority": 2,
+		"text": "Air Quality Alert"
+	},
+	"AQI": {
+		"priority": 1,
+		"text": "Air Quality Index Statement"
+	},
+	"ASA": {
+		"priority": 1,
+		"text": "Air Stagnation Advisory"
+	},
+	"AVA": {
+		"text": "Avalanche Watch",
+		"priority": 3
+	},
+	"AVG": {
+		"priority": 1,
+		"text": "Avalanche Weather Guidance"
+	},
+	"AVW": {
+		"text": "Avalanche Warning",
+		"priority": 5
+	},
+	"AWO": {
+		"priority": 1,
+		"text": "Area Weather Outlook"
+	},
+	"AWS": {
+		"priority": 1,
+		"text": "Area Weather Summary"
+	},
+	"AWU": {
+		"priority": 1,
+		"text": "Area Weather Update"
+	},
+	"AWW": {
+		"priority": 1,
+		"text": "Airport Weather Warning"
+	},
+	"BLU": {
+		"priority": 5,
+		"text": "Blue Alert"
+	},
+	"BOY": {
+		"priority": 1,
+		"text": "Buoy Report"
+	},
+	"BRG": {
+		"priority": 1,
+		"text": "Coast Guard Observations"
+	},
+	"BRT": {
+		"priority": 1,
+		"text": "Hourly Roundup for Weather Radio"
+	},
+	"CAE": {
+		"text": "Child Abduction Emergency",
+		"priority": 5
+	},
+	"CCF": {
+		"priority": 1,
+		"text": "Coded City Forecast"
+	},
+	"CDW": {
+		"text": "Civil Danger Warning",
+		"priority": 5
+	},
+	"CEM": {
+		"text": "Civil Emergency Message",
+		"priority": 5
+	},
+	"CF6": {
+		"priority": 1,
+		"text": "WFO Monthly/Daily Climate Data"
+	},
+	"CFP": {
+		"priority": 1,
+		"text": "Convective Forecast Product"
+	},
+	"CFW": {
+		"text": "Coastal Flood Warning",
+		"priority": 5
+	},
+	"CGR": {
+		"priority": 1,
+		"text": "Coast Guard Surface Report"
+	},
+	"CHG": {
+		"priority": 1,
+		"text": "Computer Hurricane Guidance"
+	},
+	"CLA": {
+		"priority": 1,
+		"text": "Climatological Report (Annual)"
+	},
+	"CLI": {
+		"priority": 1,
+		"text": "Climatological Report (Daily)"
+	},
+	"CLM": {
+		"priority": 1,
+		"text": "Climatological Report (Monthly)"
+	},
+	"CLQ": {
+		"priority": 1,
+		"text": "Climatological Report (Quarterly)"
+	},
+	"CLS": {
+		"priority": 1,
+		"text": "Climatological Report (Seasonal)"
+	},
+	"CLT": {
+		"priority": 1,
+		"text": "Climate Report"
+	},
+	"CMM": {
+		"priority": 1,
+		"text": "Coded Climatological Monthly Means"
+	},
+	"COD": {
+		"priority": 1,
+		"text": "Coded Analysis and Forecasts"
+	},
+	"CPF": {
+		"priority": 1,
+		"text": "Great Lakes Port Forecast"
+	},
+	"CUR": {
+		"priority": 1,
+		"text": "Routine Space Environment Products"
+	},
+	"CWA": {
+		"priority": 1,
+		"text": "Center (CWSU) Weather Advisory"
+	},
+	"CWF": {
+		"priority": 1,
+		"text": "Coastal Waters Forecast"
+	},
+	"CWS": {
+		"priority": 1,
+		"text": "Center (CWSU) Weather Statement"
+	},
+	"DAY": {
+		"priority": 1,
+		"text": "Routine Space Environment Product (Daily)"
+	},
+	"DDO": {
+		"priority": 1,
+		"text": "Daily Dispersion Outlook"
+	},
+	"DGT": {
+		"priority": 1,
+		"text": "Drought Information Statement"
+	},
+	"DMO": {
+		"text": "Practice/Demo Warning",
+		"priority": 1
+	},
+	"DSA": {
+		"priority": 1,
+		"text": "Unnumbered Depression / Suspicious Area Advisory"
+	},
+	"DSM": {
+		"priority": 1,
+		"text": "ASOS Daily Summary"
+	},
+	"DSW": {
+		"text": "Dust Storm Warning",
+		"priority": 5
+	},
+	"EFP": {
+		"priority": 1,
+		"text": "3 To 5 Day Extended Forecast"
+	},
+	"EOL": {
+		"priority": 1,
+		"text": "Average 6 To 10 Day Weather Outlook (Local)"
+	},
+	"EQI": {
+		"priority": 1,
+		"text": "Tsunami Bulletin"
+	},
+	"EQR": {
+		"priority": 1,
+		"text": "Earthquake Report"
+	},
+	"EQW": {
+		"text": "Earthquake Warning",
+		"priority": 5
+	},
+	"ESF": {
+		"priority": 1,
+		"text": "Flood Potential Outlook"
+	},
+	"ESG": {
+		"priority": 1,
+		"text": "Extended Streamflow Guidance"
+	},
+	"ESP": {
+		"priority": 1,
+		"text": "Extended Streamflow Prediction"
+	},
+	"ESS": {
+		"priority": 1,
+		"text": "Water Supply Outlook"
+	},
+	"EVI": {
+		"text": "Evacuation Immediate",
+		"priority": 5
+	},
+	"EWW": {
+		"priority": 5,
+		"text": "Extreme Wind Warning"
+	},
+	"FA0": {
+		"priority": 1,
+		"text": "Aviation Area Forecasts (Pacific)"
+	},
+	"FA1": {
+		"priority": 1,
+		"text": "Aviation Area Forecasts (Northeast)"
+	},
+	"FA2": {
+		"priority": 1,
+		"text": "Aviation Area Forecasts (Southeast)"
+	},
+	"FA3": {
+		"priority": 1,
+		"text": "Aviation Area Forecasts (North Central)"
+	},
+	"FA4": {
+		"priority": 1,
+		"text": "Aviation Area Forecasts (South Central)"
+	},
+	"FA5": {
+		"priority": 1,
+		"text": "Aviation Area Forecasts (Rocky Mountains)"
+	},
+	"FA6": {
+		"priority": 1,
+		"text": "Aviation Area Forecasts (West Coast)"
+	},
+	"FA7": {
+		"priority": 1,
+		"text": "Aviation Area Forecasts (Juneau, AK)"
+	},
+	"FA8": {
+		"priority": 1,
+		"text": "Aviation Area Forecasts (Anchorage, AK)"
+	},
+	"FA9": {
+		"priority": 1,
+		"text": "Aviation Area Forecasts (Fairbanks, AK)"
+	},
+	"FD0": {
+		"priority": 1,
+		"text": "24 Hr Fd Winds Aloft Fcst (45,000 and 53,000 Ft)"
+	},
+	"FD1": {
+		"priority": 1,
+		"text": "6 Hour Winds Aloft Forecast"
+	},
+	"FD2": {
+		"priority": 1,
+		"text": "12 Hour Winds Aloft Forecast"
+	},
+	"FD3": {
+		"priority": 1,
+		"text": "24 Hour Winds Aloft Forecast"
+	},
+	"FD4": {
+		"priority": 1,
+		"text": "Winds Aloft Forecast"
+	},
+	"FD5": {
+		"priority": 1,
+		"text": "Winds Aloft Forecast"
+	},
+	"FD6": {
+		"priority": 1,
+		"text": "Winds Aloft Forecast"
+	},
+	"FD7": {
+		"priority": 1,
+		"text": "Winds Aloft Forecast"
+	},
+	"FD8": {
+		"priority": 1,
+		"text": "6 Hour Fd Winds Aloft Fcst (45,000 and 53,000 Ft)"
+	},
+	"FD9": {
+		"priority": 1,
+		"text": "12 Hr Fd Winds Aloft Fcst (45,000 and 53,000 Ft)"
+	},
+	"FDI": {
+		"priority": 1,
+		"text": "Fire Danger Indices"
+	},
+	"FFA": {
+		"text": "Flash Flood Watch",
+		"priority": 4
+	},
+	"FFG": {
+		"priority": 1,
+		"text": "Flash Flood Guidance"
+	},
+	"FFH": {
+		"priority": 1,
+		"text": "Headwater Guidance"
+	},
+	"FFS": {
+		"text": "Flash Flood Statement",
+		"priority": 2
+	},
+	"FFW": {
+		"text": "Flash Flood Warning",
+		"priority": 5
+	},
+	"FLN": {
+		"priority": 1,
+		"text": "National Flood Summary"
+	},
+	"FLS": {
+		"text": "Flood Statement",
+		"priority": 2
+	},
+	"FLW": {
+		"text": "Flood Warning",
+		"priority": 3
+	},
+	"FOF": {
+		"priority": 1,
+		"text": "Upper Wind Fallout Forecast"
+	},
+	"FRW": {
+		"text": "Fire Warning",
+		"priority": 4
+	},
+	"FSH": {
+		"priority": 1,
+		"text": "Natl Marine Fisheries Administrative Service Message"
+	},
+	"FTM": {
+		"priority": 2,
+		"text": "WSR-88D Radar Outage Notification / Free Text Message"
+	},
+	"FTP": {
+		"priority": 1,
+		"text": "FOUS Prog Max/Min Temp/Pop Guidance"
+	},
+	"FWA": {
+		"priority": 1,
+		"text": "Fire Weather Administrative Message"
+	},
+	"FWD": {
+		"priority": 1,
+		"text": "Fire Weather Outlook Discussion"
+	},
+	"FWF": {
+		"priority": 1,
+		"text": "Routine Fire Wx Fcst (With/Without 6-10 Day Outlook)"
+	},
+	"FWL": {
+		"priority": 1,
+		"text": "Land Management Forecasts"
+	},
+	"FWM": {
+		"priority": 1,
+		"text": "Miscellaneous Fire Weather Product"
+	},
+	"FWN": {
+		"priority": 1,
+		"text": "Fire Weather Notification"
+	},
+	"FWO": {
+		"priority": 1,
+		"text": "Fire Weather Observation"
+	},
+	"FWS": {
+		"priority": 1,
+		"text": "Spot Forecast"
+	},
+	"FZL": {
+		"priority": 1,
+		"text": "Freezing Level Data (RADAT)"
+	},
+	"GLF": {
+		"priority": 1,
+		"text": "Great Lakes Forecast"
+	},
+	"GLS": {
+		"priority": 1,
+		"text": "Great Lakes Storm Summary"
+	},
+	"GRE": {
+		"priority": 1,
+		"text": "GREEN"
+	},
+	"HD1": {
+		"priority": 1,
+		"text": "RFC Derived QPF Data Product"
+	},
+	"HD2": {
+		"priority": 1,
+		"text": "RFCDerived QPF Data Product"
+	},
+	"HD3": {
+		"priority": 1,
+		"text": "RFC Derived QPF Data Product"
+	},
+	"HD4": {
+		"priority": 1,
+		"text": "RFC Derived QPF Data Product"
+	},
+	"HD7": {
+		"priority": 1,
+		"text": "RFC Derived QPF Data Product"
+	},
+	"HD8": {
+		"priority": 1,
+		"text": "RFC Derived QPF Data Product"
+	},
+	"HD9": {
+		"priority": 1,
+		"text": "RFC Derived QPF Data Product"
+	},
+	"HLS": {
+		"text": "Hurricane Statement",
+		"priority": 3
+	},
+	"HMD": {
+		"priority": 1,
+		"text": "Hydrometeorological Discussion"
+	},
+	"HML": {
+		"priority": 1,
+		"text": "AHPS XML"
+	},
+	"HMW": {
+		"text": "Hazardous Materials Warning",
+		"priority": 5
+	},
+	"HP1": {
+		"priority": 1,
+		"text": "RFC QPF Verification Product"
+	},
+	"HP2": {
+		"priority": 1,
+		"text": "RFC QPF Verification Product"
+	},
+	"HP3": {
+		"priority": 1,
+		"text": "RFC QPF Verification Product"
+	},
+	"HP4": {
+		"priority": 1,
+		"text": "RFC QPF Verification Product"
+	},
+	"HP5": {
+		"priority": 1,
+		"text": "RFC QPF Verification Product"
+	},
+	"HP6": {
+		"priority": 1,
+		"text": "RFC QPF Verification Product"
+	},
+	"HP7": {
+		"priority": 1,
+		"text": "RFC QPF Verification Product"
+	},
+	"HP8": {
+		"priority": 1,
+		"text": "RFC QPF Verification Product"
+	},
+	"HRR": {
+		"priority": 1,
+		"text": "Weather Roundup"
+	},
+	"HSF": {
+		"priority": 1,
+		"text": "High Seas Forecast"
+	},
+	"HWO": {
+		"priority": 2,
+		"text": "Hazardous Weather Outlook"
+	},
+	"HWR": {
+		"priority": 1,
+		"text": "Hourly Weather Roundup"
+	},
+	"HYD": {
+		"priority": 1,
+		"text": "Daily Hydrometeorological Products"
+	},
+	"HYM": {
+		"priority": 1,
+		"text": "Monthly Hydrometeorological Plain Language Product"
+	},
+	"ICE": {
+		"priority": 1,
+		"text": "Ice Forecast"
+	},
+	"IDM": {
+		"priority": 1,
+		"text": "Ice Drift Vectors"
+	},
+	"INI": {
+		"priority": 1,
+		"text": "ADMINISTR [NOUS51 KWBC]"
+	},
+	"IOB": {
+		"priority": 1,
+		"text": "Ice Observation"
+	},
+	"KPA": {
+		"priority": 1,
+		"text": "Keep Alive Message"
+	},
+	"LAE": {
+		"text": "Local Area Emergency",
+		"priority": 5
+	},
+	"LCD": {
+		"priority": 1,
+		"text": "Preliminary Local Climatological Data"
+	},
+	"LCO": {
+		"priority": 1,
+		"text": "Local Cooperative Observation"
+	},
+	"LEW": {
+		"text": "Law Enforcement Warning",
+		"priority": 5
+	},
+	"LFP": {
+		"priority": 2,
+		"text": "Local Forecast"
+	},
+	"LKE": {
+		"priority": 1,
+		"text": "Lake Stages"
+	},
+	"LLS": {
+		"priority": 1,
+		"text": "Low-Level Sounding"
+	},
+	"LOW": {
+		"priority": 1,
+		"text": "Low Temperatures"
+	},
+	"LSR": {
+		"priority": 2,
+		"text": "Local Storm Report"
+	},
+	"LTG": {
+		"priority": 1,
+		"text": "Lightning Data"
+	},
+	"MAN": {
+		"priority": 1,
+		"text": "Rawinsonde Observation Mandatory Levels"
+	},
+	"MAP": {
+		"priority": 1,
+		"text": "Mean Areal Precipitation"
+	},
+	"MAW": {
+		"priority": 1,
+		"text": "Amended Marine Forecast"
+	},
+	"MFM": {
+		"priority": 1,
+		"text": "Marine Forecast Matrix"
+	},
+	"MIM": {
+		"priority": 1,
+		"text": "Marine Interpretation Message"
+	},
+	"MIS": {
+		"priority": 1,
+		"text": "Miscellaneous Local Product"
+	},
+	"MOB": {
+		"priority": 1,
+		"text": "MOB Observations"
+	},
+	"MON": {
+		"priority": 1,
+		"text": "Routine Space Environment Product Issued Monthly"
+	},
+	"MRP": {
+		"priority": 1,
+		"text": "Techniques Development Laboratory Marine Product"
+	},
+	"MSM": {
+		"priority": 1,
+		"text": "ASOS Monthly Summary Message"
+	},
+	"MTR": {
+		"priority": 1,
+		"text": "METAR Formatted Surface Weather Observation"
+	},
+	"MTT": {
+		"priority": 1,
+		"text": "METAR Test Message"
+	},
+	"MVF": {
+		"priority": 1,
+		"text": "Marine Verification Coded Message"
+	},
+	"MWS": {
+		"priority": 1,
+		"text": "Marine Weather Statement"
+	},
+	"MWW": {
+		"priority": 1,
+		"text": "Marine Weather Message"
+	},
+	"NOU": {
+		"priority": 1,
+		"text": "Weather Reconnaisance Flights"
+	},
+	"NOW": {
+		"priority": 1,
+		"text": "Short Term Forecast"
+	},
+	"NOX": {
+		"priority": 1,
+		"text": "Data Mgt Message"
+	},
+	"NPW": {
+		"priority": 1,
+		"text": "Non-Precipitation Warnings / Watches / Advisories"
+	},
+	"NSH": {
+		"priority": 1,
+		"text": "Nearshore Marine Forecast"
+	},
+	"NUW": {
+		"text": "Nuclear Power Plant Warning",
+		"priority": 5
+	},
+	"NWR": {
+		"priority": 1,
+		"text": "NOAA Weather Radio Forecast"
+	},
+	"OAV": {
+		"priority": 1,
+		"text": "Other Aviation Products"
+	},
+	"OBS": {
+		"priority": 1,
+		"text": "Observations"
+	},
+	"OFA": {
+		"priority": 1,
+		"text": "Offshore Aviation Area Forecast"
+	},
+	"OFF": {
+		"priority": 1,
+		"text": "Offshore Forecast"
+	},
+	"OMR": {
+		"priority": 1,
+		"text": "Other Marine Products"
+	},
+	"OPU": {
+		"priority": 1,
+		"text": "Other Public Products"
+	},
+	"OSO": {
+		"priority": 1,
+		"text": "Other Surface Observations"
+	},
+	"OSW": {
+		"priority": 1,
+		"text": "Ocean Surface Winds"
+	},
+	"OUA": {
+		"priority": 1,
+		"text": "Other Upper Air Data"
+	},
+	"OZF": {
+		"priority": 1,
+		"text": "Zone Forecast"
+	},
+	"PFM": {
+		"priority": 1,
+		"text": "Point Forecast Matrices"
+	},
+	"PFW": {
+		"priority": 1,
+		"text": "Fire Weather Point Forecast Matrices"
+	},
+	"PLS": {
+		"priority": 1,
+		"text": "Plain Language Ship Report"
+	},
+	"PMD": {
+		"priority": 1,
+		"text": "Prognostic Meteorological Discussion"
+	},
+	"PNS": {
+		"priority": 2,
+		"text": "Public Information Statement"
+	},
+	"POE": {
+		"priority": 1,
+		"text": "Probability of Exceed"
+	},
+	"PRB": {
+		"priority": 1,
+		"text": "Heat Index Forecast Tables"
+	},
+	"PRC": {
+		"priority": 1,
+		"text": "State Pilot Report Collective"
+	},
+	"PRE": {
+		"priority": 1,
+		"text": "Preliminary Forecasts"
+	},
+	"PSH": {
+		"priority": 1,
+		"text": "Post Storm Hurricane Report"
+	},
+	"PTS": {
+		"priority": 1,
+		"text": "Probabilistic Outlook Points"
+	},
+	"PWO": {
+		"priority": 1,
+		"text": "Public Severe Weather Outlook"
+	},
+	"PWS": {
+		"priority": 1,
+		"text": "Tropical Cyclone Probabilities"
+	},
+	"QPF": {
+		"priority": 1,
+		"text": "Quantitative Precipitation Forecast"
+	},
+	"QPS": {
+		"priority": 1,
+		"text": "Quantitative Precipitation Statement"
+	},
+	"RDF": {
+		"priority": 1,
+		"text": "Revised Digital Forecast"
+	},
+	"REC": {
+		"priority": 1,
+		"text": "Recreational Report"
+	},
+	"RER": {
+		"priority": 2,
+		"text": "Record Report"
+	},
+	"RET": {
+		"priority": 1,
+		"text": "EAS Activation Request"
+	},
+	"RFD": {
+		"priority": 1,
+		"text": "Rangeland Fire Danger Forecast"
+	},
+	"RFI": {
+		"priority": 1,
+		"text": "RFI Observation"
+	},
+	"RFR": {
+		"priority": 1,
+		"text": "Route Forecast"
+	},
+	"RFW": {
+		"priority": 3,
+		"text": "Red Flag Warning"
+	},
+	"RHW": {
+		"text": "Radiological Hazard Warning",
+		"priority": 5
+	},
+	"RMT": {
+		"text": "Required Monthly Test",
+		"priority": 1
+	},
+	"RNS": {
+		"priority": 1,
+		"text": "Rain Information Statement"
+	},
+	"RR1": {
+		"priority": 1,
+		"text": "Hydro-Met Data Report Part 1"
+	},
+	"RR2": {
+		"priority": 1,
+		"text": "Hydro-Met Data Report Part 2"
+	},
+	"RR3": {
+		"priority": 1,
+		"text": "Hydro-Met Data Report Part 3"
+	},
+	"RR4": {
+		"priority": 1,
+		"text": "Hydro-Met Data Report Part 4"
+	},
+	"RR5": {
+		"priority": 1,
+		"text": "Hydro-Met Data Report Part 5"
+	},
+	"RR6": {
+		"priority": 1,
+		"text": "Hydro-Met Data Report Part 6"
+	},
+	"RR7": {
+		"priority": 1,
+		"text": "Hydro-Met Data Report Part 7"
+	},
+	"RR8": {
+		"priority": 1,
+		"text": "Hydro-Met Data Report Part 8"
+	},
+	"RR9": {
+		"priority": 1,
+		"text": "Hydro-Met Data Report Part 9"
+	},
+	"RRA": {
+		"priority": 1,
+		"text": "Automated Hydrologic Observation Sta Report (AHOS)"
+	},
+	"RRM": {
+		"priority": 1,
+		"text": "Miscellaneous Hydrologic Data"
+	},
+	"RRS": {
+		"priority": 1,
+		"text": "HADS Data"
+	},
+	"RRY": {
+		"priority": 1,
+		"text": "ASOS SHEF Hourly Routine Test Message"
+	},
+	"RSD": {
+		"priority": 1,
+		"text": "Daily Snotel Data"
+	},
+	"RSM": {
+		"priority": 1,
+		"text": "Monthly Snotel Data"
+	},
+	"RTP": {
+		"priority": 1,
+		"text": "Regional Max/Min Temp and Precipitation Table"
+	},
+	"RVA": {
+		"priority": 1,
+		"text": "River Summary"
+	},
+	"RVD": {
+		"priority": 1,
+		"text": "Daily River Forecasts"
+	},
+	"RVF": {
+		"priority": 1,
+		"text": "River Forecast"
+	},
+	"RVI": {
+		"priority": 1,
+		"text": "River Ice Statement"
+	},
+	"RVM": {
+		"priority": 1,
+		"text": "Miscellaneous River Product"
+	},
+	"RVR": {
+		"priority": 1,
+		"text": "River Recreation Statement"
+	},
+	"RVS": {
+		"priority": 1,
+		"text": "River Statement"
+	},
+	"RWR": {
+		"priority": 1,
+		"text": "Regional Weather Roundup"
+	},
+	"RWS": {
+		"priority": 1,
+		"text": "Regional Weather Summary"
+	},
+	"RWT": {
+		"text": "Required Weekly Test",
+		"priority": 1
+	},
+	"SAB": {
+		"priority": 1,
+		"text": "Special Avalanche Bulletin"
+	},
+	"SAF": {
+		"priority": 1,
+		"text": "Speci Agri Wx Fcst / Advisory / Flying Farmer Fcst Outlook"
+	},
+	"SAG": {
+		"priority": 1,
+		"text": "Snow Avalanche Guidance"
+	},
+	"SAT": {
+		"priority": 1,
+		"text": "APT Prediction"
+	},
+	"SAW": {
+		"priority": 1,
+		"text": "Prelim Notice of Watch & Cancellation Msg (Aviation)"
+	},
+	"SCC": {
+		"priority": 2,
+		"text": "Storm Summary"
+	},
+	"SCD": {
+		"priority": 1,
+		"text": "Supplementary Climatological Data (ASOS)"
+	},
+	"SCN": {
+		"priority": 1,
+		"text": "Soil Climate Analysis Network Data"
+	},
+	"SCP": {
+		"priority": 1,
+		"text": "Satellite Cloud Product"
+	},
+	"SCS": {
+		"priority": 1,
+		"text": "Selected Cities Summary"
+	},
+	"SDO": {
+		"priority": 1,
+		"text": "Supplementary Data Observation (ASOS)"
+	},
+	"SDS": {
+		"priority": 1,
+		"text": "Special Dispersion Statement"
+	},
+	"SEL": {
+		"priority": 1,
+		"text": "Severe Local Storm Watch and Watch Cancellation Msg"
+	},
+	"SEV": {
+		"priority": 1,
+		"text": "SPC Watch Point Information Message"
+	},
+	"SFP": {
+		"priority": 1,
+		"text": "State Forecast"
+	},
+	"SFT": {
+		"priority": 1,
+		"text": "Tabular State Forecast"
+	},
+	"SGL": {
+		"priority": 1,
+		"text": "Rawinsonde Observation Significant Levels"
+	},
+	"SHP": {
+		"priority": 1,
+		"text": "Surface Ship Report at Synoptic Time"
+	},
+	"SIG": {
+		"priority": 1,
+		"text": "International Sigmet / Convective Sigmet"
+	},
+	"SIM": {
+		"priority": 1,
+		"text": "Satellite Interpretation Message"
+	},
+	"SLS": {
+		"priority": 1,
+		"text": "Severe Local Storm Watch and Areal Outline"
+	},
+	"SMF": {
+		"priority": 1,
+		"text": "Smoke Management Weather Forecast"
+	},
+	"SMW": {
+		"text": "Special Marine Warning",
+		"priority": 4
+	},
+	"SOO": {
+		"priority": 1,
+		"text": "SOO Product"
+	},
+	"SPE": {
+		"priority": 1,
+		"text": "Satellite Precipitation Estimates (TXUS20 KWBC)"
+	},
+	"SPF": {
+		"priority": 1,
+		"text": "Storm Strike Probability Bulletin (TPC)"
+	},
+	"SPS": {
+		"text": "Special Weather Statement",
+		"priority": 2
+	},
+	"SPW": {
+		"text": "Shelter In Place Warning",
+		"priority": 5
+	},
+	"SQW": {
+		"priority": 5,
+		"text": "Snow Squall Warning"
+	},
+	"SRD": {
+		"priority": 1,
+		"text": "Surf Discussion"
+	},
+	"SRF": {
+		"priority": 1,
+		"text": "Surf Forecast"
+	},
+	"SRG": {
+		"priority": 1,
+		"text": "Soaring Guidance"
+	},
+	"SSM": {
+		"priority": 1,
+		"text": "Main Synoptic Hour Surface Observation"
+	},
+	"STA": {
+		"priority": 1,
+		"text": "Network and Severe Weather Statistical Summaries"
+	},
+	"STD": {
+		"priority": 1,
+		"text": "Satellite Tropical Disturbance Summary"
+	},
+	"STO": {
+		"priority": 1,
+		"text": "Road Condition Reports (State Agencies)"
+	},
+	"STP": {
+		"priority": 1,
+		"text": "State Max/Min Temperature and Precipitation Table"
+	},
+	"STQ": {
+		"priority": 1,
+		"text": "Spot Forecast Request"
+	},
+	"SUM": {
+		"priority": 1,
+		"text": "Space Weather Message"
+	},
+	"SVR": {
+		"text": "Severe Thunderstorm Warning",
+		"priority": 5
+	},
+	"SVS": {
+		"text": "Severe Weather Statement",
+		"priority": 3
+	},
+	"SWO": {
+		"priority": 1,
+		"text": "Severe Storm Outlook Narrative (AC)"
+	},
+	"SWS": {
+		"priority": 1,
+		"text": "State Weather Summary"
+	},
+	"SYN": {
+		"priority": 1,
+		"text": "Regional Weather Synopsis"
+	},
+	"TAF": {
+		"priority": 1,
+		"text": "Terminal Aerodrome Forecast"
+	},
+	"TAP": {
+		"priority": 1,
+		"text": "Terminal Alerting Products"
+	},
+	"TAV": {
+		"priority": 1,
+		"text": "Travelers Forecast Table"
+	},
+	"TCA": {
+		"priority": 1,
+		"text": "Aviation Tropical Cyclone Advisory"
+	},
+	"TCD": {
+		"priority": 1,
+		"text": "Tropical Cyclone Discussion"
+	},
+	"TCE": {
+		"priority": 1,
+		"text": "Tropical Cyclone Position Estimate"
+	},
+	"TCM": {
+		"priority": 1,
+		"text": "Marine/Aviation Tropical Cyclone Advisory"
+	},
+	"TCP": {
+		"priority": 1,
+		"text": "Public Tropical Cyclone Advisory"
+	},
+	"TCS": {
+		"priority": 1,
+		"text": "Satellite Tropical Cyclone Summary"
+	},
+	"TCU": {
+		"priority": 1,
+		"text": "Tropical Cyclone Update"
+	},
+	"TCV": {
+		"priority": 1,
+		"text": "Tropical Cyclone Watch/Warning Break Points"
+	},
+	"TIB": {
+		"priority": 2,
+		"text": "Tsunami Bulletin"
+	},
+	"TID": {
+		"priority": 1,
+		"text": "Tide Report"
+	},
+	"TMA": {
+		"priority": 1,
+		"text": "Tsunami Tide/Seismic Message Acknowledgement"
+	},
+	"TOE": {
+		"text": "911 Telephone Outage Emergency",
+		"priority": 5
+	},
+	"TOR": {
+		"text": "Tornado Warning",
+		"priority": 5
+	},
+	"TPT": {
+		"priority": 1,
+		"text": "Temperature Precipitation Table (Natl and Intnl)"
+	},
+	"TSU": {
+		"priority": 1,
+		"text": "Tsunami Watch/Warning"
+	},
+	"TUV": {
+		"priority": 1,
+		"text": "Weather Bulletin"
+	},
+	"TVL": {
+		"priority": 1,
+		"text": "Travelers Forecast"
+	},
+	"TWB": {
+		"priority": 1,
+		"text": "Transcribed Weather Broadcast"
+	},
+	"TWD": {
+		"priority": 1,
+		"text": "Tropical Weather Discussion"
+	},
+	"TWO": {
+		"priority": 1,
+		"text": "Tropical Weather Outlook and Summary"
+	},
+	"TWS": {
+		"priority": 1,
+		"text": "Tropical Weather Summary"
+	},
+	"URN": {
+		"priority": 1,
+		"text": "Aircraft Reconnaissance"
+	},
+	"UVI": {
+		"priority": 1,
+		"text": "Ultraviolet Index"
+	},
+	"VAA": {
+		"priority": 1,
+		"text": "Volcanic Activity Advisory"
+	},
+	"VER": {
+		"priority": 1,
+		"text": "Forecast Verification Statistics"
+	},
+	"VFT": {
+		"priority": 1,
+		"text": "Terminal Aerodrome Forecast (TAF) Verification"
+	},
+	"VOW": {
+		"text": "Volcano Warning",
+		"priority": 5
+	},
+	"WA0": {
+		"priority": 1,
+		"text": "Airmet (Pacific)"
+	},
+	"WA1": {
+		"priority": 1,
+		"text": "Airmet (Northeast)"
+	},
+	"WA2": {
+		"priority": 1,
+		"text": "Airmet (Southeast)"
+	},
+	"WA3": {
+		"priority": 1,
+		"text": "Airmet (North Central)"
+	},
+	"WA4": {
+		"priority": 1,
+		"text": "Airmet (South Central)"
+	},
+	"WA5": {
+		"priority": 1,
+		"text": "Airmet (Rocky Mountains)"
+	},
+	"WA6": {
+		"priority": 1,
+		"text": "Airmet (West Coast)"
+	},
+	"WA7": {
+		"priority": 1,
+		"text": "Airmet (Juneau, AK)"
+	},
+	"WA8": {
+		"priority": 1,
+		"text": "Airmet (Anchorage, AK)"
+	},
+	"WA9": {
+		"priority": 1,
+		"text": "Airmet (Fairbanks, AK)"
+	},
+	"WAR": {
+		"priority": 1,
+		"text": "Space Environment Warning"
+	},
+	"WAT": {
+		"priority": 1,
+		"text": "Space Environment Watch"
+	},
+	"WCN": {
+		"priority": 4,
+		"text": "Weather Watch Clearance Notification"
+	},
+	"WCR": {
+		"priority": 1,
+		"text": "Weekly Weather and Crop Report"
+	},
+	"WDA": {
+		"priority": 1,
+		"text": "Weekly Data for Agriculture"
+	},
+	"WDU": {
+		"priority": 2,
+		"text": "Warning Decision Update"
+	},
+	"WEK": {
+		"priority": 1,
+		"text": "Routine Space Environment Product Issued Weekly"
+	},
+	"WOU": {
+		"priority": 3,
+		"text": "Tornado/Severe Thunderstorm Watch"
+	},
+	"WS1": {
+		"priority": 1,
+		"text": "Sigmet (Northeast)"
+	},
+	"WS2": {
+		"priority": 1,
+		"text": "Sigmet (Southeast)"
+	},
+	"WS3": {
+		"priority": 1,
+		"text": "Sigmet (North Central)"
+	},
+	"WS4": {
+		"priority": 1,
+		"text": "Sigmet (South Central)"
+	},
+	"WS5": {
+		"priority": 1,
+		"text": "Sigmet (Rocky Mountains)"
+	},
+	"WS6": {
+		"priority": 1,
+		"text": "Sigmet (West Coast)"
+	},
+	"WST": {
+		"priority": 1,
+		"text": "Tropical Cyclone Sigmet"
+	},
+	"WSV": {
+		"priority": 1,
+		"text": "Volcanic Activity Sigmet"
+	},
+	"WSW": {
+		"text": "Winter Storm Warning",
+		"priority": 5
+	},
+	"WWA": {
+		"priority": 1,
+		"text": "Watch Status Report"
+	},
+	"WWP": {
+		"priority": 3,
+		"text": "Severe Thunderstorm / Tornado Watch Probabilities"
+	},
+	"ZFP": {
+		"priority": 2,
+		"text": "Zone Forecast Product"
+	},
+	"BZW": {
+		"text": "Blizzard Warning",
+		"priority": 5
+	},
+	"CFA": {
+		"text": "Coastal Flood Watch",
+		"priority": 4
+	},
+	"FLA": {
+		"text": "Flood Watch",
+		"priority": 2
+	},
+	"HWA": {
+		"text": "High Wind Watch",
+		"priority": 4
+	},
+	"HWW": {
+		"text": "High Wind Warning",
+		"priority": 5
+	},
+	"HUA": {
+		"text": "Hurricane Watch",
+		"priority": 4
+	},
+	"HUW": {
+		"text": "Hurricane Warning",
+		"priority": 5
+	},
+	"SVA": {
+		"text": "Severe Thunderstorm Watch",
+		"priority": 4
+	},
+	"TOA": {
+		"text": "Tornado Watch",
+		"priority": 5
+	},
+	"TRA": {
+		"text": "Tropical Storm Watch",
+		"priority": 4
+	},
+	"TRW": {
+		"text": "Tropical Storm Warning",
+		"priority": 5
+	},
+	"TSA": {
+		"text": "Tsunami Watch",
+		"priority": 4
+	},
+	"TSW": {
+		"text": "Tsunami Warning",
+		"priority": 5
+	},
+	"WSA": {
+		"text": "Winter Storm Watch",
+		"priority": 4
+	},
+	"EAN": {
+		"text": "Emergency Action Notification",
+		"priority": 5
+	},
+	"EAT": {
+		"text": "Emergency Action Termination",
+		"priority": 5
+	},
+	"NIC": {
+		"text": "National Information Center",
+		"priority": 5
+	},
+	"NPT": {
+		"text": "National Periodic Test",
+		"priority": 5
+	},
+	"BHW": {
+		"text": "Biological Hazard Warning",
+		"priority": 5
+	},
+	"BWW": {
+		"text": "Boil Water Warning",
+		"priority": 5
+	},
+	"CWW": {
+		"text": "Conataminated Water Warning",
+		"priority": 5
+	},
+	"DBA": {
+		"text": "Dam Break Watch",
+		"priority": 4
+	},
+	"DBW": {
+		"text": "Dam Break Warning",
+		"priority": 5
+	},
+	"DEW": {
+		"text": "Contagious Disease Warning",
+		"priority": 5
+	},
+	"EVA": {
+		"text": "Evacuation Watch",
+		"priority": 4
+	},
+	"FCW": {
+		"text": "Food Contamination Warning",
+		"priority": 3
+	},
+	"FSW": {
+		"text": "Flash Freeze Warning",
+		"priority": 4
+	},
+	"FZW": {
+		"text": "Freeze Warning",
+		"priority": 5
+	},
+	"IBW": {
+		"text": "Iceberg Warning",
+		"priority": 4
+	},
+	"IFW": {
+		"text": "Industrial Fire Warning",
+		"priority": 4
+	},
+	"LSW": {
+		"text": "Land Slide Warning",
+		"priority": 4
+	},
+	"NAT": {
+		"text": "National Audible Test",
+		"priority": 4
+	},
+	"NST": {
+		"text": "National Silent Test",
+		"priority": 4
+	},
+	"POS": {
+		"text": "Power Outage Statement",
+		"priority": 2
+	},
+	"WFA": {
+		"text": "Wild Fire Watch",
+		"priority": 4
+	},
+	"WFW": {
+		"text": "Wild Fire Warning",
+		"priority": 4
+	},
+	"NMN": {
+		"text": "Network Message Notification",
+		"priority": 5
+	}
+}

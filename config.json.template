@@ -1,4 +1,11 @@
 {
+	"priorityColors": {
+		"1": "#00AFFF",
+		"2": "#00FF00",
+		"3": "#FFFF00",
+		"4": "#FFA500",
+		"5": "#FF0000"
+	},
 	"discord": {
 		"token": "YOUR_TOKEN",
 		"owner": "your_user_id",
