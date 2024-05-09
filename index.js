@@ -219,7 +219,7 @@ xmpp.on("stanza", (stanza) => {
 		const product_id = parseProductID(stanza.getChild("x").attrs.product_id);
 		var evt = events[product_id.pil.substring(0, 3)];
 		if (!evt) {
-			evt = { name: "Unknown", priority: 3}
+			evt = { name: "Unknown", priority: 3 }
 			console.log(`${colors.red("[ERROR]")} Unknown event type: ${product_id.pil.substring(0, 3)}. Fix me`);
 		}
 		const product_id_raw = stanza.getChild("x").attrs.product_id;
@@ -800,7 +800,7 @@ process.on("unhandledRejection", (error) => {
 });
 
 process.on("uncaughtException", (error) => {
-	console.log(`${colors.red("[ERROR]")} Uncaught Exception: ${error.message}`);
+	console.log(`${colors.red("[ERROR]")} Uncaught Exception: ${error.message}\n${error.stack}`);
 });
 
 // Login to discord
