@@ -117,7 +117,7 @@ function getWFOByRoom(room) {
 }
 
 // Voice funcs
-function JoinChannel(channel, track, volume) {
+function JoinChannel(channel, track, volume, message) {
 	return new Promise((resolve, reject) => {
 		connection = dVC.joinVoiceChannel({
 			channelId: channel.id,
@@ -129,10 +129,10 @@ function JoinChannel(channel, track, volume) {
 
 		resource = dVC.createAudioResource(track, { inlineVolume: true, silencePaddingFrames: 5 });
 		player = dVC.createAudioPlayer();
+		connection.player = player; // So we can access it later to pause/play/stop etc
 		resource.volume.setVolume(2);
 		connection.subscribe(player)
-		player.play(resource);
-
+		player.play(resource);	
 		connection.on(dVC.VoiceConnectionStatus.Ready, () => { player.play(resource); })
 		connection.on(dVC.VoiceConnectionStatus.Disconnected, async (oldState, newState) => {
 			try {
@@ -147,15 +147,17 @@ function JoinChannel(channel, track, volume) {
 		});
 		player.on('error', error => {
 			console.error(`Error: ${error.message} with resource ${error.resource.metadata.title}`);
-			resolve({status:false, message: error.message});
+			message.channel.send(`Error while streaming. Stopping for now.`);
 			player.stop();
 		});
 		player.on(dVC.AudioPlayerStatus.Playing, () => {
-			resolve({status:true, message: "Playing..."})
+			resolve({status:true, message: "Playing"})
+			message.channel.send(`Playing stream in <#${channel.id}>`);
+			connection.paused = false;
 		});
 		player.on('idle', () => {
 			resolve({status:true, message: "Idle"})
-			connection.destroy();
+			message.channel.send(`Stream idle.`);
 		})
 	});
 }
@@ -171,6 +173,27 @@ function LeaveVoiceChannel(channel) {
 		return resolve(false);
 	});
 }
+
+function toggleVoicePause(channel) {
+	return new Promise((resolve, reject) => {
+		const connection = dVC.getVoiceConnection(channel.guild.id);
+		if (connection) {
+			if (connection.paused) {
+				connection.player.unpause();
+				connection.paused = false;
+				resolve(true);
+			}
+			else {
+				connection.player.pause();
+				connection.paused = true;
+				resolve(true);
+			}
+		}
+		else {
+			resolve(false);
+		}
+	});
+};
 
 
 const xmpp = client({
@@ -480,6 +503,11 @@ discord.on('ready', async () => {
 						"required": true
 					}
 				]
+			},
+			{
+				"name": "pause",
+				"description": "Pause/Unpause the current stream",
+				"type": 1
 			}
 		)
 	}
@@ -757,7 +785,17 @@ discord.on("interactionCreate", async (interaction) => {
 						}
 					});
 					break;
-
+				case "pause": // Pause/unpause stream
+					channel = interaction.member.voice.channel;
+					if (!channel) return interaction.reply({ content: "You need to be in a voice channel", ephemeral: true });
+					toggleVoicePause(channel).then((res) => {
+						if (res) {
+							interaction.reply({ content: "Toggled pause", ephemeral: true });
+						} else {
+							interaction.reply({ content: "Failed to toggle pause", ephemeral: true });
+						}
+					});
+					break;
 			}
 			break;
 		case Discord.InteractionType.MessageComponent:
