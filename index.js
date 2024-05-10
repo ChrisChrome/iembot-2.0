@@ -1067,6 +1067,43 @@ discord.on("interactionCreate", async (interaction) => {
 
 });
 
+discord.on("guildMemberAdd", (member) => {
+	// If it wasnt the bot, ignore
+	if (member.user.id !== discord.user.id) return;
+	// Get the main guild
+	const guild = discord.guilds.cache.get(config.discord.mainGuild);
+	// Get the log channel
+	const channel = guild.channels.cache.get(config.discord.logChannel);
+	// Send a message to the log channel
+	channel.send({
+		embeds: [
+			{
+				description: `I joined \`${member.guild.name}\``,
+				color: 0x00ff00
+			}
+		]
+	})
+
+})
+
+discord.on("guildMemberRemove", (member) => {
+	// If it wasnt the bot, ignore
+	if (member.user.id !== discord.user.id) return;
+	// Get the main guild
+	const guild = discord.guilds.cache.get(config.discord.mainGuild);
+	// Get the log channel
+	const channel = guild.channels.cache.get(config.discord.logChannel);
+	// Send a message to the log channel
+	channel.send({
+		embeds: [
+			{
+				description: `I left \`${member.guild.name}\``,
+				color: 0xff0000
+			}
+		]
+	})
+})
+
 process.on("unhandledRejection", (error) => {
 	console.log(`${colors.red("[ERROR]")} Unhandled Rejection: ${error.message}`);
 });
