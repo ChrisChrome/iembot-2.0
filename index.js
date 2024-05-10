@@ -32,6 +32,7 @@ const db = new sqlite3.Database("channels.db", (err) => {
 	console.log(`${colors.cyan("[INFO]")} Connected to the database`);
 	// Create tables if they dont exist
 	db.run(`CREATE TABLE IF NOT EXISTS channels (channelid TEXT, iemchannel TEXT, custommessage TEXT)`);
+	db.run(`CREATE TABLE IF NOT EXISTS userAlerts (userid TEXT, iemchannel TEXT, filter TEXT, filterEvt TEXT, minPriority INT)`);
 });
 
 // Setup stuff
@@ -132,7 +133,7 @@ function JoinChannel(channel, track, volume, message) {
 		connection.player = player; // So we can access it later to pause/play/stop etc
 		resource.volume.setVolume(2);
 		connection.subscribe(player)
-		player.play(resource);	
+		player.play(resource);
 		connection.on(dVC.VoiceConnectionStatus.Ready, () => { player.play(resource); })
 		connection.on(dVC.VoiceConnectionStatus.Disconnected, async (oldState, newState) => {
 			try {
@@ -151,12 +152,12 @@ function JoinChannel(channel, track, volume, message) {
 			player.stop();
 		});
 		player.on(dVC.AudioPlayerStatus.Playing, () => {
-			resolve({status:true, message: "Playing"})
+			resolve({ status: true, message: "Playing" })
 			message.channel.send(`Playing stream in <#${channel.id}>`);
 			connection.paused = false;
 		});
 		player.on('idle', () => {
-			resolve({status:true, message: "Idle"})
+			resolve({ status: true, message: "Idle" })
 			message.channel.send(`Stream idle.`);
 		})
 	});
@@ -195,10 +196,37 @@ function toggleVoicePause(channel) {
 	});
 };
 
+// func to Generate random string, ({upper, lower, number, special}, length)
+
+const generateRandomString = function (options, length) {
+	let result = '';
+	const characters = {
+		upper: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+		lower: 'abcdefghijklmnopqrstuvwxyz',
+		number: '0123456789',
+		special: '!@#$%^&*()_+'
+	};
+	let chars = '';
+	for (const key in options) {
+		if (options[key]) {
+			chars += characters[key];
+		}
+	}
+	for (let i = 0; i < length; i++) {
+		result += chars.charAt(Math.floor(Math.random() * chars.length));
+	}
+	return result;
+}
+
+// Func to generate UUID
+const generateUUID = function () {
+	return generateRandomString({ lower: true, upper: true, number: true }, 8) + "-" + generateRandomString({ lower: true, upper: true, number: true }, 4) + "-" + generateRandomString({ lower: true, upper: true, number: true }, 4) + "-" + generateRandomString({ lower: true, upper: true, number: true }, 4) + "-" + generateRandomString({ lower: true, upper: true, number: true }, 12);
+}
 
 const xmpp = client({
 	service: "xmpp://conference.weather.im",
-	domain: "weather.im"
+	domain: "weather.im",
+	resource: `discord-weather-bot-${generateRandomString({ upper: true, lower: true, number: true }, 5)}`, // Weird fix to "Username already in use"
 });
 
 //debug(xmpp, true);
@@ -230,28 +258,31 @@ xmpp.on("stanza", (stanza) => {
 	if (stanza.is("message") && stanza.attrs.type === "groupchat") {
 		// Get channel name
 		fromChannel = stanza.attrs.from.split("@")[0];
-
 		// Ignores
 		if (!stanza.getChild("x")) return; // No PID, ignore it
 		if (!stanza.getChild("x").attrs.product_id) return;
 
+		const product_id = parseProductID(stanza.getChild("x").attrs.product_id);
+		const product_id_raw = stanza.getChild("x").attrs.product_id;
 		// Get body of message
 		const body = html.decode(stanza.getChildText("body"));
 		const bodyData = getFirstURL(body);
 		// get product id from "x" tag
-		const product_id = parseProductID(stanza.getChild("x").attrs.product_id);
 		var evt = events[product_id.pil.substring(0, 3)];
+		evt.code = product_id.pil.substring(0, 3);
+
 		if (!evt) {
 			evt = { name: "Unknown", priority: 3 }
 			console.log(`${colors.red("[ERROR]")} Unknown event type: ${product_id.pil.substring(0, 3)}. Fix me`);
 		}
-		const product_id_raw = stanza.getChild("x").attrs.product_id;
 		// Check timestamp, if not within 3 minutes, ignore it
 		const now = new Date();
 		const diff = (now - product_id.timestamp) / 1000 / 60;
 		if (diff > 3) return;
 		if (config.debug >= 1) console.log(`${colors.magenta("[DEBUG]")} New message from ${fromChannel}`);
 		messages++;
+
+
 		// Handle NTFY
 		if (config.ntfy.enabled) {
 			if (config.debug >= 1) console.log(`${colors.magenta("[DEBUG]")} Sending NTFY for ${config.ntfy.prefix}${fromChannel}`)
@@ -294,11 +325,39 @@ xmpp.on("stanza", (stanza) => {
 				url: stanza.getChild("x").attrs.twitter_media
 			}
 		}
+
+		let discordMsg = {
+			embeds: [embed],
+			components: [
+				{
+					type: 1,
+					components: [
+						{
+							type: 2,
+							label: "Product",
+							style: 5,
+							url: bodyData.url
+						},
+						{
+							type: 2,
+							style: 1,
+							custom_id: product_id_raw,
+							label: "Product Text",
+							emoji: {
+								name: "📄"
+							}
+						}
+					]
+				}
+			]
+		}
+
 		// Run through the database, and find all channels that are linked to the iem channel
 		db.all(`SELECT channelid, custommessage FROM channels WHERE iemchannel = ?`, [fromChannel], (err, rows) => {
 			if (err) {
 				console.error(err.message);
 			}
+			if (!rows) return; // No channels to alert
 			rows.forEach((row) => {
 				const channel = discord.channels.cache.get(row.channelid);
 				if (!channel) {
@@ -310,36 +369,47 @@ xmpp.on("stanza", (stanza) => {
 						console.log(`${colors.cyan("[INFO]")} Deleted channel ${row.channelid} from database`);
 					});
 				};
-				channel.send({
-					content: row.custommessage, embeds: [embed],
-					components: [
-						{
-							type: 1,
-							components: [
-								{
-									type: 2,
-									label: "Product",
-									style: 5,
-									url: bodyData.url
-								},
-								{
-									type: 2,
-									style: 1,
-									custom_id: product_id_raw,
-									label: "Product Text",
-									emoji: {
-										name: "📄"
-									}
-								}
-							]
-						}
-					]
-				}
-				).then((msg) => {
+				thisMsg = JSON.parse(JSON.stringify(discordMsg));
+				thisMsg.content = row.custommessage;
+				channel.send(thisMsg).then((msg) => {
 					if (msg.channel.type === Discord.ChannelType.GuildAnnouncement) msg.crosspost();
 				}).catch((err) => {
 					console.log(`${colors.red("[ERROR]")} Failed to send message to channel ${row.channelid}: ${err.message}`);
 				});
+			});
+		});
+
+
+		// User DM alert handling
+		db.all(`SELECT userid, filter, minPriority, filterEvt FROM userAlerts WHERE iemchannel = ?`, [fromChannel], (err, rows) => {
+			if (err) {
+				console.error(err.message);
+			}
+			if (!rows) return; // No users to alert
+			rows.forEach((row) => {
+				// Parse filterEvt
+				if (!row.filterEvt) row.filterEvt = "";
+				let filterEvt = row.filterEvt.split(",");
+
+				let user = discord.users.cache.get(row.userid);
+				if (!user) return; // Will handle better later
+				// If priority is less than the min priority, ignore it
+				if (evt.priority < row.minPriority) return;
+				// If the event type is not in th filter, ignore it. Make sure filterEvt isnt null
+				if (!filterEvt[0]) filterEvt = [];
+				if (!filterEvt.includes(evt.code) && !filterEvt.length == 0) return;
+				// fetch the product text
+				fetch(`https://mesonet.agron.iastate.edu/api/1/nwstext/${product_id_raw}`).then((res) => {
+					// If neither the body nor the product text contains the filter, ignore it
+					res.text().then((text) => {
+						if (!bodyData.string.includes(row.filter) && !text.includes(row.filter)) return;
+						thisMsg = JSON.parse(JSON.stringify(discordMsg));
+						user.send(thisMsg).catch((err) => {
+							console.error(err);
+						});
+					});
+				});
+
 			});
 		});
 	}
@@ -348,17 +418,27 @@ xmpp.on("stanza", (stanza) => {
 
 
 xmpp.on("online", async (address) => {
+
 	errCount = 0;
 	// Start listening on all channels, (dont ban me funny man)
 	// for (const channel in config.iem.channels) {
 	// 	console.log(`Joining ${channel.name}`)
 	// 	await xmpp.send(xml("presence", { to: `${channel.jud}/${channel.name}` }));
 	// }
-
+	/* sub format
+	<presence to="botstalk@conference.weather.im/add9b8f1-038d-47ed-b708-6ed60075a82f" xmlns="jabber:client">
+		<x xmlns="http://jabber.org/protocol/muc#user">
+			<item>
+				<role>visitor</role>
+			</item>
+		</x>
+	</presence>
+	*/
 	// Join all channels
 	config.iem.channels.forEach((channel => {
 		console.log(`${colors.cyan("[INFO]")} Joining ${channel.jid.split("@")[0]}:${channel.name}`)
-		xmpp.send(xml("presence", { to: `${channel.jid}/${channel.jid.split("@")[0]}` }));
+		//xmpp.send(xml("presence", { to: `${channel.jid}/${channel.jid.split("@")[0]}` }));
+		xmpp.send(xml("presence", { to: `${channel.jid}/${channel.name}/${generateUUID()}` }, xml("item", { role: "visitor" })));
 	}))
 
 	console.log(`${colors.cyan("[INFO]")} Connected to XMPP server as ${address.toString()}`);
@@ -468,6 +548,82 @@ discord.on('ready', async () => {
 		{
 			"name": "support",
 			"description": "Get support for the bot",
+			"type": 1
+		},
+		// User alert commands
+		{
+			"name": "usersubscribe",
+			"description": "Subscribe to alerts for a room",
+			"type": 1,
+			"options": [
+				{
+					"name": "room",
+					"description": "The room/WFO you want to subscribe to",
+					"type": 3,
+					"required": true
+				},
+				{
+					"name": "filter",
+					"description": "Filter for the alert",
+					"type": 3,
+					"required": false
+				},
+				{
+					"name": "minpriority",
+					"description": "Minimum priority to alert for",
+					"type": 4,
+					"required": false,
+					"choices": [
+						{
+							"name": "Any",
+							"value": 0,
+						},
+						{
+							"name": "Minimum",
+							"value": 1,
+						},
+						{
+							"name": "Low",
+							"value": 2,
+						},
+						{
+							"name": "Normal",
+							"value": 3,
+						},
+						{
+							"name": "High",
+							"value": 4,
+						},
+						{
+							"name": "Very High",
+							"value": 5,
+						}
+					]
+				},
+				{
+					"name": "filterevt",
+					"description": "Filter for event type",
+					"type": 3,
+					"required": false
+				}
+			]
+		},
+		{
+			"name": "userunsubscribe",
+			"description": "Unsubscribe from alerts for a room",
+			"type": 1,
+			"options": [
+				{
+					"name": "room",
+					"description": "The room/WFO you want to unsubscribe from",
+					"type": 3,
+					"required": true
+				}
+			]
+		},
+		{
+			"name": "userlist",
+			"description": "List all subscribed alerts for this user",
 			"type": 1
 		}
 	];
@@ -754,7 +910,7 @@ discord.on("interactionCreate", async (interaction) => {
 						}
 					});
 					break;
-				
+
 				case "play": // Play generic stream
 					// Get the URL
 					url = interaction.options.getString("url");
@@ -793,6 +949,58 @@ discord.on("interactionCreate", async (interaction) => {
 							interaction.reply({ content: "Toggled pause", ephemeral: true });
 						} else {
 							interaction.reply({ content: "Failed to toggle pause", ephemeral: true });
+						}
+					});
+					break;
+
+				case "usersubscribe":
+					room = getWFOroom(interaction.options.getString("room"));
+					if (!config.iem.channels.find((channel) => channel.jid.split("@")[0] === room)) {
+						interaction.reply({ content: "Invalid room", ephemeral: true });
+						return;
+					}
+					filter = interaction.options.getString("filter") || "";
+					minPriority = interaction.options.getInteger("minpriority");
+					filterEvt = interaction.options.getString("filterevt") || null;
+					db.run(`INSERT INTO userAlerts (userid, iemchannel, filter, minPriority, filterEvt) VALUES (?, ?, ?, ?, ?)`, [interaction.user.id, room, filter, minPriority, filterEvt], (err) => {
+						if (err) {
+							console.error(err.message);
+							interaction.reply({ content: "Failed to subscribe to alerts", ephemeral: true });
+						} else {
+							interaction.reply({ content: `Subscribed to alerts for \`${getWFOByRoom(room).location}\``, ephemeral: true });
+						}
+					});
+					break;
+				case "userunsubscribe":
+					room = getWFOroom(interaction.options.getString("room"));
+					if (!config.iem.channels.find((channel) => channel.jid.split("@")[0] === room)) {
+						interaction.reply({ content: "Invalid room", ephemeral: true });
+						return;
+					}
+					db.run(`DELETE FROM userAlerts WHERE userid = ? AND iemchannel = ?`, [interaction.user.id, room], (err) => {
+						if (err) {
+							console.error(err.message);
+							interaction.reply({ content: "Failed to unsubscribe from alerts", ephemeral: true });
+						} else {
+							interaction.reply({ content: `Unsubscribed from alerts for \`${getWFOByRoom(room).location}\``, ephemeral: true });
+						}
+					});
+					break;
+				case "userlist":
+					db.all(`SELECT iemchannel, filter, minPriority, filterEvt FROM userAlerts WHERE userid = ?`, [interaction.user.id], (err, rows) => {
+						if (err) {
+							console.error(err.message);
+							interaction.reply({ content: "Failed to list subscribed alerts", ephemeral: true });
+						} else {
+							let message = "";
+							rows.forEach((row) => {
+								message += `\`${row.iemchannel}\`: ${getWFOByRoom(row.iemchannel).location || "Unknown"} Filter: \`${row.filter}\` Min Priority: \`${row.minPriority}\` Filter EVT: \`${row.filterEvt}\`\n`;
+							}
+							);
+							if (message === "") {
+								message = "No subscribed alerts";
+							}
+							interaction.reply({ content: message, ephemeral: true });
 						}
 					});
 					break;
