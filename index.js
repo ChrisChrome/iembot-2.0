@@ -402,7 +402,7 @@ xmpp.on("stanza", (stanza) => {
 				fetch(`https://mesonet.agron.iastate.edu/api/1/nwstext/${product_id_raw}`).then((res) => {
 					// If neither the body nor the product text contains the filter, ignore it
 					res.text().then((text) => {
-						if (!bodyData.string.includes(row.filter) && !text.includes(row.filter)) return;
+						if (!bodyData.string.toLowerCase().includes(row.filter) && !text.toLowerCase().includes(row.filter)) return;
 						thisMsg = JSON.parse(JSON.stringify(discordMsg));
 						user.send(thisMsg).catch((err) => {
 							console.error(err);
@@ -959,7 +959,7 @@ discord.on("interactionCreate", async (interaction) => {
 						interaction.reply({ content: "Invalid room", ephemeral: true });
 						return;
 					}
-					filter = interaction.options.getString("filter") || "";
+					filter = interaction.options.getString("filter").toLowerCase() || "";
 					minPriority = interaction.options.getInteger("minpriority");
 					filterEvt = interaction.options.getString("filterevt") || null;
 					db.run(`INSERT INTO userAlerts (userid, iemchannel, filter, minPriority, filterEvt) VALUES (?, ?, ?, ?, ?)`, [interaction.user.id, room, filter, minPriority, filterEvt], (err) => {
