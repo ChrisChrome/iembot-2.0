@@ -1069,6 +1069,7 @@ discord.on("interactionCreate", async (interaction) => {
 });
 
 discord.on("guildMemberAdd", (member) => {
+	console.log("test")
 	// If it wasnt the bot, ignore
 	if (member.user.id !== discord.user.id) return;
 	// Get the main guild
