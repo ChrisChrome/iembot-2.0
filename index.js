@@ -969,6 +969,7 @@ discord.on("interactionCreate", async (interaction) => {
 					volume = interaction.options.getInteger("volume")/100;
 					// Make sure volume isnt negative
 					if (volume < 0) volume = 0;
+					if (volume > 1) volume = 1;
 					res = setVolume(channel, volume)
 					if (res) {
 						interaction.reply({ content: `Set volume to ${volume*100}%` });
