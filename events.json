@@ -992,7 +992,7 @@
 		"text": "Special Dispersion Statement"
 	},
 	"SEL": {
-		"priority": 1,
+		"priority": 4,
 		"text": "Severe Local Storm Watch and Watch Cancellation Msg"
 	},
 	"SEV": {
@@ -1108,7 +1108,7 @@
 		"priority": 3
 	},
 	"SWO": {
-		"priority": 1,
+		"priority": 3,
 		"text": "Severe Storm Outlook Narrative (AC)"
 	},
 	"SWS": {
