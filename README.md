@@ -6,16 +6,26 @@ This is SUPER tossed together. Might bother cleaning it up later.
 ## What is this?
 This is meant to be a public Discord bot. It connects via XMPP to Weather.IM and allows server owners to subscribe a channel to any number of weather alerts.
 
+## Pre-requisites
+1. Node.js
+2. NPM
+3. A Discord bot token
+
 ## How do I use this?
 1. Clone the repo
-2. Install the requirements
+2. Install the requirements with `npm install`
 3. Copy `config.example.json` to `config.json` and fill in the values
+	- `token` is your Discord bot token
+	- `owner` is your Discord user ID
+	- `mainGuild` is the ID of the guild you want to use as the main guild (This is used for making the support invite)
+	- `inviteChannel` is the ID of the channel you want to use for the support invite
+	- NTFY config is optional, leave enabled false if you don't want to use it or don't know how.
 4. Run `node .`
 5. Profit?
 
 ## TODO
-- [X] Clean up the code
+- [ ] Clean up the code
 - [X] Add more error handling
 - [X] Add more logging
 - [X] Add more features
-- [ ] Add more documentation
+- [X] Add more documentation

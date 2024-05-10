@@ -1,6 +1,7 @@
 // Requires
 const config = require("./config.json");
 const wfos = require("./wfos.json");
+const iem = require("./iem.json");
 const events = require("./events.json");
 const { client, xml } = require("@xmpp/client");
 const fetch = require("node-fetch");
@@ -423,7 +424,7 @@ xmpp.on("online", async (address) => {
 
 	errCount = 0;
 	// Start listening on all channels, (dont ban me funny man)
-	// for (const channel in config.iem.channels) {
+	// for (const channel in iem.channels) {
 	// 	console.log(`Joining ${channel.name}`)
 	// 	await xmpp.send(xml("presence", { to: `${channel.jud}/${channel.name}` }));
 	// }
@@ -437,7 +438,7 @@ xmpp.on("online", async (address) => {
 	</presence>
 	*/
 	// Join all channels
-	config.iem.channels.forEach((channel => {
+	iem.channels.forEach((channel => {
 		console.log(`${colors.cyan("[INFO]")} Joining ${channel.jid.split("@")[0]}:${channel.name}`)
 		//xmpp.send(xml("presence", { to: `${channel.jid}/${channel.jid.split("@")[0]}` }));
 		xmpp.send(xml("presence", { to: `${channel.jid}/${channel.name}/${generateUUID()}` }, xml("item", { role: "visitor" })));
@@ -705,7 +706,7 @@ discord.on("interactionCreate", async (interaction) => {
 			switch (interaction.commandName) {
 				case "subscribe":
 					room = getWFOroom(interaction.options.getString("room"));
-					if (!config.iem.channels.find((channel) => channel.jid.split("@")[0] === room)) {
+					if (!iem.channels.find((channel) => channel.jid.split("@")[0] === room)) {
 						interaction.reply({ content: "Invalid room", ephemeral: true });
 						return;
 					}
@@ -722,7 +723,7 @@ discord.on("interactionCreate", async (interaction) => {
 				case "unsubscribe":
 					// Check that the room is valid
 					room = getWFOroom(interaction.options.getString("room"));
-					if (!config.iem.channels.find((channel) => channel.jid.split("@")[0] === room)) {
+					if (!iem.channels.find((channel) => channel.jid.split("@")[0] === room)) {
 						interaction.reply({ content: "Invalid room", ephemeral: true });
 						return;
 					}
@@ -754,7 +755,7 @@ discord.on("interactionCreate", async (interaction) => {
 					break;
 				case "setmessage":
 					room = getWFOroom(interaction.options.getString("room"));
-					if (!config.iem.channels.find((channel) => channel.jid.split("@")[0] === room)) {
+					if (!iem.channels.find((channel) => channel.jid.split("@")[0] === room)) {
 						interaction.reply({ content: "Invalid room", ephemeral: true });
 						return;
 					}
@@ -822,7 +823,7 @@ discord.on("interactionCreate", async (interaction) => {
 				case "rooms":
 					// // Send an embed showing all the available rooms
 					// let roomList = "";
-					// config.iem.channels.forEach((channel) => {
+					// iem.channels.forEach((channel) => {
 					// 	room = channel.jid.split("@")[0]
 					// 	console.log(getWFOByRoom(room))
 					// 	roomList += `\`${room}\`: ${getWFOByRoom(room).location}\n`;
@@ -835,7 +836,7 @@ discord.on("interactionCreate", async (interaction) => {
 					// interaction.reply({ embeds: [roomEmbed], ephemeral: true });
 					// Do the above, but paginate like the product text
 					let roomList = "";
-					config.iem.channels.forEach((channel) => {
+					iem.channels.forEach((channel) => {
 						room = channel.jid.split("@")[0]
 						roomList += `\`${room}\`: ${getWFOByRoom(room).location || "Unknown"}\n`;
 					});
@@ -856,9 +857,9 @@ discord.on("interactionCreate", async (interaction) => {
 					// Create channels for all rooms
 					const chunks = [];
 					const chunkSize = 50;
-					const totalRooms = config.iem.channels.length;
+					const totalRooms = iem.channels.length;
 					for (let i = 0; i < totalRooms; i += chunkSize) {
-						chunks.push(config.iem.channels.slice(i, i + chunkSize));
+						chunks.push(iem.channels.slice(i, i + chunkSize));
 					}
 
 					chunks.forEach((chunk, index) => {
@@ -980,7 +981,7 @@ discord.on("interactionCreate", async (interaction) => {
 
 				case "usersubscribe":
 					room = getWFOroom(interaction.options.getString("room"));
-					if (!config.iem.channels.find((channel) => channel.jid.split("@")[0] === room)) {
+					if (!iem.channels.find((channel) => channel.jid.split("@")[0] === room)) {
 						interaction.reply({ content: "Invalid room", ephemeral: true });
 						return;
 					}
@@ -998,7 +999,7 @@ discord.on("interactionCreate", async (interaction) => {
 					break;
 				case "userunsubscribe":
 					room = getWFOroom(interaction.options.getString("room"));
-					if (!config.iem.channels.find((channel) => channel.jid.split("@")[0] === room)) {
+					if (!iem.channels.find((channel) => channel.jid.split("@")[0] === room)) {
 						interaction.reply({ content: "Invalid room", ephemeral: true });
 						return;
 					}

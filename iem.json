@@ -1,0 +1,884 @@
+{
+	"channels": [
+		{
+			"jid": "ilnchat@conference.weather.im",
+			"name": "ilnchat"
+		},
+		{
+			"jid": "zhuchat@conference.weather.im",
+			"name": "zhuchat"
+		},
+		{
+			"jid": "rerchat@conference.weather.im",
+			"name": "Record Event Reports (RER)"
+		},
+		{
+			"jid": "ncrfcchat@conference.weather.im",
+			"name": "ncrfcchat"
+		},
+		{
+			"jid": "zmechat@conference.weather.im",
+			"name": "zmechat"
+		},
+		{
+			"jid": "ggwchat@conference.weather.im",
+			"name": "ggwchat"
+		},
+		{
+			"jid": "sewchat@conference.weather.im",
+			"name": "sewchat"
+		},
+		{
+			"jid": "ohxchat@conference.weather.im",
+			"name": "ohxchat"
+		},
+		{
+			"jid": "megchat@conference.weather.im",
+			"name": "megchat"
+		},
+		{
+			"jid": "mobchat@conference.weather.im",
+			"name": "mobchat"
+		},
+		{
+			"jid": "brochat@conference.weather.im",
+			"name": "brochat"
+		},
+		{
+			"jid": "mkx_madison_spotters@conference.weather.im",
+			"name": "MKX madison storm spotters"
+		},
+		{
+			"jid": "ddcchat@conference.weather.im",
+			"name": "ddcchat"
+		},
+		{
+			"jid": "zanchat@conference.weather.im",
+			"name": "zanchat"
+		},
+		{
+			"jid": "mflchat@conference.weather.im",
+			"name": "mflchat"
+		},
+		{
+			"jid": "michiganwxalerts@conference.weather.im",
+			"name": "michiganwxalerts"
+		},
+		{
+			"jid": "dvnchat@conference.weather.im",
+			"name": "dvnchat"
+		},
+		{
+			"jid": "gjtchat@conference.weather.im",
+			"name": "gjtchat"
+		},
+		{
+			"jid": "ztlchat@conference.weather.im",
+			"name": "ztlchat"
+		},
+		{
+			"jid": "skywarnstatewidechase@conference.weather.im",
+			"name": "Skywarn Statewide Chase team"
+		},
+		{
+			"jid": "lmkchat@conference.weather.im",
+			"name": "lmkchat"
+		},
+		{
+			"jid": "wws44fl@conference.weather.im",
+			"name": "WWS Tampa Bay"
+		},
+		{
+			"jid": "hatchat@conference.weather.im",
+			"name": "hatchat"
+		},
+		{
+			"jid": "fwdchat@conference.weather.im",
+			"name": "fwdchat"
+		},
+		{
+			"jid": "boichat@conference.weather.im",
+			"name": "boichat"
+		},
+		{
+			"jid": "crisfield-chat@conference.weather.im",
+			"name": "crisfield-chat"
+		},
+		{
+			"jid": "slcchat@conference.weather.im",
+			"name": "slcchat"
+		},
+		{
+			"jid": "zobchat@conference.weather.im",
+			"name": "zobchat"
+		},
+		{
+			"jid": "amachat@conference.weather.im",
+			"name": "Amarillo, TX"
+		},
+		{
+			"jid": "pqrchat@conference.weather.im",
+			"name": "pqrchat"
+		},
+		{
+			"jid": "gstweather@conference.weather.im",
+			"name": "GST Weather"
+		},
+		{
+			"jid": "tws_chat@conference.weather.im",
+			"name": "tws_chat"
+		},
+		{
+			"jid": "franklin_chat@conference.weather.im",
+			"name": "Franklin VT Chatroom"
+		},
+		{
+			"jid": "zidchat@conference.weather.im",
+			"name": "zidchat"
+		},
+		{
+			"jid": "cnrfcchat@conference.weather.im",
+			"name": "cnrfcchat"
+		},
+		{
+			"jid": "nhcchat@conference.weather.im",
+			"name": "nhcchat"
+		},
+		{
+			"jid": "mke-skywarn@conference.weather.im",
+			"name": "MKE Skywarn"
+		},
+		{
+			"jid": "tnwxdiscuss@conference.weather.im",
+			"name": "TN Statewide Weather Discussion"
+		},
+		{
+			"jid": "stochat@conference.weather.im",
+			"name": "stochat"
+		},
+		{
+			"jid": "jklchat@conference.weather.im",
+			"name": "jklchat"
+		},
+		{
+			"jid": "grrchat@conference.weather.im",
+			"name": "grrchat"
+		},
+		{
+			"jid": "hnxchat@conference.weather.im",
+			"name": "hnxchat"
+		},
+		{
+			"jid": "spcchat@conference.weather.im",
+			"name": "Storm Prediction Center Chatroom"
+		},
+		{
+			"jid": "lchchat@conference.weather.im",
+			"name": "lchchat"
+		},
+		{
+			"jid": "khws@conference.weather.im",
+			"name": "Huffman Weather Service"
+		},
+		{
+			"jid": "kcichat@conference.weather.im",
+			"name": "kcichat"
+		},
+		{
+			"jid": "zbwchat@conference.weather.im",
+			"name": "zbwchat"
+		},
+		{
+			"jid": "otxchat@conference.weather.im",
+			"name": "otxchat"
+		},
+		{
+			"jid": "kodster@conference.weather.im",
+			"name": "kodster"
+		},
+		{
+			"jid": "vefchat@conference.weather.im",
+			"name": "vefchat"
+		},
+		{
+			"jid": "pubchat@conference.weather.im",
+			"name": "pubchat"
+		},
+		{
+			"jid": "wxst@conference.weather.im",
+			"name": "Nationwide Encoder Relay Program"
+		},
+		{
+			"jid": "psrchat@conference.weather.im",
+			"name": "psrchat"
+		},
+		{
+			"jid": "sgxchat@conference.weather.im",
+			"name": "sgxchat"
+		},
+		{
+			"jid": "pbzchat@conference.weather.im",
+			"name": "pbzchat"
+		},
+		{
+			"jid": "reddit_weatherlab@conference.weather.im",
+			"name": "reddit_weatherlab"
+		},
+		{
+			"jid": "nalsw@conference.weather.im",
+			"name": "nalsw"
+		},
+		{
+			"jid": "ekachat@conference.weather.im",
+			"name": "ekachat"
+		},
+		{
+			"jid": "ilxchat@conference.weather.im",
+			"name": "ilxchat"
+		},
+		{
+			"jid": "jsjchat@conference.weather.im",
+			"name": "jsjchat"
+		},
+		{
+			"jid": "barnburnerwi@conference.weather.im",
+			"name": "Barn Burner WI"
+		},
+		{
+			"jid": "ohiostormspottersteamoss@conference.weather.im",
+			"name": "Ohio storm Spotters Team oss"
+		},
+		{
+			"jid": "mlbchat@conference.weather.im",
+			"name": "mlbchat"
+		},
+		{
+			"jid": "arxchat@conference.weather.im",
+			"name": "arxchat"
+		},
+		{
+			"jid": "ilmchat@conference.weather.im",
+			"name": "ilmchat"
+		},
+		{
+			"jid": "okxchat@conference.weather.im",
+			"name": "okxchat"
+		},
+		{
+			"jid": "botstalk@conference.weather.im",
+			"name": "botstalk"
+		},
+		{
+			"jid": "lknchat@conference.weather.im",
+			"name": "lknchat"
+		},
+		{
+			"jid": "siawx_chat@conference.weather.im",
+			"name": "siawx_chat"
+		},
+		{
+			"jid": "rahchat@conference.weather.im",
+			"name": "rahchat"
+		},
+		{
+			"jid": "afcchat@conference.weather.im",
+			"name": "afcchat"
+		},
+		{
+			"jid": "lotchat@conference.weather.im",
+			"name": "lotchat"
+		},
+		{
+			"jid": "n90@conference.weather.im",
+			"name": "n90"
+		},
+		{
+			"jid": "boxchat@conference.weather.im",
+			"name": "boxchat"
+		},
+		{
+			"jid": "znychat@conference.weather.im",
+			"name": "znychat"
+		},
+		{
+			"jid": "akqchat@conference.weather.im",
+			"name": "akqchat"
+		},
+		{
+			"jid": "nerfcchat@conference.weather.im",
+			"name": "nerfcchat"
+		},
+		{
+			"jid": "zkcchat@conference.weather.im",
+			"name": "zkcchat"
+		},
+		{
+			"jid": "bischat@conference.weather.im",
+			"name": "bischat"
+		},
+		{
+			"jid": "twcchat@conference.weather.im",
+			"name": "twcchat"
+		},
+		{
+			"jid": "lmrfcchat@conference.weather.im",
+			"name": "lmrfcchat"
+		},
+		{
+			"jid": "abrchat@conference.weather.im",
+			"name": "abrchat"
+		},
+		{
+			"jid": "mbrfcchat@conference.weather.im",
+			"name": "mbrfcchat"
+		},
+		{
+			"jid": "pihchat@conference.weather.im",
+			"name": "pihchat"
+		},
+		{
+			"jid": "zoachat@conference.weather.im",
+			"name": "zoachat"
+		},
+		{
+			"jid": "mtrchat@conference.weather.im",
+			"name": "mtrchat"
+		},
+		{
+			"jid": "sjuchat@conference.weather.im",
+			"name": "sjuchat"
+		},
+		{
+			"jid": "gidchat@conference.weather.im",
+			"name": "gidchat"
+		},
+		{
+			"jid": "zmpchat@conference.weather.im",
+			"name": "zmpchat"
+		},
+		{
+			"jid": "phichat@conference.weather.im",
+			"name": "phichat"
+		},
+		{
+			"jid": "pitchat@conference.weather.im",
+			"name": "WWS Pittsburgh"
+		},
+		{
+			"jid": "chschat@conference.weather.im",
+			"name": "chschat"
+		},
+		{
+			"jid": "ajkchat@conference.weather.im",
+			"name": "ajkchat"
+		},
+		{
+			"jid": "chachat@conference.weather.im",
+			"name": "WWS Charlotte"
+		},
+		{
+			"jid": "bmxchat@conference.weather.im",
+			"name": "bmxchat"
+		},
+		{
+			"jid": "lixchat@conference.weather.im",
+			"name": "lixchat"
+		},
+		{
+			"jid": "apxchat@conference.weather.im",
+			"name": "apxchat"
+		},
+		{
+			"jid": "hunchat@conference.weather.im",
+			"name": "hunchat"
+		},
+		{
+			"jid": "spcmobile2006@conference.weather.im",
+			"name": "spcmobile2006"
+		},
+		{
+			"jid": "zmachat@conference.weather.im",
+			"name": "zmachat"
+		},
+		{
+			"jid": "phl@conference.weather.im",
+			"name": "PHL TRACON"
+		},
+		{
+			"jid": "dtxchat@conference.weather.im",
+			"name": "dtxchat"
+		},
+		{
+			"jid": "wbkoweatherwatchers@conference.weather.im",
+			"name": "wbkoweatherwatchers"
+		},
+		{
+			"jid": "gumchat@conference.weather.im",
+			"name": "gumchat"
+		},
+		{
+			"jid": "gcwxchat@conference.weather.im",
+			"name": "gcwxchat"
+		},
+		{
+			"jid": "zzmkxchat@conference.weather.im",
+			"name": "zzmkxchat"
+		},
+		{
+			"jid": "dentcoeas@conference.weather.im",
+			"name": "dentcoeas"
+		},
+		{
+			"jid": "marfcchat@conference.weather.im",
+			"name": "marfcchat"
+		},
+		{
+			"jid": "easwtalk@conference.weather.im",
+			"name": "easwtalk"
+		},
+		{
+			"jid": "crpchat@conference.weather.im",
+			"name": "crpchat"
+		},
+		{
+			"jid": "gccc-nc-skywarn@conference.weather.im",
+			"name": "GCCC NC Skywarn"
+		},
+		{
+			"jid": "zjxchat@conference.weather.im",
+			"name": "zjxchat"
+		},
+		{
+			"jid": "shvchat@conference.weather.im",
+			"name": "shvchat"
+		},
+		{
+			"jid": "tbwchat@conference.weather.im",
+			"name": "tbwchat"
+		},
+		{
+			"jid": "cyschat@conference.weather.im",
+			"name": "cyschat"
+		},
+		{
+			"jid": "hfochat@conference.weather.im",
+			"name": "hfochat"
+		},
+		{
+			"jid": "dmxchat@conference.weather.im",
+			"name": "Des Moines, IA"
+		},
+		{
+			"jid": "mseas-weather-discussion@conference.weather.im",
+			"name": "MSEAS-Weather-Discussion"
+		},
+		{
+			"jid": "zsechat@conference.weather.im",
+			"name": "zsechat"
+		},
+		{
+			"jid": "revchat@conference.weather.im",
+			"name": "revchat"
+		},
+		{
+			"jid": "carchat@conference.weather.im",
+			"name": "carchat"
+		},
+		{
+			"jid": "msochat@conference.weather.im",
+			"name": "msochat"
+		},
+		{
+			"jid": "abc3340@conference.weather.im",
+			"name": "abc3340"
+		},
+		{
+			"jid": "keychat@conference.weather.im",
+			"name": "keychat"
+		},
+		{
+			"jid": "riwchat@conference.weather.im",
+			"name": "riwchat"
+		},
+		{
+			"jid": "awpwxchat@conference.weather.im",
+			"name": "awpwxchat"
+		},
+		{
+			"jid": "mhxchat@conference.weather.im",
+			"name": "mhxchat"
+		},
+		{
+			"jid": "caechat@conference.weather.im",
+			"name": "caechat"
+		},
+		{
+			"jid": "indchat@conference.weather.im",
+			"name": "indchat"
+		},
+		{
+			"jid": "dlhchat@conference.weather.im",
+			"name": "dlhchat"
+		},
+		{
+			"jid": "unrchat@conference.weather.im",
+			"name": "unrchat"
+		},
+		{
+			"jid": "wilchat@conference.weather.im",
+			"name": "WWS Columbus/Wilmington"
+		},
+		{
+			"jid": "okc_chatrooms@conference.weather.im",
+			"name": "okc_chatrooms"
+		},
+		{
+			"jid": "kdtxchat@conference.weather.im",
+			"name": "kdtxchat"
+		},
+		{
+			"jid": "zabchat@conference.weather.im",
+			"name": "zabchat"
+		},
+		{
+			"jid": "wnpchat@conference.weather.im",
+			"name": "wnpchat"
+		},
+		{
+			"jid": "zlcchat@conference.weather.im",
+			"name": "zlcchat"
+		},
+		{
+			"jid": "ffcchat@conference.weather.im",
+			"name": "ffcchat"
+		},
+		{
+			"jid": "epzchat@conference.weather.im",
+			"name": "epzchat"
+		},
+		{
+			"jid": "taechat@conference.weather.im",
+			"name": "taechat"
+		},
+		{
+			"jid": "fox6chat@conference.weather.im",
+			"name": "fox6chat"
+		},
+		{
+			"jid": "cbrfcchat@conference.weather.im",
+			"name": "cbrfcchat"
+		},
+		{
+			"jid": "wisconsin_storm_spotters@conference.weather.im",
+			"name": "Wisconsin Storm Spotters"
+		},
+		{
+			"jid": "tfxchat@conference.weather.im",
+			"name": "tfxchat"
+		},
+		{
+			"jid": "abqchat@conference.weather.im",
+			"name": "abqchat"
+		},
+		{
+			"jid": "nwrfcchat@conference.weather.im",
+			"name": "nwrfcchat"
+		},
+		{
+			"jid": "rlxchat@conference.weather.im",
+			"name": "rlxchat"
+		},
+		{
+			"jid": "ounchat@conference.weather.im",
+			"name": "ounchat"
+		},
+		{
+			"jid": "clechat@conference.weather.im",
+			"name": "clechat"
+		},
+		{
+			"jid": "loxchat@conference.weather.im",
+			"name": "loxchat"
+		},
+		{
+			"jid": "fsdchat@conference.weather.im",
+			"name": "fsdchat"
+		},
+		{
+			"jid": "bgmchat@conference.weather.im",
+			"name": "bgmchat"
+		},
+		{
+			"jid": "wgrfcchat@conference.weather.im",
+			"name": "wgrfcchat"
+		},
+		{
+			"jid": "ewxchat@conference.weather.im",
+			"name": "ewxchat"
+		},
+		{
+			"jid": "uswat@conference.weather.im",
+			"name": "Uswat United States weather team"
+		},
+		{
+			"jid": "iowawx@conference.weather.im",
+			"name": "iowawx"
+		},
+		{
+			"jid": "ohrfcchat@conference.weather.im",
+			"name": "ohrfcchat"
+		},
+		{
+			"jid": "serfcchat@conference.weather.im",
+			"name": "serfcchat"
+		},
+		{
+			"jid": "stichat@conference.weather.im",
+			"name": "stichat"
+		},
+		{
+			"jid": "zdvchat@conference.weather.im",
+			"name": "zdvchat"
+		},
+		{
+			"jid": "eaxchat@conference.weather.im",
+			"name": "eaxchat"
+		},
+		{
+			"jid": "iwxchat@conference.weather.im",
+			"name": "iwxchat"
+		},
+		{
+			"jid": "lubchat@conference.weather.im",
+			"name": "lubchat"
+		},
+		{
+			"jid": "whntweather@conference.weather.im",
+			"name": "whntweather"
+		},
+		{
+			"jid": "bufchat@conference.weather.im",
+			"name": "bufchat"
+		},
+		{
+			"jid": "pdtchat@conference.weather.im",
+			"name": "pdtchat"
+		},
+		{
+			"jid": "knsw@conference.weather.im",
+			"name": "knsw"
+		},
+		{
+			"jid": "mkxchat@conference.weather.im",
+			"name": "mkxchat"
+		},
+		{
+			"jid": "test@conference.weather.im",
+			"name": "test"
+		},
+		{
+			"jid": "abc3340skywatcher@conference.weather.im",
+			"name": "abc3340skywatcher"
+		},
+		{
+			"jid": "grbchat@conference.weather.im",
+			"name": "grbchat"
+		},
+		{
+			"jid": "topchat@conference.weather.im",
+			"name": "topchat"
+		},
+		{
+			"jid": "rnkchat@conference.weather.im",
+			"name": "rnkchat"
+		},
+		{
+			"jid": "lzkchat@conference.weather.im",
+			"name": "lzkchat"
+		},
+		{
+			"jid": "ctpchat@conference.weather.im",
+			"name": "ctpchat"
+		},
+		{
+			"jid": "gldchat@conference.weather.im",
+			"name": "gldchat"
+		},
+		{
+			"jid": "abrfcchat@conference.weather.im",
+			"name": "abrfcchat"
+		},
+		{
+			"jid": "byzchat@conference.weather.im",
+			"name": "byzchat"
+		},
+		{
+			"jid": "mpxchat@conference.weather.im",
+			"name": "mpxchat"
+		},
+		{
+			"jid": "zdcchat@conference.weather.im",
+			"name": "zdcchat"
+		},
+		{
+			"jid": "lsxchat@conference.weather.im",
+			"name": "lsxchat"
+		},
+		{
+			"jid": "pahchat@conference.weather.im",
+			"name": "pahchat"
+		},
+		{
+			"jid": "bouchat@conference.weather.im",
+			"name": "Boulder, CO"
+		},
+		{
+			"jid": "tsachat@conference.weather.im",
+			"name": "tsachat"
+		},
+		{
+			"jid": "bmxspotterchat@conference.weather.im",
+			"name": "bmxspotterchat"
+		},
+		{
+			"jid": "zfwchat@conference.weather.im",
+			"name": "zfwchat"
+		},
+		{
+			"jid": "zauchat@conference.weather.im",
+			"name": "zauchat"
+		},
+		{
+			"jid": "aprfcchat@conference.weather.im",
+			"name": "aprfcchat"
+		},
+		{
+			"jid": "wwsreport@conference.weather.im",
+			"name": "WWS Report"
+		},
+		{
+			"jid": "bmxalertchat@conference.weather.im",
+			"name": "bmxalertchat"
+		},
+		{
+			"jid": "mqtchat@conference.weather.im",
+			"name": "mqtchat"
+		},
+		{
+			"jid": "mafchat@conference.weather.im",
+			"name": "mafchat"
+		},
+		{
+			"jid": "mrxchat@conference.weather.im",
+			"name": "mrxchat"
+		},
+		{
+			"jid": "fgzchat@conference.weather.im",
+			"name": "fgzchat"
+		},
+		{
+			"jid": "twitter@conference.weather.im",
+			"name": "twitter"
+		},
+		{
+			"jid": "oaxchat@conference.weather.im",
+			"name": "oaxchat"
+		},
+		{
+			"jid": "btvchat@conference.weather.im",
+			"name": "btvchat"
+		},
+		{
+			"jid": "potomac_tracon@conference.weather.im",
+			"name": "Potomac TRACON"
+		},
+		{
+			"jid": "ictchat@conference.weather.im",
+			"name": "ictchat"
+		},
+		{
+			"jid": "mfrchat@conference.weather.im",
+			"name": "mfrchat"
+		},
+		{
+			"jid": "detroiteaschat@conference.weather.im",
+			"name": "detroiteaschat"
+		},
+		{
+			"jid": "hgxchat@conference.weather.im",
+			"name": "hgxchat"
+		},
+		{
+			"jid": "afgchat@conference.weather.im",
+			"name": "afgchat"
+		},
+		{
+			"jid": "sgfchat@conference.weather.im",
+			"name": "sgfchat"
+		},
+		{
+			"jid": "hawaii@conference.weather.im",
+			"name": "Hawaii Weather"
+		},
+		{
+			"jid": "cwest@conference.weather.im",
+			"name": "CWEST"
+		},
+		{
+			"jid": "zlachat@conference.weather.im",
+			"name": "zlachat"
+		},
+		{
+			"jid": "alychat@conference.weather.im",
+			"name": "alychat"
+		},
+		{
+			"jid": "sjtchat@conference.weather.im",
+			"name": "sjtchat"
+		},
+		{
+			"jid": "janchat@conference.weather.im",
+			"name": "janchat"
+		},
+		{
+			"jid": "gspchat@conference.weather.im",
+			"name": "gspchat"
+		},
+		{
+			"jid": "lwxchat@conference.weather.im",
+			"name": "lwxchat"
+		},
+		{
+			"jid": "gyxchat@conference.weather.im",
+			"name": "gyxchat"
+		},
+		{
+			"jid": "wpcchat@conference.weather.im",
+			"name": "WPC Chatroom"
+		},
+		{
+			"jid": "sweaseops1@conference.weather.im",
+			"name": "sweaseops1"
+		},
+		{
+			"jid": "scwx@conference.weather.im",
+			"name": "South Carolina Weather"
+		},
+		{
+			"jid": "lbfchat@conference.weather.im",
+			"name": "lbfchat"
+		},
+		{
+			"jid": "jaxchat@conference.weather.im",
+			"name": "jaxchat"
+		},
+		{
+			"jid": "nwsc@conference.weather.im",
+			"name": "Nate's Weather Safety Center"
+		},
+		{
+			"jid": "fgfchat@conference.weather.im",
+			"name": "fgfchat"
+		}
+	]
+}
