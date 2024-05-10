@@ -14,7 +14,8 @@ const sqlite3 = require("sqlite3").verbose();
 const discord = new Discord.Client({
 	intents: [
 		"Guilds",
-		"GuildVoiceStates"
+		"GuildVoiceStates",
+		"GuildMembers"
 	]
 });
 const {
