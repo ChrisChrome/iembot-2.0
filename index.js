@@ -14,8 +14,7 @@ const sqlite3 = require("sqlite3").verbose();
 const discord = new Discord.Client({
 	intents: [
 		"Guilds",
-		"GuildVoiceStates",
-		"GuildMembers"
+		"GuildVoiceStates"
 	]
 });
 const {
@@ -452,6 +451,15 @@ xmpp.on("online", async (address) => {
 		console.log(`${colors.cyan("[INFO]")} Startup complete, listening for messages...`);
 	}, 1000)
 });
+
+xmpp.on("close", () => {
+	console.log(`${colors.yellow("[WARN]")} XMPP connection closed, trying to reconnect...`);
+	setTimeout(() => {
+		xmpp.stop().then(() => {
+			start();
+		});
+	}, 5000);
+})
 
 const start = () => {
 	xmpp.start().catch((err) => {
