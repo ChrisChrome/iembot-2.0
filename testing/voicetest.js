@@ -2,7 +2,7 @@ const Discord = require('discord.js');
 const { Client, Intents } = require('discord.js');
 const client = new Client({ intents: ["GuildVoiceStates", "Guilds"] });
 
-const config =  require('./config.json');
+const config =  require('../config.json');
 
 const dVC = require('@discordjs/voice');
 const { join } = require('path');

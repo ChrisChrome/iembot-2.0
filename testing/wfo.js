@@ -3,7 +3,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const wfos = require('./wfos.json');
+const wfos = require('../wfos.json');
 
 // wfos is an object of objects
 
