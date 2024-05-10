@@ -473,6 +473,12 @@ const start = () => {
 
 discord.on('ready', async () => {
 	console.log(`${colors.cyan("[INFO]")} Logged in as ${discord.user.tag}`);
+
+	// Get all guilds, and log them
+	discord.guilds.cache.forEach((guild) => {
+		console.log(`${colors.cyan("[INFO]")} In guild: ${guild.name} (${guild.id})`);
+	});
+
 	// Do slash command stuff
 	const commands = [
 		{
