@@ -45,10 +45,6 @@
 			"name": "brochat"
 		},
 		{
-			"jid": "mkx_madison_spotters@conference.weather.im",
-			"name": "MKX madison storm spotters"
-		},
-		{
 			"jid": "ddcchat@conference.weather.im",
 			"name": "ddcchat"
 		},
@@ -59,10 +55,6 @@
 		{
 			"jid": "mflchat@conference.weather.im",
 			"name": "mflchat"
-		},
-		{
-			"jid": "michiganwxalerts@conference.weather.im",
-			"name": "michiganwxalerts"
 		},
 		{
 			"jid": "dvnchat@conference.weather.im",
@@ -77,16 +69,8 @@
 			"name": "ztlchat"
 		},
 		{
-			"jid": "skywarnstatewidechase@conference.weather.im",
-			"name": "Skywarn Statewide Chase team"
-		},
-		{
 			"jid": "lmkchat@conference.weather.im",
 			"name": "lmkchat"
-		},
-		{
-			"jid": "wws44fl@conference.weather.im",
-			"name": "WWS Tampa Bay"
 		},
 		{
 			"jid": "hatchat@conference.weather.im",
@@ -101,10 +85,6 @@
 			"name": "boichat"
 		},
 		{
-			"jid": "crisfield-chat@conference.weather.im",
-			"name": "crisfield-chat"
-		},
-		{
 			"jid": "slcchat@conference.weather.im",
 			"name": "slcchat"
 		},
@@ -114,23 +94,15 @@
 		},
 		{
 			"jid": "amachat@conference.weather.im",
-			"name": "Amarillo, TX"
+			"name": "amachat"
 		},
 		{
 			"jid": "pqrchat@conference.weather.im",
 			"name": "pqrchat"
 		},
 		{
-			"jid": "gstweather@conference.weather.im",
-			"name": "GST Weather"
-		},
-		{
 			"jid": "tws_chat@conference.weather.im",
 			"name": "tws_chat"
-		},
-		{
-			"jid": "franklin_chat@conference.weather.im",
-			"name": "Franklin VT Chatroom"
 		},
 		{
 			"jid": "zidchat@conference.weather.im",
@@ -143,14 +115,6 @@
 		{
 			"jid": "nhcchat@conference.weather.im",
 			"name": "nhcchat"
-		},
-		{
-			"jid": "mke-skywarn@conference.weather.im",
-			"name": "MKE Skywarn"
-		},
-		{
-			"jid": "tnwxdiscuss@conference.weather.im",
-			"name": "TN Statewide Weather Discussion"
 		},
 		{
 			"jid": "stochat@conference.weather.im",
@@ -177,10 +141,6 @@
 			"name": "lchchat"
 		},
 		{
-			"jid": "khws@conference.weather.im",
-			"name": "Huffman Weather Service"
-		},
-		{
 			"jid": "kcichat@conference.weather.im",
 			"name": "kcichat"
 		},
@@ -193,20 +153,12 @@
 			"name": "otxchat"
 		},
 		{
-			"jid": "kodster@conference.weather.im",
-			"name": "kodster"
-		},
-		{
 			"jid": "vefchat@conference.weather.im",
 			"name": "vefchat"
 		},
 		{
 			"jid": "pubchat@conference.weather.im",
 			"name": "pubchat"
-		},
-		{
-			"jid": "wxst@conference.weather.im",
-			"name": "Nationwide Encoder Relay Program"
 		},
 		{
 			"jid": "psrchat@conference.weather.im",
@@ -221,14 +173,6 @@
 			"name": "pbzchat"
 		},
 		{
-			"jid": "reddit_weatherlab@conference.weather.im",
-			"name": "reddit_weatherlab"
-		},
-		{
-			"jid": "nalsw@conference.weather.im",
-			"name": "nalsw"
-		},
-		{
 			"jid": "ekachat@conference.weather.im",
 			"name": "ekachat"
 		},
@@ -239,14 +183,6 @@
 		{
 			"jid": "jsjchat@conference.weather.im",
 			"name": "jsjchat"
-		},
-		{
-			"jid": "barnburnerwi@conference.weather.im",
-			"name": "Barn Burner WI"
-		},
-		{
-			"jid": "ohiostormspottersteamoss@conference.weather.im",
-			"name": "Ohio storm Spotters Team oss"
 		},
 		{
 			"jid": "mlbchat@conference.weather.im",
