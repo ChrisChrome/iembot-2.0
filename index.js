@@ -1068,19 +1068,16 @@ discord.on("interactionCreate", async (interaction) => {
 
 });
 
-discord.on("guildMemberAdd", (member) => {
-	console.log("test")
-	// If it wasnt the bot, ignore
-	if (member.user.id !== discord.user.id) return;
+discord.on("guildCreate", (guild) => {
 	// Get the main guild
-	const guild = discord.guilds.cache.get(config.discord.mainGuild);
+	const myGuild = discord.guilds.cache.get(config.discord.mainGuild);
 	// Get the log channel
-	const channel = guild.channels.cache.get(config.discord.logChannel);
+	const channel = myGuild.channels.cache.get(config.discord.logChannel);
 	// Send a message to the log channel
 	channel.send({
 		embeds: [
 			{
-				description: `I joined \`${member.guild.name}\``,
+				description: `I joined \`${guild.name}\``,
 				color: 0x00ff00
 			}
 		]
@@ -1088,18 +1085,16 @@ discord.on("guildMemberAdd", (member) => {
 
 })
 
-discord.on("guildMemberRemove", (member) => {
-	// If it wasnt the bot, ignore
-	if (member.user.id !== discord.user.id) return;
+discord.on("guildDelete", (guild) => {
 	// Get the main guild
-	const guild = discord.guilds.cache.get(config.discord.mainGuild);
+	const myGuild = discord.guilds.cache.get(config.discord.mainGuild);
 	// Get the log channel
-	const channel = guild.channels.cache.get(config.discord.logChannel);
+	const channel = myGuild.channels.cache.get(config.discord.logChannel);
 	// Send a message to the log channel
 	channel.send({
 		embeds: [
 			{
-				description: `I left \`${member.guild.name}\``,
+				description: `I left \`${guild.name}\``,
 				color: 0xff0000
 			}
 		]
