@@ -15,7 +15,8 @@ const discord = new Discord.Client({
 	intents: [
 		"Guilds",
 		"GuildVoiceStates"
-	]
+	],
+	shardCount: "auto" // The lazy way out
 });
 const {
 	REST,
