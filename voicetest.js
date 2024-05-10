@@ -10,6 +10,9 @@ const { join } = require('path');
 // get user input for url and channel
 console.log(process.argv)
 
+channelIN = process.argv[2];
+urlIN = process.argv[3];
+
 client.once('ready', () => {
     console.log("ready");
     JoinChannel(client.channels.cache.get(channelIN), urlIN);  
@@ -54,6 +57,7 @@ function JoinChannel(channel, track, volume) {
     player.on('idle', () => {
         connection.destroy();
     })
+	console.log(player.state.resource.volume.volume)
 }
 
 function LeaveVoiceChannel(channel) {

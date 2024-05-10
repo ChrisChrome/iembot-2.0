@@ -119,82 +119,84 @@ function getWFOByRoom(room) {
 
 // Voice funcs
 function JoinChannel(channel, track, volume, message) {
-	return new Promise((resolve, reject) => {
-		connection = dVC.joinVoiceChannel({
-			channelId: channel.id,
-			guildId: channel.guild.id,
-			adapterCreator: channel.guild.voiceAdapterCreator,
-			selfDeaf: true
-		});
-
-
-		resource = dVC.createAudioResource(track, { inlineVolume: true, silencePaddingFrames: 5 });
-		player = dVC.createAudioPlayer();
-		connection.player = player; // So we can access it later to pause/play/stop etc
-		resource.volume.setVolume(2);
-		connection.subscribe(player)
-		player.play(resource);
-		connection.on(dVC.VoiceConnectionStatus.Ready, () => { player.play(resource); })
-		connection.on(dVC.VoiceConnectionStatus.Disconnected, async (oldState, newState) => {
-			try {
-				await Promise.race([
-					dVC.entersState(connection, VoiceConnectionStatus.Signalling, 5_000),
-					dVC.entersState(connection, VoiceConnectionStatus.Connecting, 5_000),
-				]);
-			} catch (error) {
-				resolve(false);
-				connection.destroy();
-			}
-		});
-		player.on('error', error => {
-			console.error(`Error: ${error.message} with resource ${error.resource.metadata.title}`);
-			message.channel.send(`Error while streaming. Stopping for now.`);
-			player.stop();
-		});
-		player.on(dVC.AudioPlayerStatus.Playing, () => {
-			resolve({ status: true, message: "Playing" })
-			message.channel.send(`Playing stream in <#${channel.id}>`);
-			connection.paused = false;
-		});
-		player.on('idle', () => {
-			resolve({ status: true, message: "Idle" })
-			message.channel.send(`Stream idle.`);
-		})
+	connection = dVC.joinVoiceChannel({
+		channelId: channel.id,
+		guildId: channel.guild.id,
+		adapterCreator: channel.guild.voiceAdapterCreator,
+		selfDeaf: true
 	});
+
+
+	resource = dVC.createAudioResource(track, { inlineVolume: true, silencePaddingFrames: 5 });
+	player = dVC.createAudioPlayer();
+	connection.player = player; // So we can access it later to pause/play/stop etc
+	resource.volume.setVolume(2);
+	connection.subscribe(player)
+	player.play(resource);
+	connection.on(dVC.VoiceConnectionStatus.Ready, () => { player.play(resource); })
+	connection.on(dVC.VoiceConnectionStatus.Disconnected, async (oldState, newState) => {
+		try {
+			await Promise.race([
+				dVC.entersState(connection, VoiceConnectionStatus.Signalling, 5_000),
+				dVC.entersState(connection, VoiceConnectionStatus.Connecting, 5_000),
+			]);
+		} catch (error) {
+			message.channel.send(`Failed to reconnect to the voice channel. Stopping for now.`);
+			connection.destroy();
+			return false;
+		}
+	});
+	player.on('error', error => {
+		console.error(`Error: ${error.message} with resource ${error.resource.metadata.title}`);
+		message.channel.send(`Error while streaming. Stopping for now.`);
+		player.stop();
+	});
+	player.on(dVC.AudioPlayerStatus.Playing, () => {
+		message.channel.send(`Playing stream in <#${channel.id}>`);
+		connection.paused = false;
+	});
+	player.on('idle', () => {
+		message.channel.send(`Stream idle.`);
+	})
+	return true;
 }
 
 function LeaveVoiceChannel(channel) {
-	return new Promise((resolve, reject) => {
-		// Get resource, player, etc, and destroy them
-		const connection = dVC.getVoiceConnection(channel.guild.id);
-		if (connection) {
-			connection.destroy();
-			return resolve(true);
-		}
-		return resolve(false);
-	});
+	// Get resource, player, etc, and destroy them
+	const connection = dVC.getVoiceConnection(channel.guild.id);
+	if (connection) {
+		connection.destroy();
+		return true
+	}
+	return false
 }
 
 function toggleVoicePause(channel) {
-	return new Promise((resolve, reject) => {
-		const connection = dVC.getVoiceConnection(channel.guild.id);
-		if (connection) {
-			if (connection.paused) {
-				connection.player.unpause();
-				connection.paused = false;
-				resolve(true);
-			}
-			else {
-				connection.player.pause();
-				connection.paused = true;
-				resolve(true);
-			}
+	const connection = dVC.getVoiceConnection(channel.guild.id);
+	if (connection) {
+		if (connection.paused) {
+			connection.player.unpause();
+			connection.paused = false;
+			return true;
 		}
 		else {
-			resolve(false);
+			connection.player.pause();
+			connection.paused = true;
+			return true
 		}
-	});
+	}
+	else {
+		return false;
+	}
 };
+
+function setVolume(channel, volume) {
+	const connection = dVC.getVoiceConnection(channel.guild.id);
+	if (connection) {
+		connection.player.state.resource.volume.setVolume(volume);
+		return true;
+	}
+}
 
 // func to Generate random string, ({upper, lower, number, special}, length)
 
@@ -664,6 +666,18 @@ discord.on('ready', async () => {
 				"name": "pause",
 				"description": "Pause/Unpause the current stream",
 				"type": 1
+			},
+			{
+				"name": "volume",
+				"description": "Set the volume of the current stream",
+				"options": [
+					{
+						"name": "volume",
+						"description": "The volume to set",
+						"type": 4,
+						"required": true
+					}
+				]
 			}
 		)
 	}
@@ -902,13 +916,12 @@ discord.on("interactionCreate", async (interaction) => {
 					channel = interaction.member.voice.channel;
 					if (!channel) return interaction.reply({ content: "You need to be in a voice channel", ephemeral: true });
 					// Join the channel and play the stream
-					JoinChannel(channel, url, 2, interaction).then((res) => {
-						if (res.status) {
-							interaction.reply({ content: res.message, ephemeral: true });
+					res = JoinChannel(channel, url, .1, interaction)
+						if (res) {
+							interaction.reply({ content: "Playing Stream", ephemeral: true });
 						} else {
-							interaction.reply({ content: `Failed to play stream: ${res.message}`, ephemeral: true });
+							interaction.reply({ content: `Failed to play stream`, ephemeral: true });
 						}
-					});
 					break;
 
 				case "play": // Play generic stream
@@ -920,37 +933,48 @@ discord.on("interactionCreate", async (interaction) => {
 					channel = interaction.member.voice.channel;
 					if (!channel) return interaction.reply({ content: "You need to be in a voice channel", ephemeral: true });
 					// Join the channel and play the stream
-					JoinChannel(channel, url, 2, interaction).then((res) => {
-						if (res.status) {
-							interaction.reply({ content: res.message, ephemeral: true });
-						} else {
-							interaction.reply({ content: `Failed to play stream: ${res.message}`, ephemeral: true });
-						}
-					});
+					st = JoinChannel(channel, url, .1, interaction)
+					if (st) {
+						interaction.reply({ content: "Joined, trying to start playing.", ephemeral: true });
+					} else {
+						interaction.reply({ content: `Failed to play stream`, ephemeral: true });
+					}
 					break;
 
 				case "leave": // Leave broadcastify stream
 					if (!config.broadcastify.enabled) return interaction.reply({ content: "Broadcastify is not enabled", ephemeral: true });
 					channel = interaction.member.voice.channel;
 					if (!channel) return interaction.reply({ content: "You need to be in a voice channel", ephemeral: true });
-					LeaveVoiceChannel(channel).then((res) => {
-						if (res) {
-							interaction.reply({ content: "Left voice channel", ephemeral: true });
-						} else {
-							interaction.reply({ content: "Failed to leave voice channel (Was i ever in one?)", ephemeral: true });
-						}
-					});
+					res = LeaveVoiceChannel(channel)
+					if (res) {
+						interaction.reply({ content: "Left voice channel", ephemeral: true });
+					} else {
+						interaction.reply({ content: "Failed to leave voice channel (Was i ever in one?)", ephemeral: true });
+					}
+
 					break;
 				case "pause": // Pause/unpause stream
 					channel = interaction.member.voice.channel;
 					if (!channel) return interaction.reply({ content: "You need to be in a voice channel", ephemeral: true });
-					toggleVoicePause(channel).then((res) => {
-						if (res) {
-							interaction.reply({ content: "Toggled pause", ephemeral: true });
-						} else {
-							interaction.reply({ content: "Failed to toggle pause", ephemeral: true });
-						}
-					});
+					res = toggleVoicePause(channel)
+					if (res) {
+						interaction.reply({ content: "Toggled pause", ephemeral: true });
+					} else {
+						interaction.reply({ content: "Failed to toggle pause", ephemeral: true });
+					}
+					break;
+				case "volume": // Set volume
+					channel = interaction.member.voice.channel;
+					if (!channel) return interaction.reply({ content: "You need to be in a voice channel", ephemeral: true });
+					volume = interaction.options.getInteger("volume")/100;
+					// Make sure volume isnt negative
+					if (volume < 0) volume = 0;
+					res = setVolume(channel, volume)
+					if (res) {
+						interaction.reply({ content: `Set volume to ${volume*100}%` });
+					} else {
+						interaction.reply({ content: "Failed to set volume", ephemeral: true });
+					}
 					break;
 
 				case "usersubscribe":
