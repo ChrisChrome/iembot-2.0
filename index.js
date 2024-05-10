@@ -130,7 +130,7 @@ function JoinChannel(channel, track, volume, message) {
 	resource = dVC.createAudioResource(track, { inlineVolume: true, silencePaddingFrames: 5 });
 	player = dVC.createAudioPlayer();
 	connection.player = player; // So we can access it later to pause/play/stop etc
-	resource.volume.setVolume(2);
+	resource.volume.setVolume(volume);
 	connection.subscribe(player)
 	player.play(resource);
 	connection.on(dVC.VoiceConnectionStatus.Ready, () => { player.play(resource); })
