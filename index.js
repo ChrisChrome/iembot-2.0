@@ -1153,10 +1153,14 @@ discord.on("guildDelete", (guild) => {
 	})
 })
 
-process.on("unhandledRejection", (error) => {
-	console.log(`${colors.red("[ERROR]")} Unhandled Rejection: ${error.stack}`);
+process.on("unhandledRejection", (error, promise) => {
+	console.log(`${colors.red("[ERROR]")} Unhandled Rejection @ ${promise}: ${error}`);
+	// create errors folder if it doesnt exist
+	if (!fs.existsSync("./error")) {
+		fs.mkdirSync("./error");
+	}
 	// write ./error/rejection_timestamp.txt
-	fs.writeFileSync(`./error/rejection_${Date.now()}.txt`, error.stack);
+	fs.writeFileSync(`./error/rejection_${Date.now()}.txt`, `ERROR:\n${error}\n\nPROMISE:\n${promise}`);
 	process.exit(1);
 	if (false) {
 		fetch(config.ntfy.server, {
@@ -1177,6 +1181,7 @@ process.on("unhandledRejection", (error) => {
 });
 
 process.on("uncaughtException", (error) => {
+	
 	console.log(`${colors.red("[ERROR]")} Uncaught Exception: ${error.message}\n${error.stack}`);
 	// write ./error/exception_timestamp.txt
 	fs.writeFileSync(`./error/exception_${Date.now()}.txt`, error.stack);
