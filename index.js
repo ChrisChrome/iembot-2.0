@@ -254,6 +254,17 @@ xmpp.on("offline", () => {
 
 
 xmpp.on("stanza", (stanza) => {
+	// If room list, console.log
+	if (stanza.is("iq") && stanza.attrs.type === "result" && stanza.getChild("query")) {
+		query = stanza.getChild("query");
+		if (query.attrs.xmlns === "http://jabber.org/protocol/disco#items") {
+			query.getChildren("item").forEach((item) => {
+				console.log(`${colors.cyan("[INFO]")} Found room: ${JSON.stringify(item.attrs)}`);
+			});
+		}
+	}
+
+
 	if (config.debug >= 2) console.log(`${colors.magenta("[DEBUG]")} Stanza: ${stanza.toString()}`);
 	// Stops spam from getting old messages
 	if (startup) return;
@@ -437,11 +448,16 @@ xmpp.on("online", async (address) => {
 		</x>
 	</presence>
 	*/
+
+	// Request room list
+	// TODO: Automatically find room list
+	//xmpp.send(xml("iq", { type: "get", to: "conference.weather.im", id: "rooms" }, xml("query", { xmlns: "http://jabber.org/protocol/disco#items" })));
+	var curUUID = generateUUID();
 	// Join all channels
 	iem.channels.forEach((channel => {
 		console.log(`${colors.cyan("[INFO]")} Joining ${channel.jid.split("@")[0]}:${channel.name}`)
 		//xmpp.send(xml("presence", { to: `${channel.jid}/${channel.jid.split("@")[0]}` }));
-		xmpp.send(xml("presence", { to: `${channel.jid}/${channel.name}/${generateUUID()}` }, xml("item", { role: "visitor" })));
+		xmpp.send(xml("presence", { to: `${channel.jid}/${channel.name}/${curUUID}` }, xml("item", { role: "visitor" })));
 	}))
 
 	console.log(`${colors.cyan("[INFO]")} Connected to XMPP server as ${address.toString()}`);
