@@ -1136,7 +1136,7 @@ discord.on("guildDelete", (guild) => {
 
 process.on("unhandledRejection", (error) => {
 	console.log(`${colors.red("[ERROR]")} Unhandled Rejection: ${error.message}`);
-	if (config.ntfy.enabled) {
+	if (false) {
 		fetch(config.ntfy.server, {
 			method: 'POST',
 			body: JSON.stringify({
@@ -1156,7 +1156,7 @@ process.on("unhandledRejection", (error) => {
 
 process.on("uncaughtException", (error) => {
 	console.log(`${colors.red("[ERROR]")} Uncaught Exception: ${error.message}\n${error.stack}`);
-	if (config.ntfy.enabled) {
+	if (false) {
 		fetch(config.ntfy.server, {
 			method: 'POST',
 			body: JSON.stringify({
