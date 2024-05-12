@@ -1,4 +1,5 @@
 {
+	"debug": 0,
 	"priorityColors": {
 		"1": "#00AFFF",
 		"2": "#00FF00",
@@ -8,14 +9,21 @@
 	},
 	"discord": {
 		"token": "YOUR_TOKEN",
-		"owner": "your_user_id",
-		"mainGuild": "your_guild_id",
-		"inviteChannel": "your_channel_id"
+		"owner": "YOUR_ID",
+		"mainGuild": "YOUR_GUILD",
+		"inviteChannel": "INVITE_CHANNEL",
+		"logChannel": "LOG_CHANNEL"
 	},
 	"ntfy": {
 		"enabled": false,
-		"server": "https://Example.com",
-		"token": "ntfy_access_token",
-		"prefix": "iem-"
+		"server": "https://your.ntfy.server",
+		"token": "tk_XXXXXXXXXXXXXXXX",
+		"prefix": "iem-",
+		"errors": "iem-errors"
+	},
+	"broadcastify": {
+		"enabled": false,
+		"username": "YOUR_USERNAME",
+		"password": "YOUR_PASSWORD"
 	}
 }

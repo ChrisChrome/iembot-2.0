@@ -1133,10 +1133,42 @@ discord.on("guildDelete", (guild) => {
 
 process.on("unhandledRejection", (error) => {
 	console.log(`${colors.red("[ERROR]")} Unhandled Rejection: ${error.message}`);
+	if (config.ntfy.enabled) {
+		fetch(config.ntfy.server, {
+			method: 'POST',
+			body: JSON.stringify({
+				"topic": config.ntfy.errors,
+				"message": `Unhandled Rejection: ${error.message}`,
+				"tags": ["Error"],
+				"priority": 5
+			}),
+			headers: {
+				'Authorization': `Bearer ${config.ntfy.token}`
+			}
+		}).catch((err) => {
+			console.error(err)
+		})
+	}
 });
 
 process.on("uncaughtException", (error) => {
 	console.log(`${colors.red("[ERROR]")} Uncaught Exception: ${error.message}\n${error.stack}`);
+	if (config.ntfy.enabled) {
+		fetch(config.ntfy.server, {
+			method: 'POST',
+			body: JSON.stringify({
+				"topic": config.ntfy.errors,
+				"message": `Uncaught Exception: ${error.message}\n${error.stack}`,
+				"tags": ["Error"],
+				"priority": 5
+			}),
+			headers: {
+				'Authorization': `Bearer ${config.ntfy.token}`
+			}
+		}).catch((err) => {
+			console.error(err)
+		})
+	}
 });
 
 // Login to discord
