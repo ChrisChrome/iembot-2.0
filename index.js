@@ -432,6 +432,14 @@ xmpp.on("stanza", (stanza) => {
 
 
 xmpp.on("online", async (address) => {
+	if (config["uptime-kuma"].enabled) {
+		setInterval(() => {
+			// Send POST request to config["uptime-kuma"].url
+			fetch(config["uptime-kuma"].url, {
+				method: 'POST'
+			})
+		}, config["uptime-kuma"].interval * 1000) // Every X seconds
+	}
 
 	errCount = 0;
 	// Start listening on all channels, (dont ban me funny man)
@@ -959,11 +967,11 @@ discord.on("interactionCreate", async (interaction) => {
 					if (!channel) return interaction.reply({ content: "You need to be in a voice channel", ephemeral: true });
 					// Join the channel and play the stream
 					res = JoinChannel(channel, url, .1, interaction)
-						if (res) {
-							interaction.reply({ content: "Playing Stream", ephemeral: true });
-						} else {
-							interaction.reply({ content: `Failed to play stream`, ephemeral: true });
-						}
+					if (res) {
+						interaction.reply({ content: "Playing Stream", ephemeral: true });
+					} else {
+						interaction.reply({ content: `Failed to play stream`, ephemeral: true });
+					}
 					break;
 
 				case "play": // Play generic stream
@@ -1008,13 +1016,13 @@ discord.on("interactionCreate", async (interaction) => {
 				case "volume": // Set volume
 					channel = interaction.member.voice.channel;
 					if (!channel) return interaction.reply({ content: "You need to be in a voice channel", ephemeral: true });
-					volume = interaction.options.getInteger("volume")/100;
+					volume = interaction.options.getInteger("volume") / 100;
 					// Make sure volume isnt negative
 					if (volume < 0) volume = 0;
 					if (volume > 1) volume = 1;
 					res = setVolume(channel, volume)
 					if (res) {
-						interaction.reply({ content: `Set volume to ${volume*100}%` });
+						interaction.reply({ content: `Set volume to ${volume * 100}%` });
 					} else {
 						interaction.reply({ content: "Failed to set volume", ephemeral: true });
 					}
