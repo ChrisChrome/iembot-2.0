@@ -131,3 +131,5 @@ dist
 config.json
 channels.db
 private/
+error/
+old/

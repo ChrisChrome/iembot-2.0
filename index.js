@@ -1,9 +1,9 @@
 // Requires
 const fs = require("fs");
 const config = require("./config.json");
-const wfos = require("./wfos.json");
-const iem = require("./iem.json");
-const events = require("./events.json");
+const wfos = require("./data/wfos.json");
+const blacklist = require("./data/blacklist.json");
+const events = require("./data/events.json");
 const { client, xml } = require("@xmpp/client");
 const fetch = require("node-fetch");
 const html = require("html-entities")
@@ -37,11 +37,7 @@ const db = new sqlite3.Database("channels.db", (err) => {
 	db.run(`CREATE TABLE IF NOT EXISTS userAlerts (userid TEXT, iemchannel TEXT, filter TEXT, filterEvt TEXT, minPriority INT)`);
 });
 
-// Setup stuff
-var startup = true;
-var startTimestap = new Date();
-var messages = 0;
-var errCount = 0;
+
 // Random funcs
 const parseProductID = function (product_id) {
 	const [timestamp, station, wmo, pil] = product_id.split("-");
@@ -227,6 +223,15 @@ const generateUUID = function () {
 	return generateRandomString({ lower: true, upper: true, number: true }, 8) + "-" + generateRandomString({ lower: true, upper: true, number: true }, 4) + "-" + generateRandomString({ lower: true, upper: true, number: true }, 4) + "-" + generateRandomString({ lower: true, upper: true, number: true }, 4) + "-" + generateRandomString({ lower: true, upper: true, number: true }, 12);
 }
 
+// Variable setup
+var iem = []
+var startup = true;
+var startTimestap = new Date();
+var messages = 0;
+var errCount = 0;
+const curUUID = generateUUID();
+
+
 const xmpp = client({
 	service: "xmpp://conference.weather.im",
 	domain: "weather.im",
@@ -253,24 +258,30 @@ xmpp.on("offline", () => {
 	})
 });
 
-
 xmpp.on("stanza", (stanza) => {
-	// If room list, console.log
+	// Debug stuff
+	if (config.debug >= 2) console.log(`${colors.magenta("[DEBUG]")} Stanza: ${stanza.toString()}`);
+
+
+	// Handle Room List
 	if (stanza.is("iq") && stanza.attrs.type === "result" && stanza.getChild("query")) {
 		query = stanza.getChild("query");
 		if (query.attrs.xmlns === "http://jabber.org/protocol/disco#items") {
 			query.getChildren("item").forEach((item) => {
-				console.log(`${colors.cyan("[INFO]")} Found room: ${JSON.stringify(item.attrs)}`);
+				// Check if the JID is on the blacklist, if so, ignore it
+				if (blacklist.includes(item.attrs.jid)) return;
+				iem.push(item.attrs);
+				console.log(`${colors.cyan("[INFO]")} Found room: ${item.attrs.jid}`);
+				// Join the room
+				//xmpp.send(xml("presence", { to: `${channel.jid}/${channel.name}/${curUUID}` }, xml("item", { role: "visitor" })));
+				xmpp.send(xml("presence", { to: `${item.attrs.jid}/${curUUID}` }, xml("item", { role: "visitor" })));
 			});
 		}
 	}
-
-
-	if (config.debug >= 2) console.log(`${colors.magenta("[DEBUG]")} Stanza: ${stanza.toString()}`);
-	// Stops spam from getting old messages
-	if (startup) return;
 	// Get new messages and log them, ignore old messages
 	if (stanza.is("message") && stanza.attrs.type === "groupchat") {
+		// Stops spam from getting old messages
+		if (startup) return;
 		// Get channel name
 		fromChannel = stanza.attrs.from.split("@")[0];
 		// Ignores
@@ -448,7 +459,7 @@ xmpp.on("online", async (address) => {
 
 	errCount = 0;
 	// Start listening on all channels, (dont ban me funny man)
-	// for (const channel in iem.channels) {
+	// for (const channel in iem) {
 	// 	console.log(`Joining ${channel.name}`)
 	// 	await xmpp.send(xml("presence", { to: `${channel.jud}/${channel.name}` }));
 	// }
@@ -463,15 +474,14 @@ xmpp.on("online", async (address) => {
 	*/
 
 	// Request room list
-	// TODO: Automatically find room list
-	//xmpp.send(xml("iq", { type: "get", to: "conference.weather.im", id: "rooms" }, xml("query", { xmlns: "http://jabber.org/protocol/disco#items" })));
-	var curUUID = generateUUID();
-	// Join all channels
-	iem.channels.forEach((channel => {
-		console.log(`${colors.cyan("[INFO]")} Joining ${channel.jid}/${channel.name}/${curUUID}`)
-		//xmpp.send(xml("presence", { to: `${channel.jid}/${channel.jid.split("@")[0]}` }));
-		xmpp.send(xml("presence", { to: `${channel.jid}/${channel.name}/${curUUID}` }, xml("item", { role: "visitor" })));
-	}))
+	// Automatically find room list
+	xmpp.send(xml("iq", { type: "get", to: "conference.weather.im", id: "rooms" }, xml("query", { xmlns: "http://jabber.org/protocol/disco#items" })));
+	// Join all channels (Old method)
+	// iem.forEach((channel => {
+	// 	console.log(`${colors.cyan("[INFO]")} Joining ${channel.jid}/${channel.name}/${curUUID}`)
+	// 	//xmpp.send(xml("presence", { to: `${channel.jid}/${channel.jid.split("@")[0]}` }));
+	// 	xmpp.send(xml("presence", { to: `${channel.jid}/${channel.name}/${curUUID}` }, xml("item", { role: "visitor" })));
+	// }))
 
 	console.log(`${colors.cyan("[INFO]")} Connected to XMPP server as ${address.toString()}`);
 
@@ -760,7 +770,7 @@ discord.on("interactionCreate", async (interaction) => {
 			switch (interaction.commandName) {
 				case "subscribe":
 					room = getWFOroom(interaction.options.getString("room"));
-					if (!iem.channels.find((channel) => channel.jid.split("@")[0] === room)) {
+					if (!iem.find((channel) => channel.jid.split("@")[0] === room)) {
 						interaction.reply({ content: "Invalid room", ephemeral: true });
 						return;
 					}
@@ -777,7 +787,7 @@ discord.on("interactionCreate", async (interaction) => {
 				case "unsubscribe":
 					// Check that the room is valid
 					room = getWFOroom(interaction.options.getString("room"));
-					if (!iem.channels.find((channel) => channel.jid.split("@")[0] === room)) {
+					if (!iem.find((channel) => channel.jid.split("@")[0] === room)) {
 						interaction.reply({ content: "Invalid room", ephemeral: true });
 						return;
 					}
@@ -809,7 +819,7 @@ discord.on("interactionCreate", async (interaction) => {
 					break;
 				case "setmessage":
 					room = getWFOroom(interaction.options.getString("room"));
-					if (!iem.channels.find((channel) => channel.jid.split("@")[0] === room)) {
+					if (!iem.find((channel) => channel.jid.split("@")[0] === room)) {
 						interaction.reply({ content: "Invalid room", ephemeral: true });
 						return;
 					}
@@ -877,7 +887,7 @@ discord.on("interactionCreate", async (interaction) => {
 				case "rooms":
 					// // Send an embed showing all the available rooms
 					// let roomList = "";
-					// iem.channels.forEach((channel) => {
+					// iem.forEach((channel) => {
 					// 	room = channel.jid.split("@")[0]
 					// 	console.log(getWFOByRoom(room))
 					// 	roomList += `\`${room}\`: ${getWFOByRoom(room).location}\n`;
@@ -890,7 +900,7 @@ discord.on("interactionCreate", async (interaction) => {
 					// interaction.reply({ embeds: [roomEmbed], ephemeral: true });
 					// Do the above, but paginate like the product text
 					let roomList = "";
-					iem.channels.forEach((channel) => {
+					iem.forEach((channel) => {
 						room = channel.jid.split("@")[0]
 						roomList += `\`${room}\`: ${getWFOByRoom(room).location || "Unknown"}\n`;
 					});
@@ -911,9 +921,9 @@ discord.on("interactionCreate", async (interaction) => {
 					// Create channels for all rooms
 					const chunks = [];
 					const chunkSize = 50;
-					const totalRooms = iem.channels.length;
+					const totalRooms = iem.length;
 					for (let i = 0; i < totalRooms; i += chunkSize) {
-						chunks.push(iem.channels.slice(i, i + chunkSize));
+						chunks.push(iem.slice(i, i + chunkSize));
 					}
 
 					chunks.forEach((chunk, index) => {
@@ -1035,7 +1045,7 @@ discord.on("interactionCreate", async (interaction) => {
 
 				case "usersubscribe":
 					room = getWFOroom(interaction.options.getString("room"));
-					if (!iem.channels.find((channel) => channel.jid.split("@")[0] === room)) {
+					if (!iem.find((channel) => channel.jid.split("@")[0] === room)) {
 						interaction.reply({ content: "Invalid room", ephemeral: true });
 						return;
 					}
@@ -1053,7 +1063,7 @@ discord.on("interactionCreate", async (interaction) => {
 					break;
 				case "userunsubscribe":
 					room = getWFOroom(interaction.options.getString("room"));
-					if (!iem.channels.find((channel) => channel.jid.split("@")[0] === room)) {
+					if (!iem.find((channel) => channel.jid.split("@")[0] === room)) {
 						interaction.reply({ content: "Invalid room", ephemeral: true });
 						return;
 					}
