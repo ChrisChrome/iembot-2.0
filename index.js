@@ -1,4 +1,5 @@
 // Requires
+const fs = require("fs");
 const config = require("./config.json");
 const wfos = require("./wfos.json");
 const iem = require("./iem.json");
@@ -1154,6 +1155,9 @@ discord.on("guildDelete", (guild) => {
 
 process.on("unhandledRejection", (error) => {
 	console.log(`${colors.red("[ERROR]")} Unhandled Rejection: ${error.stack}`);
+	// write ./error/rejection_timestamp.txt
+	fs.writeFileSync(`./error/rejection_${Date.now()}.txt`, error.stack);
+	process.exit(1);
 	if (false) {
 		fetch(config.ntfy.server, {
 			method: 'POST',
@@ -1174,6 +1178,9 @@ process.on("unhandledRejection", (error) => {
 
 process.on("uncaughtException", (error) => {
 	console.log(`${colors.red("[ERROR]")} Uncaught Exception: ${error.message}\n${error.stack}`);
+	// write ./error/exception_timestamp.txt
+	fs.writeFileSync(`./error/exception_${Date.now()}.txt`, error.stack);
+	process.exit(1);
 	if (false) {
 		fetch(config.ntfy.server, {
 			method: 'POST',
