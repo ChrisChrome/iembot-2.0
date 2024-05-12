@@ -1135,7 +1135,7 @@ discord.on("guildDelete", (guild) => {
 })
 
 process.on("unhandledRejection", (error) => {
-	console.log(`${colors.red("[ERROR]")} Unhandled Rejection: ${error.message}`);
+	console.log(`${colors.red("[ERROR]")} Unhandled Rejection: ${error.stack}`);
 	if (false) {
 		fetch(config.ntfy.server, {
 			method: 'POST',
