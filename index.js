@@ -485,6 +485,8 @@ const start = () => {
 			process.exit(1);
 		}
 		console.log(`${colors.red("[ERROR]")} XMPP failed to start: ${err}. Trying again in 5 seconds...`);
+		xmpp.close();
+		xmpp.disconnect();
 		setTimeout(() => {
 			start();
 		}, 5000);
