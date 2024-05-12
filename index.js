@@ -433,16 +433,12 @@ xmpp.on("stanza", (stanza) => {
 
 xmpp.on("online", async (address) => {
 	if (config["uptime-kuma"].enabled) {
-		fetch(config["uptime-kuma"].url, {
-			method: 'POST'
-		}).then(() => {
+		fetch(config["uptime-kuma"].url).then(() => {
 			console.log(`${colors.cyan("[INFO]")} Sent heartbeat to Uptime Kuma`)
 		})
 		setInterval(() => {
 			// Send POST request to config["uptime-kuma"].url
-			fetch(config["uptime-kuma"].url, {
-				method: 'POST'
-			}).then(() => {
+			fetch(config["uptime-kuma"].url).then(() => {
 				console.log(`${colors.cyan("[INFO]")} Sent heartbeat to Uptime Kuma`)
 			})
 		}, config["uptime-kuma"].interval * 1000) // Every X seconds
