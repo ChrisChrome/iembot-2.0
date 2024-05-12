@@ -727,6 +727,13 @@ discord.on('ready', async () => {
 	})();
 
 	start();
+	setTimeout(() => {
+		// Wait 10 seconds, if startup is still true, something went wrong
+		if (startup) {
+			console.log(`${colors.red("[ERROR]")} Startup failed, exiting...`);
+			process.exit(1);
+		}
+	}, 10000)
 });
 
 discord.on("interactionCreate", async (interaction) => {
