@@ -284,12 +284,13 @@ xmpp.on("stanza", (stanza) => {
 		const bodyData = getFirstURL(body);
 		// get product id from "x" tag
 		var evt = events[product_id.pil.substring(0, 3)];
-		evt.code = product_id.pil.substring(0, 3);
 
 		if (!evt) {
 			evt = { name: "Unknown", priority: 3 }
 			console.log(`${colors.red("[ERROR]")} Unknown event type: ${product_id.pil.substring(0, 3)}. Fix me`);
 		}
+
+		evt.code = product_id.pil.substring(0, 3);
 		// Check timestamp, if not within 3 minutes, ignore it
 		const now = new Date();
 		const diff = (now - product_id.timestamp) / 1000 / 60;
