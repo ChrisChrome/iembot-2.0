@@ -245,11 +245,11 @@ xmpp.on("error", (err) => {
 
 xmpp.on("offline", () => {
 	console.log(`${colors.yellow("[WARN]")} XMPP offline, trying to reconnect...`);
-	setTimeout(() => {
+	xmpp.disconnect().then(() => {
 		xmpp.stop().then(() => {
 			start();
-		});
-	}, 5000);
+		})
+	})
 });
 
 
@@ -470,8 +470,10 @@ xmpp.on("online", async (address) => {
 
 xmpp.on("close", () => {
 	console.log(`${colors.yellow("[WARN]")} XMPP connection closed, trying to reconnect...`);
-	xmpp.stop().then(() => {
-		start();
+	xmpp.disconnect().then(() => {
+		xmpp.stop().then(() => {
+			start();
+		})
 	})
 })
 
@@ -484,8 +486,10 @@ const start = () => {
 			process.exit(1);
 		}
 		console.log(`${colors.red("[ERROR]")} XMPP failed to start: ${err}.`);
-		xmpp.stop().then(() => {
-			start();
+		xmpp.disconnect().then(() => {
+			xmpp.stop().then(() => {
+				start();
+			})
 		})
 	});
 }
