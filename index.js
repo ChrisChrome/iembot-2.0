@@ -470,26 +470,23 @@ xmpp.on("online", async (address) => {
 
 xmpp.on("close", () => {
 	console.log(`${colors.yellow("[WARN]")} XMPP connection closed, trying to reconnect...`);
-	setTimeout(() => {
-		xmpp.stop().then(() => {
-			start();
-		});
-	}, 5000);
+	xmpp.stop().then(() => {
+		start();
+	})
 })
 
 const start = () => {
+	startup = true;
 	xmpp.start().catch((err) => {
 		errCount++;
 		if (errCount >= 5) {
 			console.log(`${colors.red("[ERROR]")} XMPP failed to start after 5 attempts, exiting...`);
 			process.exit(1);
 		}
-		console.log(`${colors.red("[ERROR]")} XMPP failed to start: ${err}. Trying again in 5 seconds...`);
-		xmpp.close();
-		xmpp.disconnect();
-		setTimeout(() => {
+		console.log(`${colors.red("[ERROR]")} XMPP failed to start: ${err}.`);
+		xmpp.stop().then(() => {
 			start();
-		}, 5000);
+		})
 	});
 }
 
