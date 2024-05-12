@@ -1194,6 +1194,9 @@ process.on("unhandledRejection", (error, promise) => {
 process.on("uncaughtException", (error) => {
 	
 	console.log(`${colors.red("[ERROR]")} Uncaught Exception: ${error.message}\n${error.stack}`);
+	if (!fs.existsSync("./error")) {
+		fs.mkdirSync("./error");
+	}
 	// write ./error/exception_timestamp.txt
 	fs.writeFileSync(`./error/exception_${Date.now()}.txt`, error.stack);
 	process.exit(1);
