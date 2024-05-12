@@ -455,7 +455,7 @@ xmpp.on("online", async (address) => {
 	var curUUID = generateUUID();
 	// Join all channels
 	iem.channels.forEach((channel => {
-		console.log(`${colors.cyan("[INFO]")} Joining ${channel.jid.split("@")[0]}:${channel.name}`)
+		console.log(`${colors.cyan("[INFO]")} Joining ${channel.jid}/${channel.name}/${curUUID}`)
 		//xmpp.send(xml("presence", { to: `${channel.jid}/${channel.jid.split("@")[0]}` }));
 		xmpp.send(xml("presence", { to: `${channel.jid}/${channel.name}/${curUUID}` }, xml("item", { role: "visitor" })));
 	}))
