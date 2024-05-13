@@ -1171,7 +1171,7 @@ process.on("unhandledRejection", (error, promise) => {
 		fs.mkdirSync("./error");
 	}
 	// write ./error/rejection_timestamp.txt
-	fs.writeFileSync(`./error/rejection_${Date.now()}.txt`, `ERROR:\n${error}\n\nPROMISE:\n${promise}`);
+	fs.writeFileSync(`./error/rejection_${Date.now()}.txt`, `ERROR:\n${error}\n\nPROMISE:\n${JSON.stringify(promise)}`);
 	return;
 });
 
