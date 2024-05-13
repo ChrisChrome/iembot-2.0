@@ -1172,23 +1172,7 @@ process.on("unhandledRejection", (error, promise) => {
 	}
 	// write ./error/rejection_timestamp.txt
 	fs.writeFileSync(`./error/rejection_${Date.now()}.txt`, `ERROR:\n${error}\n\nPROMISE:\n${promise}`);
-	process.exit(1);
-	if (false) {
-		fetch(config.ntfy.server, {
-			method: 'POST',
-			body: JSON.stringify({
-				"topic": config.ntfy.errors,
-				"message": `Unhandled Rejection: ${error.message}`,
-				"tags": ["Error"],
-				"priority": 5
-			}),
-			headers: {
-				'Authorization': `Bearer ${config.ntfy.token}`
-			}
-		}).catch((err) => {
-			console.error(err)
-		})
-	}
+	return;
 });
 
 process.on("uncaughtException", (error) => {
@@ -1199,23 +1183,7 @@ process.on("uncaughtException", (error) => {
 	}
 	// write ./error/exception_timestamp.txt
 	fs.writeFileSync(`./error/exception_${Date.now()}.txt`, error.stack);
-	process.exit(1);
-	if (false) {
-		fetch(config.ntfy.server, {
-			method: 'POST',
-			body: JSON.stringify({
-				"topic": config.ntfy.errors,
-				"message": `Uncaught Exception: ${error.message}\n${error.stack}`,
-				"tags": ["Error"],
-				"priority": 5
-			}),
-			headers: {
-				'Authorization': `Bearer ${config.ntfy.token}`
-			}
-		}).catch((err) => {
-			console.error(err)
-		})
-	}
+	return;
 });
 
 // Login to discord
