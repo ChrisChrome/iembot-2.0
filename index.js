@@ -1172,6 +1172,17 @@ process.on("unhandledRejection", (error, promise) => {
 	}
 	// write ./error/rejection_timestamp.txt
 	fs.writeFileSync(`./error/rejection_${Date.now()}.txt`, `ERROR:\n${error}\n\nPROMISE:\n${JSON.stringify(promise)}`);
+	// Send discord log
+	const myGuild = discord.guilds.cache.get(config.discord.mainGuild);
+	const channel = myGuild.channels.cache.get(config.discord.logChannel);
+	channel.send({
+		embeds: [
+			{
+				description: `Unhandled Rejection\n\`\`\`${error}\n${JSON.stringify(promise)}\`\`\``,
+				color: 0xff0000
+			}
+		]
+	})
 	return;
 });
 
@@ -1183,6 +1194,17 @@ process.on("uncaughtException", (error) => {
 	}
 	// write ./error/exception_timestamp.txt
 	fs.writeFileSync(`./error/exception_${Date.now()}.txt`, error.stack);
+	// Send message to log channel
+	const myGuild = discord.guilds.cache.get(config.discord.mainGuild);
+	const channel = myGuild.channels.cache.get(config.discord.logChannel);
+	channel.send({
+		embeds: [
+			{
+				description: `Uncaught Exception\n\`\`\`${error.message}\n${error.stack}\`\`\``,
+				color: 0xff0000
+			}
+		]
+	})
 	return;
 });
 
