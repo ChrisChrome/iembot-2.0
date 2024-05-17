@@ -775,12 +775,23 @@ discord.on("interactionCreate", async (interaction) => {
 						return;
 					}
 					message = interaction.options.getString("message") || null;
-					db.run(`INSERT INTO channels (channelid, iemchannel, custommessage) VALUES (?, ?, ?)`, [interaction.channel.id, room, message], (err) => {
+					// Check that the channel isn't already subbed to the room
+					db.get(`SELECT * FROM channels WHERE channelid = ? AND iemchannel = ?`, [interaction.channel.id, room], (err, row) => {
 						if (err) {
 							console.error(err.message);
 							interaction.reply({ content: "Failed to subscribe to room", ephemeral: true });
+						} else if (row) {
+							return interaction.reply({ content: `Already subscribed to \`${getWFOByRoom(room).location}\``, ephemeral: true });
 						} else {
-							interaction.reply({ content: `Subscribed to \`${getWFOByRoom(room).location}\``, ephemeral: true });
+
+							db.run(`INSERT INTO channels (channelid, iemchannel, custommessage) VALUES (?, ?, ?)`, [interaction.channel.id, room, message], (err) => {
+								if (err) {
+									console.error(err.message);
+									interaction.reply({ content: "Failed to subscribe to room", ephemeral: true });
+								} else {
+									interaction.reply({ content: `Subscribed to \`${getWFOByRoom(room).location}\``, ephemeral: true });
+								}
+							});
 						}
 					});
 					break;
@@ -791,12 +802,23 @@ discord.on("interactionCreate", async (interaction) => {
 						interaction.reply({ content: "Invalid room", ephemeral: true });
 						return;
 					}
-					db.run(`DELETE FROM channels WHERE channelid = ? AND iemchannel = ?`, [interaction.channel.id, room], (err) => {
+					// Check that the channel is subbed to the room
+					db.get(`SELECT * FROM channels WHERE channelid = ? AND iemchannel = ?`, [interaction.channel.id, room], (err, row) => {
 						if (err) {
 							console.error(err.message);
 							interaction.reply({ content: "Failed to unsubscribe from room", ephemeral: true });
+						} else if (!row) {
+							return interaction.reply({ content: `Not subscribed to \`${getWFOByRoom(room).location}\``, ephemeral: true });
 						} else {
-							interaction.reply({ content: `Unsubscribed from \`${getWFOByRoom(room).location}\``, ephemeral: true });
+
+							db.run(`DELETE FROM channels WHERE channelid = ? AND iemchannel = ?`, [interaction.channel.id, room], (err) => {
+								if (err) {
+									console.error(err.message);
+									interaction.reply({ content: "Failed to unsubscribe from room", ephemeral: true });
+								} else {
+									interaction.reply({ content: `Unsubscribed from \`${getWFOByRoom(room).location}\``, ephemeral: true });
+								}
+							});
 						}
 					});
 					break;
@@ -1187,7 +1209,7 @@ process.on("unhandledRejection", (error, promise) => {
 });
 
 process.on("uncaughtException", (error) => {
-	
+
 	console.log(`${colors.red("[ERROR]")} Uncaught Exception: ${error.message}\n${error.stack}`);
 	if (!fs.existsSync("./error")) {
 		fs.mkdirSync("./error");
