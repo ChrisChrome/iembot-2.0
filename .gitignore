@@ -133,3 +133,4 @@ channels.db
 private/
 error/
 old/
+package-lock.json
