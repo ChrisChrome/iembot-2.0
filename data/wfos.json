@@ -1,514 +1,594 @@
 {
-	"abq": {
-		"location": "Albuquerque, NM",
-		"room": "abqchat"
+	"iln": {
+		"room": "ilnchat",
+		"location": "Wilmington"
 	},
-	"abr": {
-		"location": "Aberdeen, SD",
-		"room": "abrchat"
+	"zhu": {
+		"room": "zhuchat",
+		"location": "Houston"
 	},
-	"afc": {
-		"location": "Anchorage, AK",
-		"room": "afcchat"
-	},
-	"afg": {
-		"location": "Fairbanks, AK",
-		"room": "afgchat"
-	},
-	"ajk": {
-		"location": "Juneau, AK",
-		"room": "ajkchat"
-	},
-	"akq": {
-		"location": "Wakefield, VA",
-		"room": "akqchat"
-	},
-	"aly": {
-		"location": "Albany, NY",
-		"room": "alychat"
-	},
-	"ama": {
-		"location": "Amarillo, TX",
-		"room": "amachat"
-	},
-	"apx": {
-		"location": "Gaylord, MI",
-		"room": "apxchat"
-	},
-	"arx": {
-		"location": "La Crosse, WI",
-		"room": "arxchat"
-	},
-	"bgm": {
-		"location": "Binghamton, NY",
-		"room": "bgmchat"
-	},
-	"bis": {
-		"location": "Bismarck, ND",
-		"room": "bischat"
-	},
-	"bmx": {
-		"location": "Birmingham, AL",
-		"room": "bmxchat"
-	},
-	"boi": {
-		"location": "Boise, ID",
-		"room": "boichat"
-	},
-	"bou": {
-		"location": "Denver (Boulder), CO",
-		"room": "bouchat"
-	},
-	"box": {
-		"location": "Boston, MA",
-		"room": "boxchat"
-	},
-	"bro": {
-		"location": "Brownsville, TX",
-		"room": "brochat"
-	},
-	"btv": {
-		"location": "Burlington, VT",
-		"room": "btvchat"
-	},
-	"buf": {
-		"location": "Buffalo, NY",
-		"room": "bufchat"
-	},
-	"byz": {
-		"location": "Billings, MT",
-		"room": "byzchat"
-	},
-	"cae": {
-		"location": "Columbia, SC",
-		"room": "caechat"
-	},
-	"car": {
-		"location": "Caribou, ME",
-		"room": "carchat"
-	},
-	"chs": {
-		"location": "Charleston, SC",
-		"room": "chschat"
-	},
-	"cle": {
-		"location": "Cleveland, OH",
-		"room": "clechat"
-	},
-	"crp": {
-		"location": "Corpus Christi, TX",
-		"room": "crpchat"
-	},
-	"ctp": {
-		"location": "State College, PA",
-		"room": "ctpchat"
-	},
-	"cys": {
-		"location": "Cheyenne, WY",
-		"room": "cyschat"
-	},
-	"ddc": {
-		"location": "Dodge City, KS",
-		"room": "ddcchat"
-	},
-	"dlh": {
-		"location": "Duluth, MN",
-		"room": "dlhchat"
-	},
-	"dmx": {
-		"location": "Des Moines, IA",
-		"room": "dmxchat"
-	},
-	"dtx": {
-		"location": "Detroit, MI",
-		"room": "dtxchat"
-	},
-	"dvn": {
-		"location": "Quad Cities, IA",
-		"room": "dvnchat"
-	},
-	"eax": {
-		"location": "Kansas City/Pleasant Hill, MO",
-		"room": "eaxchat"
-	},
-	"eka": {
-		"location": "Eureka, CA",
-		"room": "ekachat"
-	},
-	"epz": {
-		"location": "El Paso, TX",
-		"room": "epzchat"
-	},
-	"ewx": {
-		"location": "Austin/San Antonio, TX",
-		"room": "ewxchat"
-	},
-	"eyw": {
-		"location": "Key West, FL",
-		"room": "eywchat"
-	},
-	"ffc": {
-		"location": "Atlanta, GA",
-		"room": "ffcchat"
-	},
-	"fgf": {
-		"location": "Grand Forks, ND",
-		"room": "fgfchat"
-	},
-	"fgz": {
-		"location": "Flagstaff, AZ",
-		"room": "fgzchat"
-	},
-	"fsd": {
-		"location": "Sioux Falls, SD",
-		"room": "fsdchat"
-	},
-	"fwd": {
-		"location": "Dallas/Fort Worth, TX",
-		"room": "fwdchat"
+	"zme": {
+		"room": "zmechat",
+		"location": "Memphis"
 	},
 	"ggw": {
-		"location": "Glasgow, MT",
-		"room": "ggwchat"
-	},
-	"gid": {
-		"location": "Hastings, NE",
-		"room": "gidchat"
-	},
-	"gjt": {
-		"location": "Grand Junction, CO",
-		"room": "gjtchat"
-	},
-	"gld": {
-		"location": "Goodland, KS",
-		"room": "gldchat"
-	},
-	"grb": {
-		"location": "Green Bay, WI",
-		"room": "grbchat"
-	},
-	"grr": {
-		"location": "Grand Rapids, MI",
-		"room": "grrchat"
-	},
-	"gsp": {
-		"location": "Greenville/Spartanburg, SC",
-		"room": "gspchat"
-	},
-	"gum": {
-		"location": "Guam",
-		"room": "gumchat"
-	},
-	"gyx": {
-		"location": "Portland/Gray, ME",
-		"room": "gyxchat"
-	},
-	"hfo": {
-		"location": "Honolulu, HI",
-		"room": "hfochat"
-	},
-	"hgx": {
-		"location": "Houston/Galveston, TX",
-		"room": "hgxchat"
-	},
-	"hnx": {
-		"location": "San Joaquin Valley/Hanford, CA",
-		"room": "hnxchat"
-	},
-	"hun": {
-		"location": "Huntsville, AL",
-		"room": "hunchat"
-	},
-	"ict": {
-		"location": "Wichita, KS",
-		"room": "ictchat"
-	},
-	"ilm": {
-		"location": "Wilmington, NC",
-		"room": "ilmchat"
-	},
-	"iln": {
-		"location": "Wilmington/Cincinnati, OH",
-		"room": "ilnchat"
-	},
-	"ilx": {
-		"location": "Central Illinois (Lincoln, IL)",
-		"room": "ilxchat"
-	},
-	"ind": {
-		"location": "Indianapolis, IN",
-		"room": "indchat"
-	},
-	"iwx": {
-		"location": "Northern Indiana (North Webster, IN)",
-		"room": "iwxchat"
-	},
-	"jan": {
-		"location": "Jackson, MS",
-		"room": "janchat"
-	},
-	"jax": {
-		"location": "Jacksonville, FL",
-		"room": "jaxchat"
-	},
-	"jkl": {
-		"location": "Jackson, KY",
-		"room": "jklchat"
-	},
-	"lbf": {
-		"location": "North Platte, NE",
-		"room": "lbfchat"
-	},
-	"lch": {
-		"location": "Lake Charles, LA",
-		"room": "lchchat"
-	},
-	"lix": {
-		"location": "New Orleans/Baton Rouge, LA",
-		"room": "lixchat"
-	},
-	"lkn": {
-		"location": "Elko, NV",
-		"room": "lknchat"
-	},
-	"lmk": {
-		"location": "Louisville, KY",
-		"room": "lmkchat"
-	},
-	"lot": {
-		"location": "Chicago, IL",
-		"room": "lotchat"
-	},
-	"lox": {
-		"location": "Los Angeles, CA",
-		"room": "loxchat"
-	},
-	"lsx": {
-		"location": "St. Louis, MO",
-		"room": "lsxchat"
-	},
-	"lub": {
-		"location": "Lubbock, TX",
-		"room": "lubchat"
-	},
-	"lwx": {
-		"location": "Baltimore/Washington D.C.",
-		"room": "lwxchat"
-	},
-	"lzk": {
-		"location": "Little Rock, AR",
-		"room": "lzkchat"
-	},
-	"maf": {
-		"location": "Midland/Odessa, TX",
-		"room": "mafchat"
-	},
-	"meg": {
-		"location": "Memphis, TE",
-		"room": "megchat"
-	},
-	"mfl": {
-		"location": "Miami, FL",
-		"room": "mflchat"
-	},
-	"mfr": {
-		"location": "Medford, OR",
-		"room": "mfrchat"
-	},
-	"mhx": {
-		"location": "Morehead City, NC",
-		"room": "mhxchat"
-	},
-	"mkx": {
-		"location": "Milwaukee, WI",
-		"room": "mkxchat"
-	},
-	"mlb": {
-		"location": "Melbourne, FL",
-		"room": "mlbchat"
-	},
-	"mob": {
-		"location": "Mobile, AL",
-		"room": "mobchat"
-	},
-	"mpx": {
-		"location": "Minneapolis, MN",
-		"room": "mpxchat"
-	},
-	"mqt": {
-		"location": "Marquette, MI",
-		"room": "mqtchat"
-	},
-	"mrx": {
-		"location": "Knoxville/Tri-Cities, TN",
-		"room": "mrxchat"
-	},
-	"mso": {
-		"location": "Missoula, MT",
-		"room": "msochat"
-	},
-	"mtr": {
-		"location": "San Francisco Bay Area/Monterey, CA",
-		"room": "mtrchat"
-	},
-	"oax": {
-		"location": "Omaha, NE",
-		"room": "oaxchat"
-	},
-	"ohx": {
-		"location": "Nashville, TN",
-		"room": "ohxchat"
-	},
-	"okx": {
-		"location": "New York City, Upton, NY",
-		"room": "okxchat"
-	},
-	"otx": {
-		"location": "Spokane, WA",
-		"room": "otxchat"
-	},
-	"oun": {
-		"location": "Norman (Oklahoma City), OK",
-		"room": "ounchat"
-	},
-	"pah": {
-		"location": "Paducah, KY",
-		"room": "pahchat"
-	},
-	"pbz": {
-		"location": "Pittsburgh, PA",
-		"room": "pbzchat"
-	},
-	"pdt": {
-		"location": "Pendleton, OR",
-		"room": "pdtchat"
-	},
-	"phi": {
-		"location": "Philadelphia, PA",
-		"room": "phichat"
-	},
-	"pih": {
-		"location": "Pocatello/Idaho Falls, ID",
-		"room": "pihchat"
-	},
-	"pqr": {
-		"location": "Portland, OR",
-		"room": "pqrchat"
-	},
-	"psr": {
-		"location": "Phoenix, AZ",
-		"room": "psrchat"
-	},
-	"pub": {
-		"location": "Pueblo, CO",
-		"room": "pubchat"
-	},
-	"rah": {
-		"location": "Raleigh/Durham, NC",
-		"room": "rahchat"
-	},
-	"rev": {
-		"location": "Reno, NV",
-		"room": "revchat"
-	},
-	"riw": {
-		"location": "Riverton, WY",
-		"room": "riwchat"
-	},
-	"rlx": {
-		"location": "Charleston, WV",
-		"room": "rlxchat"
-	},
-	"rnk": {
-		"location": "Blacksburg, VA",
-		"room": "rnkchat"
+		"room": "ggwchat",
+		"location": "Glasgow"
 	},
 	"sew": {
-		"location": "Seattle/Tacoma, WA",
-		"room": "sewchat"
+		"room": "sewchat",
+		"location": "Seattle"
 	},
-	"sgf": {
-		"location": "Springfield, MO",
-		"room": "sgfchat"
+	"ohx": {
+		"room": "ohxchat",
+		"location": "Nashville"
 	},
-	"sgx": {
-		"location": "San Diego, CA",
-		"room": "sgxchat"
+	"meg": {
+		"room": "megchat",
+		"location": "Memphis"
 	},
-	"shv": {
-		"location": "Shreveport, LA",
-		"room": "shvchat"
+	"mob": {
+		"room": "mobchat",
+		"location": "Mobile"
 	},
-	"sjt": {
-		"location": "San Angelo, TX",
-		"room": "sjtchat"
+	"bro": {
+		"room": "brochat",
+		"location": "Brownsville"
 	},
-	"sju": {
-		"location": "San Juan, PR",
-		"room": "sjuchat"
+	"ddc": {
+		"room": "ddcchat",
+		"location": "Dodge_City"
+	},
+	"mfl": {
+		"room": "mflchat",
+		"location": "Miami"
+	},
+	"dvn": {
+		"room": "dvnchat",
+		"location": "Quad_Cities_Ia"
+	},
+	"gjt": {
+		"room": "gjtchat",
+		"location": "Grand_Junction"
+	},
+	"ztl": {
+		"room": "ztlchat",
+		"location": "Atlanta"
+	},
+	"lmk": {
+		"room": "lmkchat",
+		"location": "Louisville"
+	},
+	"fwd": {
+		"room": "fwdchat",
+		"location": "Dallas-Fort_Worth"
+	},
+	"boi": {
+		"room": "boichat",
+		"location": "Boise"
 	},
 	"slc": {
-		"location": "Salt Lake City, UT",
-		"room": "slcchat"
+		"room": "slcchat",
+		"location": "Salt_Lake_City"
+	},
+	"zob": {
+		"room": "zobchat",
+		"location": "Cleveland"
+	},
+	"ama": {
+		"room": "amachat",
+		"location": "Amarillo"
+	},
+	"pqr": {
+		"room": "pqrchat",
+		"location": "Portland"
+	},
+	"zid": {
+		"room": "zidchat",
+		"location": "Indianapolis"
+	},
+	"nhc": {
+		"room": "nhcchat",
+		"location": "National_Hurricane_Center"
 	},
 	"sto": {
-		"location": "Sacramento, CA",
-		"room": "stochat"
+		"room": "stochat",
+		"location": "Sacramento"
 	},
-	"tae": {
-		"location": "Tallahassee, FL",
-		"room": "taechat"
+	"jkl": {
+		"room": "jklchat",
+		"location": "Jackson"
 	},
-	"tbw": {
-		"location": "Tampa Bay, FL",
-		"room": "tbwchat"
+	"grr": {
+		"room": "grrchat",
+		"location": "Grand_Rapids"
 	},
-	"tfx": {
-		"location": "Great Falls, MT",
-		"room": "tfxchat"
-	},
-	"top": {
-		"location": "Topeka, KS",
-		"room": "topchat"
-	},
-	"tsa": {
-		"location": "Tulsa, OK",
-		"room": "tsachat"
-	},
-	"twc": {
-		"location": "Tucson, AZ",
-		"room": "twcchat"
-	},
-	"unr": {
-		"location": "Rapid City, SD",
-		"room": "unrchat"
-	},
-	"vef": {
-		"location": "Las Vegas, NV",
-		"room": "vefchat"
-	},
-	"bot": {
-		"location": "Bot Chat",
-		"room": "botstalk"
-	},
-	"tst": {
-		"location": "Test Room",
-		"room": "test"
+	"hnx": {
+		"room": "hnxchat",
+		"location": "San_Joaquin_Valley-Hanford"
 	},
 	"spc": {
-		"location": "Storm Prediction Center",
-		"room": "spcchat"
+		"room": "spcchat",
+		"location": "Storm_Prediction_Center"
 	},
-	"rer": {
-		"location": "Record Event Reports (RER)",
-		"room": "rerchat"
+	"lch": {
+		"room": "lchchat",
+		"location": "Lake_Charles"
 	},
-	"cnr": {
-		"location": "Central North Regional Forecast (I think)",
-		"room": "cnrfchat"
+	"zbw": {
+		"room": "zbwchat",
+		"location": "Boston"
 	},
-	"ioa": {
-		"location": "Iowa WX",
-		"room": "iowawx"
+	"otx": {
+		"room": "otxchat",
+		"location": "Spokane"
+	},
+	"vef": {
+		"room": "vefchat",
+		"location": "Las_Vegas"
+	},
+	"pub": {
+		"room": "pubchat",
+		"location": "Pueblo"
+	},
+	"psr": {
+		"room": "psrchat",
+		"location": "Phoenix"
+	},
+	"sgx": {
+		"room": "sgxchat",
+		"location": "San_Diego"
+	},
+	"pbz": {
+		"room": "pbzchat",
+		"location": "Pittsburgh"
+	},
+	"eka": {
+		"room": "ekachat",
+		"location": "Eureka"
+	},
+	"ilx": {
+		"room": "ilxchat",
+		"location": "Lincoln"
+	},
+	"jsj": {
+		"room": "jsjchat",
+		"location": "San_Juan"
+	},
+	"mlb": {
+		"room": "mlbchat",
+		"location": "Melbourne"
+	},
+	"arx": {
+		"room": "arxchat",
+		"location": "La_Crosse"
+	},
+	"ilm": {
+		"room": "ilmchat",
+		"location": "Wilmington"
+	},
+	"okx": {
+		"room": "okxchat",
+		"location": "New_York"
+	},
+	"bot": {
+		"room": "botstalk",
+		"location": "All_Bots_Talk"
+	},
+	"lkn": {
+		"room": "lknchat",
+		"location": "Elko"
+	},
+	"rah": {
+		"room": "rahchat",
+		"location": "Raleigh"
+	},
+	"afc": {
+		"room": "afcchat",
+		"location": "Anchorage"
+	},
+	"lot": {
+		"room": "lotchat",
+		"location": "Chicago"
+	},
+	"box": {
+		"room": "boxchat",
+		"location": "Boston-Taunton"
+	},
+	"zny": {
+		"room": "znychat",
+		"location": "New_York"
+	},
+	"akq": {
+		"room": "akqchat",
+		"location": "Wakefield"
+	},
+	"zkc": {
+		"room": "zkcchat",
+		"location": "Kansas_City"
+	},
+	"bis": {
+		"room": "bischat",
+		"location": "Bismarck"
+	},
+	"twc": {
+		"room": "twcchat",
+		"location": "Tucson"
+	},
+	"abr": {
+		"room": "abrchat",
+		"location": "Aberdeen"
+	},
+	"pih": {
+		"room": "pihchat",
+		"location": "Pocatello-Idaho_Falls"
+	},
+	"zoa": {
+		"room": "zoachat",
+		"location": "Oakland"
+	},
+	"mtr": {
+		"room": "mtrchat",
+		"location": "San_Francisco"
+	},
+	"sju": {
+		"room": "sjuchat",
+		"location": "San_Juan"
+	},
+	"gid": {
+		"room": "gidchat",
+		"location": "Hastings"
+	},
+	"zmp": {
+		"room": "zmpchat",
+		"location": "Minneapolis"
+	},
+	"phi": {
+		"room": "phichat",
+		"location": "Mount_Holly"
+	},
+	"chs": {
+		"room": "chschat",
+		"location": "Charleston"
+	},
+	"ajk": {
+		"room": "ajkchat",
+		"location": "Juneau"
+	},
+	"bmx": {
+		"room": "bmxchat",
+		"location": "Birmingham"
+	},
+	"lix": {
+		"room": "lixchat",
+		"location": "New_Orleans"
+	},
+	"apx": {
+		"room": "apxchat",
+		"location": "Gaylord"
+	},
+	"hun": {
+		"room": "hunchat",
+		"location": "Huntsville"
+	},
+	"zma": {
+		"room": "zmachat",
+		"location": "Miami"
+	},
+	"dtx": {
+		"room": "dtxchat",
+		"location": "Detroit"
+	},
+	"gum": {
+		"room": "gumchat",
+		"location": "Guam"
+	},
+	"crp": {
+		"room": "crpchat",
+		"location": "Corpus_Christi"
+	},
+	"zjx": {
+		"room": "zjxchat",
+		"location": "Jacksonville"
+	},
+	"shv": {
+		"room": "shvchat",
+		"location": "Shreveport"
+	},
+	"tbw": {
+		"room": "tbwchat",
+		"location": "Tampa_Bay_Area-Ruskin"
+	},
+	"cys": {
+		"room": "cyschat",
+		"location": "Cheyenne"
+	},
+	"hfo": {
+		"room": "hfochat",
+		"location": "Honolulu"
+	},
+	"dmx": {
+		"room": "dmxchat",
+		"location": "Des_Moines"
+	},
+	"zse": {
+		"room": "zsechat",
+		"location": "Seattle"
+	},
+	"rev": {
+		"room": "revchat",
+		"location": "Reno"
+	},
+	"car": {
+		"room": "carchat",
+		"location": "Caribou"
+	},
+	"mso": {
+		"room": "msochat",
+		"location": "Missoula"
+	},
+	"key": {
+		"room": "keychat",
+		"location": "Key_West"
+	},
+	"riw": {
+		"room": "riwchat",
+		"location": "Riverton"
+	},
+	"mhx": {
+		"room": "mhxchat",
+		"location": "Newport-Morehead_City"
+	},
+	"cae": {
+		"room": "caechat",
+		"location": "Columbia"
+	},
+	"ind": {
+		"room": "indchat",
+		"location": "Indianapolis"
+	},
+	"dlh": {
+		"room": "dlhchat",
+		"location": "Duluth"
+	},
+	"unr": {
+		"room": "unrchat",
+		"location": "Rapid_City"
+	},
+	"zab": {
+		"room": "zabchat",
+		"location": "Albuquerque"
+	},
+	"zlc": {
+		"room": "zlcchat",
+		"location": "Salt_Lake_City"
+	},
+	"ffc": {
+		"room": "ffcchat",
+		"location": "Peachtree_City"
+	},
+	"epz": {
+		"room": "epzchat",
+		"location": "El_Paso_Tx-Santa_Teresa"
+	},
+	"tae": {
+		"room": "taechat",
+		"location": "Tallahassee"
+	},
+	"tfx": {
+		"room": "tfxchat",
+		"location": "Great_Falls"
+	},
+	"abq": {
+		"room": "abqchat",
+		"location": "Albuquerque"
+	},
+	"rlx": {
+		"room": "rlxchat",
+		"location": "Charleston"
+	},
+	"oun": {
+		"room": "ounchat",
+		"location": "Norman"
+	},
+	"cle": {
+		"room": "clechat",
+		"location": "Cleveland"
+	},
+	"lox": {
+		"room": "loxchat",
+		"location": "Los_Angeles-Oxnard"
+	},
+	"fsd": {
+		"room": "fsdchat",
+		"location": "Sioux_Falls"
+	},
+	"bgm": {
+		"room": "bgmchat",
+		"location": "Binghamton"
+	},
+	"ewx": {
+		"room": "ewxchat",
+		"location": "Austin-San_Antonio"
+	},
+	"zdv": {
+		"room": "zdvchat",
+		"location": "Denver"
+	},
+	"eax": {
+		"room": "eaxchat",
+		"location": "Kansas_City-Pleasant_Hill"
+	},
+	"iwx": {
+		"room": "iwxchat",
+		"location": "Northern_Indiana"
+	},
+	"lub": {
+		"room": "lubchat",
+		"location": "Lubbock"
+	},
+	"buf": {
+		"room": "bufchat",
+		"location": "Buffalo"
+	},
+	"pdt": {
+		"room": "pdtchat",
+		"location": "Pendleton"
+	},
+	"mkx": {
+		"room": "mkxchat",
+		"location": "Milwaukee-Sullivan"
+	},
+	"grb": {
+		"room": "grbchat",
+		"location": "Green_Bay"
+	},
+	"top": {
+		"room": "topchat",
+		"location": "Topeka"
+	},
+	"rnk": {
+		"room": "rnkchat",
+		"location": "Blacksburg"
+	},
+	"lzk": {
+		"room": "lzkchat",
+		"location": "Little_Rock"
+	},
+	"ctp": {
+		"room": "ctpchat",
+		"location": "State_College"
+	},
+	"gld": {
+		"room": "gldchat",
+		"location": "Goodland"
+	},
+	"byz": {
+		"room": "byzchat",
+		"location": "Billings"
+	},
+	"mpx": {
+		"room": "mpxchat",
+		"location": "Twin_Cities-Chanhassen"
+	},
+	"zdc": {
+		"room": "zdcchat",
+		"location": "Washington_DC"
+	},
+	"lsx": {
+		"room": "lsxchat",
+		"location": "St_Louis"
+	},
+	"pah": {
+		"room": "pahchat",
+		"location": "Paducah"
+	},
+	"bou": {
+		"room": "bouchat",
+		"location": "Denver"
+	},
+	"tsa": {
+		"room": "tsachat",
+		"location": "Tulsa"
+	},
+	"zfw": {
+		"room": "zfwchat",
+		"location": "Fort_Worth"
+	},
+	"zau": {
+		"room": "zauchat",
+		"location": "Chicago"
+	},
+	"mqt": {
+		"room": "mqtchat",
+		"location": "Marquette"
+	},
+	"maf": {
+		"room": "mafchat",
+		"location": "Midland-Odessa"
+	},
+	"mrx": {
+		"room": "mrxchat",
+		"location": "Morristown"
+	},
+	"fgz": {
+		"room": "fgzchat",
+		"location": "Flagstaff"
+	},
+	"oax": {
+		"room": "oaxchat",
+		"location": "Omaha-Valley"
+	},
+	"btv": {
+		"room": "btvchat",
+		"location": "Burlington"
+	},
+	"ict": {
+		"room": "ictchat",
+		"location": "Wichita"
+	},
+	"mfr": {
+		"room": "mfrchat",
+		"location": "Medford"
+	},
+	"hgx": {
+		"room": "hgxchat",
+		"location": "Houston-Galveston"
+	},
+	"afg": {
+		"room": "afgchat",
+		"location": "Fairbanks"
+	},
+	"sgf": {
+		"room": "sgfchat",
+		"location": "Springfield"
+	},
+	"haw": {
+		"room": "hawaii",
+		"location": "Hawaii"
+	},
+	"zla": {
+		"room": "zlachat",
+		"location": "Los_Angeles"
+	},
+	"aly": {
+		"room": "alychat",
+		"location": "Albany"
+	},
+	"sjt": {
+		"room": "sjtchat",
+		"location": "San_Angelo"
+	},
+	"jan": {
+		"room": "janchat",
+		"location": "Jackson"
+	},
+	"gsp": {
+		"room": "gspchat",
+		"location": "Greenville-Spartanburg"
+	},
+	"lwx": {
+		"room": "lwxchat",
+		"location": "Baltimore_Md-_Washington_Dc"
+	},
+	"gyx": {
+		"room": "gyxchat",
+		"location": "Gray"
+	},
+	"wpc": {
+		"room": "wpcchat",
+		"location": "Weather_Prediction_Center"
+	},
+	"lbf": {
+		"room": "lbfchat",
+		"location": "North_Platte"
+	},
+	"jax": {
+		"room": "jaxchat",
+		"location": "Jacksonville"
+	},
+	"fgf": {
+		"room": "fgfchat",
+		"location": "Grand_Forks"
 	}
 }

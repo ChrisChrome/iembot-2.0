@@ -1,0 +1,654 @@
+[
+	{
+		"room": "botstalk",
+		"name": "All_Bots_Talk"
+	},
+	{
+		"room": "nhcchat",
+		"name": "National_Hurricane_Center"
+	},
+	{
+		"room": "spcchat",
+		"name": "Storm_Prediction_Center"
+	},
+	{
+		"room": "wpcchat",
+		"name": "Weather_Prediction_Center"
+	},
+	{
+		"room": "abqchat",
+		"name": "Albuquerque"
+	},
+	{
+		"room": "abrchat",
+		"name": "Aberdeen"
+	},
+	{
+		"room": "afcchat",
+		"name": "Anchorage"
+	},
+	{
+		"room": "afgchat",
+		"name": "Fairbanks"
+	},
+	{
+		"room": "ajkchat",
+		"name": "Juneau"
+	},
+	{
+		"room": "akqchat",
+		"name": "Wakefield"
+	},
+	{
+		"room": "alychat",
+		"name": "Albany"
+	},
+	{
+		"room": "amachat",
+		"name": "Amarillo"
+	},
+	{
+		"room": "apxchat",
+		"name": "Gaylord"
+	},
+	{
+		"room": "arxchat",
+		"name": "La_Crosse"
+	},
+	{
+		"room": "bgmchat",
+		"name": "Binghamton"
+	},
+	{
+		"room": "bischat",
+		"name": "Bismarck"
+	},
+	{
+		"room": "bmxchat",
+		"name": "Birmingham"
+	},
+	{
+		"room": "boichat",
+		"name": "Boise"
+	},
+	{
+		"room": "bouchat",
+		"name": "Denver"
+	},
+	{
+		"room": "boxchat",
+		"name": "Boston-Taunton"
+	},
+	{
+		"room": "brochat",
+		"name": "Brownsville"
+	},
+	{
+		"room": "btvchat",
+		"name": "Burlington"
+	},
+	{
+		"room": "bufchat",
+		"name": "Buffalo"
+	},
+	{
+		"room": "byzchat",
+		"name": "Billings"
+	},
+	{
+		"room": "caechat",
+		"name": "Columbia"
+	},
+	{
+		"room": "carchat",
+		"name": "Caribou"
+	},
+	{
+		"room": "chschat",
+		"name": "Charleston"
+	},
+	{
+		"room": "clechat",
+		"name": "Cleveland"
+	},
+	{
+		"room": "crpchat",
+		"name": "Corpus_Christi"
+	},
+	{
+		"room": "ctpchat",
+		"name": "State_College"
+	},
+	{
+		"room": "cyschat",
+		"name": "Cheyenne"
+	},
+	{
+		"room": "ddcchat",
+		"name": "Dodge_City"
+	},
+	{
+		"room": "dlhchat",
+		"name": "Duluth"
+	},
+	{
+		"room": "dmxchat",
+		"name": "Des_Moines"
+	},
+	{
+		"room": "dtxchat",
+		"name": "Detroit"
+	},
+	{
+		"room": "dvnchat",
+		"name": "Quad_Cities_Ia"
+	},
+	{
+		"room": "eaxchat",
+		"name": "Kansas_City-Pleasant_Hill"
+	},
+	{
+		"room": "ekachat",
+		"name": "Eureka"
+	},
+	{
+		"room": "epzchat",
+		"name": "El_Paso_Tx-Santa_Teresa"
+	},
+	{
+		"room": "ewxchat",
+		"name": "Austin-San_Antonio"
+	},
+	{
+		"room": "ffcchat",
+		"name": "Peachtree_City"
+	},
+	{
+		"room": "fgfchat",
+		"name": "Grand_Forks"
+	},
+	{
+		"room": "fgzchat",
+		"name": "Flagstaff"
+	},
+	{
+		"room": "fsdchat",
+		"name": "Sioux_Falls"
+	},
+	{
+		"room": "fwdchat",
+		"name": "Dallas-Fort_Worth"
+	},
+	{
+		"room": "ggwchat",
+		"name": "Glasgow"
+	},
+	{
+		"room": "gidchat",
+		"name": "Hastings"
+	},
+	{
+		"room": "gjtchat",
+		"name": "Grand_Junction"
+	},
+	{
+		"room": "gldchat",
+		"name": "Goodland"
+	},
+	{
+		"room": "grbchat",
+		"name": "Green_Bay"
+	},
+	{
+		"room": "grrchat",
+		"name": "Grand_Rapids"
+	},
+	{
+		"room": "gspchat",
+		"name": "Greenville-Spartanburg"
+	},
+	{
+		"room": "gumchat",
+		"name": "Guam"
+	},
+	{
+		"room": "gyxchat",
+		"name": "Gray"
+	},
+	{
+		"room": "hawaii",
+		"name": "Hawaii"
+	},
+	{
+		"room": "hfochat",
+		"name": "Honolulu"
+	},
+	{
+		"room": "hgxchat",
+		"name": "Houston-Galveston"
+	},
+	{
+		"room": "hnxchat",
+		"name": "San_Joaquin_Valley-Hanford"
+	},
+	{
+		"room": "hunchat",
+		"name": "Huntsville"
+	},
+	{
+		"room": "ictchat",
+		"name": "Wichita"
+	},
+	{
+		"room": "ilmchat",
+		"name": "Wilmington"
+	},
+	{
+		"room": "ilnchat",
+		"name": "Wilmington"
+	},
+	{
+		"room": "ilxchat",
+		"name": "Lincoln"
+	},
+	{
+		"room": "indchat",
+		"name": "Indianapolis"
+	},
+	{
+		"room": "iwxchat",
+		"name": "Northern_Indiana"
+	},
+	{
+		"room": "janchat",
+		"name": "Jackson"
+	},
+	{
+		"room": "jaxchat",
+		"name": "Jacksonville"
+	},
+	{
+		"room": "jklchat",
+		"name": "Jackson"
+	},
+	{
+		"room": "jsjchat",
+		"name": "San_Juan"
+	},
+	{
+		"room": "keychat",
+		"name": "Key_West"
+	},
+	{
+		"room": "lbfchat",
+		"name": "North_Platte"
+	},
+	{
+		"room": "lchchat",
+		"name": "Lake_Charles"
+	},
+	{
+		"room": "lixchat",
+		"name": "New_Orleans"
+	},
+	{
+		"room": "lknchat",
+		"name": "Elko"
+	},
+	{
+		"room": "lmkchat",
+		"name": "Louisville"
+	},
+	{
+		"room": "lotchat",
+		"name": "Chicago"
+	},
+	{
+		"room": "loxchat",
+		"name": "Los_Angeles-Oxnard"
+	},
+	{
+		"room": "lsxchat",
+		"name": "St_Louis"
+	},
+	{
+		"room": "lubchat",
+		"name": "Lubbock"
+	},
+	{
+		"room": "lwxchat",
+		"name": "Baltimore_Md-_Washington_Dc"
+	},
+	{
+		"room": "lzkchat",
+		"name": "Little_Rock"
+	},
+	{
+		"room": "mafchat",
+		"name": "Midland-Odessa"
+	},
+	{
+		"room": "megchat",
+		"name": "Memphis"
+	},
+	{
+		"room": "mflchat",
+		"name": "Miami"
+	},
+	{
+		"room": "mfrchat",
+		"name": "Medford"
+	},
+	{
+		"room": "mhxchat",
+		"name": "Newport-Morehead_City"
+	},
+	{
+		"room": "mkxchat",
+		"name": "Milwaukee-Sullivan"
+	},
+	{
+		"room": "mlbchat",
+		"name": "Melbourne"
+	},
+	{
+		"room": "mobchat",
+		"name": "Mobile"
+	},
+	{
+		"room": "mpxchat",
+		"name": "Twin_Cities-Chanhassen"
+	},
+	{
+		"room": "mqtchat",
+		"name": "Marquette"
+	},
+	{
+		"room": "mrxchat",
+		"name": "Morristown"
+	},
+	{
+		"room": "msochat",
+		"name": "Missoula"
+	},
+	{
+		"room": "mtrchat",
+		"name": "San_Francisco"
+	},
+	{
+		"room": "oaxchat",
+		"name": "Omaha-Valley"
+	},
+	{
+		"room": "ohxchat",
+		"name": "Nashville"
+	},
+	{
+		"room": "okxchat",
+		"name": "New_York"
+	},
+	{
+		"room": "otxchat",
+		"name": "Spokane"
+	},
+	{
+		"room": "ounchat",
+		"name": "Norman"
+	},
+	{
+		"room": "pahchat",
+		"name": "Paducah"
+	},
+	{
+		"room": "pbzchat",
+		"name": "Pittsburgh"
+	},
+	{
+		"room": "pdtchat",
+		"name": "Pendleton"
+	},
+	{
+		"room": "phichat",
+		"name": "Mount_Holly"
+	},
+	{
+		"room": "pihchat",
+		"name": "Pocatello-Idaho_Falls"
+	},
+	{
+		"room": "pqrchat",
+		"name": "Portland"
+	},
+	{
+		"room": "psrchat",
+		"name": "Phoenix"
+	},
+	{
+		"room": "pubchat",
+		"name": "Pueblo"
+	},
+	{
+		"room": "rahchat",
+		"name": "Raleigh"
+	},
+	{
+		"room": "revchat",
+		"name": "Reno"
+	},
+	{
+		"room": "riwchat",
+		"name": "Riverton"
+	},
+	{
+		"room": "rlxchat",
+		"name": "Charleston"
+	},
+	{
+		"room": "rnkchat",
+		"name": "Blacksburg"
+	},
+	{
+		"room": "sewchat",
+		"name": "Seattle"
+	},
+	{
+		"room": "sgfchat",
+		"name": "Springfield"
+	},
+	{
+		"room": "sgxchat",
+		"name": "San_Diego"
+	},
+	{
+		"room": "shvchat",
+		"name": "Shreveport"
+	},
+	{
+		"room": "sjtchat",
+		"name": "San_Angelo"
+	},
+	{
+		"room": "sjuchat",
+		"name": "San_Juan"
+	},
+	{
+		"room": "slcchat",
+		"name": "Salt_Lake_City"
+	},
+	{
+		"room": "stochat",
+		"name": "Sacramento"
+	},
+	{
+		"room": "taechat",
+		"name": "Tallahassee"
+	},
+	{
+		"room": "tbwchat",
+		"name": "Tampa_Bay_Area-Ruskin"
+	},
+	{
+		"room": "tfxchat",
+		"name": "Great_Falls"
+	},
+	{
+		"room": "topchat",
+		"name": "Topeka"
+	},
+	{
+		"room": "tsachat",
+		"name": "Tulsa"
+	},
+	{
+		"room": "twcchat",
+		"name": "Tucson"
+	},
+	{
+		"room": "unrchat",
+		"name": "Rapid_City"
+	},
+	{
+		"room": "vefchat",
+		"name": "Las_Vegas"
+	},
+	{
+		"room": "alrchat",
+		"name": "Atlanta_RFC"
+	},
+	{
+		"room": "fwrchat",
+		"name": "West_Gulf_RFC"
+	},
+	{
+		"room": "krfchat",
+		"name": "Missouri_River_Basin_RFC"
+	},
+	{
+		"room": "msrchat",
+		"name": "North_Central_RFC"
+	},
+	{
+		"room": "ornchat",
+		"name": "Lower_Mississippi_RFC"
+	},
+	{
+		"room": "pacrchat",
+		"name": "Alaska_-_Pacific_RFC"
+	},
+	{
+		"room": "ptrchat",
+		"name": "Northwest_RFC"
+	},
+	{
+		"room": "rhachat",
+		"name": "Mid_Atlantic_RFC"
+	},
+	{
+		"room": "rsachat",
+		"name": "California_-_Nevada_RFC"
+	},
+	{
+		"room": "strchat",
+		"name": "Colorado_RFC"
+	},
+	{
+		"room": "tarchat",
+		"name": "Northeast_RFC"
+	},
+	{
+		"room": "tirchat",
+		"name": "Ohio_RFC"
+	},
+	{
+		"room": "tuachat",
+		"name": "Arkansas_Red_River_RFC"
+	},
+	{
+		"room": "pancchat",
+		"name": "Anchorage"
+	},
+	{
+		"room": "zabchat",
+		"name": "Albuquerque"
+	},
+	{
+		"room": "zauchat",
+		"name": "Chicago"
+	},
+	{
+		"room": "zbwchat",
+		"name": "Boston"
+	},
+	{
+		"room": "zdcchat",
+		"name": "Washington_DC"
+	},
+	{
+		"room": "zdvchat",
+		"name": "Denver"
+	},
+	{
+		"room": "zfwchat",
+		"name": "Fort_Worth"
+	},
+	{
+		"room": "zhnchat",
+		"name": "Honolulu_CWSU"
+	},
+	{
+		"room": "zhuchat",
+		"name": "Houston"
+	},
+	{
+		"room": "zidchat",
+		"name": "Indianapolis"
+	},
+	{
+		"room": "zjxchat",
+		"name": "Jacksonville"
+	},
+	{
+		"room": "zkcchat",
+		"name": "Kansas_City"
+	},
+	{
+		"room": "zlachat",
+		"name": "Los_Angeles"
+	},
+	{
+		"room": "zlcchat",
+		"name": "Salt_Lake_City"
+	},
+	{
+		"room": "zmachat",
+		"name": "Miami"
+	},
+	{
+		"room": "zmechat",
+		"name": "Memphis"
+	},
+	{
+		"room": "zmpchat",
+		"name": "Minneapolis"
+	},
+	{
+		"room": "znychat",
+		"name": "New_York"
+	},
+	{
+		"room": "zoachat",
+		"name": "Oakland"
+	},
+	{
+		"room": "zobchat",
+		"name": "Cleveland"
+	},
+	{
+		"room": "zsechat",
+		"name": "Seattle"
+	},
+	{
+		"room": "ztlchat",
+		"name": "Atlanta"
+	}
+]
