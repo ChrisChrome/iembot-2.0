@@ -940,7 +940,7 @@ discord.on("interactionCreate", async (interaction) => {
 				case "setupall":
 					if (!config.discord.owner) return interaction.reply({ content: "Owner not set in config", ephemeral: true });
 					if (interaction.user.id !== config.discord.owner) return interaction.reply({ content: "You are not the owner", ephemeral: true });
-					interaction.deferReply({ ephemeral: true })
+					await interaction.deferReply({ ephemeral: true })
 					var category;
 
 					// Create channels for all rooms
