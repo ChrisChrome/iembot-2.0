@@ -948,8 +948,17 @@ discord.on("interactionCreate", async (interaction) => {
 
 
 
-					// get chunks from iem
-					const chunks = chunkArray(iem, Math.ceil(iem.length / 50));
+					// New setup, we're pulling from wfos.json now
+					const chunks = [];
+					const chunkSize = 50;
+					const total = iem.length;
+					// wfos is object "wfo": {"location": "Text Name", "room": "roomname"}
+					for (let i = 0; i < total; i += chunkSize) {
+						chunks.push(iem.slice(i, i + chunkSize));
+						console.log(iem.slice(i, i + chunkSize))
+					}
+					
+
 
 					chunks.forEach((chunk, index) => {
 						const categoryName = `Rooms ${index + 1}`;
