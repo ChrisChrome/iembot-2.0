@@ -57,7 +57,9 @@ const convertDate = function (date) {
 	const day = date.substring(6, 8);
 	const hours = date.substring(8, 10);
 	const mins = date.substring(10, 12);
-	return new Date(Date.UTC(year, month - 1, day, hours, mins));
+	// Because they don't have seconds, assume current seconds
+	const secs = new Date().getSeconds();
+	return new Date(Date.UTC(year, month - 1, day, hours, mins, secs));
 }
 
 // Get number of unique channels in the database
@@ -299,6 +301,7 @@ xmpp.on("stanza", (stanza) => {
 		if (!evt) {
 			evt = { name: "Unknown", priority: 3 }
 			console.log(`${colors.red("[ERROR]")} Unknown event type: ${product_id.pil.substring(0, 3)}. Fix me`);
+			console.log(`${colors.magenta("[DEBUG]")} ${bodyData.string}`)
 		}
 
 		evt.code = product_id.pil.substring(0, 3);
@@ -340,11 +343,11 @@ xmpp.on("stanza", (stanza) => {
 
 		// Send discord msg
 		let embed = {
-			description: bodyData.string,
+			description: `<t:${product_id.timestamp/1000}:T> <t:${product_id.timestamp/1000}:R> ${bodyData.string}`,
 			color: parseInt(config.priorityColors[evt.priority].replace("#", ""), 16) || 0x000000,
 			timestamp: product_id.timestamp,
 			footer: {
-				text: `Station: ${product_id.station} WMO: ${product_id.wmo} PIL: ${product_id.pil} Channel: ${fromChannel}`
+				text: `Station: ${product_id.station} PID: ${product_id_raw} Channel: ${fromChannel}`
 			}
 		}
 		if (stanza.getChild("x").attrs.twitter_media) {
