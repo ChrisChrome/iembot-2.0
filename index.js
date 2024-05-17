@@ -272,6 +272,9 @@ xmpp.on("stanza", (stanza) => {
 			query.getChildren("item").forEach((item) => {
 				// Check if the JID is on the blacklist, if so, ignore it
 				if (blacklist.includes(item.attrs.jid)) return;
+				// get proper name from wfos
+				const wfo = getWFOByRoom(item.attrs.jid.split("@")[0]);
+				item.attrs.properName = wfo.location;
 				iem.push(item.attrs);
 				console.log(`${colors.cyan("[INFO]")} Found room: ${item.attrs.jid}`);
 				// Join the room
@@ -945,19 +948,10 @@ discord.on("interactionCreate", async (interaction) => {
 
 
 
-					// New setup, we're pulling from wfos.json now
-					const wfoChunks = [];
-					const wfoChunkSize = 50;
-					const totalWFOs = wfos.length;
-					// wfos is object "wfo": {"location": "Text Name", "room": "roomname"}
-					for (let i = 0; i < totalWFOs; i += wfoChunkSize) {
-						wfoChunks.push(wfos.slice(i, i + wfoChunkSize));
-						console.log(wfos.slice(i, i + wfoChunkSize))
-					}
+					// get chunks from iem
+					const chunks = chunkArray(iem, Math.ceil(iem.length / 50));
 
-
-
-					wfoChunks.forEach((chunk, index) => {
+					chunks.forEach((chunk, index) => {
 						const categoryName = `Rooms ${index + 1}`;
 						interaction.guild.channels.create({
 							name: categoryName,
