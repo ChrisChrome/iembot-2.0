@@ -26,7 +26,6 @@
 		"username": "YOUR_USERNAME",
 		"password": "YOUR_PASSWORD"
 	},
-	,
 	"uptime-kuma": {
 		"enabled": false,
 		"url": "",
