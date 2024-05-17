@@ -874,7 +874,7 @@ discord.on("interactionCreate", async (interaction) => {
 							thumbnail: {
 								url: discord.user.avatarURL()
 							},
-							description: `I listen to all the weather.im rooms and send them to discord channels.\nI am open source, you can find my code [here!](https://github.com/ChrisChrome/iembot-2.0)\n\nThis bot is not affiliated with NOAAm the National Weather Service, or the IEM project.`,
+							description: `I listen to all the weather.im rooms and send them to discord channels.\nI am open source, you can find my code [here!](https://github.com/ChrisChrome/iembot-2.0)\n\nThis bot is not affiliated with NOAA, the National Weather Service, or the IEM project.`,
 							fields: [
 								{
 									name: "Uptime",
