@@ -763,6 +763,25 @@ discord.on('ready', async () => {
 			process.exit(1);
 		}
 	}, 10000)
+
+	// Check all channels in DB, fetch them, if they dont exist, delete all subscriptions
+	db.all(`SELECT channelid FROM channels`, (err, rows) => {
+		if (err) {
+			console.error(err.message);
+		}
+		rows.forEach((row) => {
+			const channel = discord.channels.cache.get(row.channelid);
+			if (!channel) {
+				// Delete the channel from the database and return
+				return db.run(`DELETE FROM channels WHERE channelid = ?`, [row.channelid], (err) => {
+					if (err) {
+						console.error(err.message);
+					}
+					console.log(`${colors.cyan("[INFO]")} Deleted channel ${row.channelid} from database`);
+				});
+			};
+		});
+	});	
 });
 
 discord.on("interactionCreate", async (interaction) => {
