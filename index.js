@@ -943,20 +943,16 @@ discord.on("interactionCreate", async (interaction) => {
 					await interaction.deferReply({ ephemeral: true })
 					var category;
 
-					// Create channels for all rooms
-					const chunks = [];
-					const chunkSize = 50;
-					// const totalRooms = iem.length;
-					// for (let i = 0; i < totalRooms; i += chunkSize) {
-					// 	chunks.push(iem.slice(i, i + chunkSize));
-					// }
+
 
 					// New setup, we're pulling from wfos.json now
 					const wfoChunks = [];
 					const wfoChunkSize = 50;
 					const totalWFOs = wfos.length;
+					// wfos is object "wfo": {"location": "Text Name", "room": "roomname"}
 					for (let i = 0; i < totalWFOs; i += wfoChunkSize) {
 						wfoChunks.push(wfos.slice(i, i + wfoChunkSize));
+						console.log(wfos.slice(i, i + wfoChunkSize))
 					}
 
 
