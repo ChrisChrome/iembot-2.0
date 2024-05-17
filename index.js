@@ -946,12 +946,22 @@ discord.on("interactionCreate", async (interaction) => {
 					// Create channels for all rooms
 					const chunks = [];
 					const chunkSize = 50;
-					const totalRooms = iem.length;
-					for (let i = 0; i < totalRooms; i += chunkSize) {
-						chunks.push(iem.slice(i, i + chunkSize));
+					// const totalRooms = iem.length;
+					// for (let i = 0; i < totalRooms; i += chunkSize) {
+					// 	chunks.push(iem.slice(i, i + chunkSize));
+					// }
+
+					// New setup, we're pulling from wfos.json now
+					const wfoChunks = [];
+					const wfoChunkSize = 50;
+					const totalWFOs = wfos.length;
+					for (let i = 0; i < totalWFOs; i += wfoChunkSize) {
+						wfoChunks.push(wfos.slice(i, i + wfoChunkSize));
 					}
 
-					chunks.forEach((chunk, index) => {
+
+
+					wfoChunks.forEach((chunk, index) => {
 						const categoryName = `Rooms ${index + 1}`;
 						interaction.guild.channels.create({
 							name: categoryName,
