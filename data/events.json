@@ -1506,5 +1506,9 @@
 	"NMN": {
 		"text": "Network Message Notification",
 		"priority": 5
+	},
+	"AHD": {
+		"text": "Area Hydrological Discussion",
+		"priority": 1
 	}
 }
