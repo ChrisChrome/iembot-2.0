@@ -1236,7 +1236,7 @@ discord.on("interactionCreate", async (interaction) => {
 						res.buffer().then(async (buffer) => {
 							interaction.editReply({
 								embeds: [{
-									title: `${toTitleCase(type)} Outlook Day ${day}`,
+									title: `${toTitleCase(type)} Outlook Day ${day + 1}`,
 									image: {
 										url: `attachment://${type}_${day}.png`
 									},
