@@ -1245,7 +1245,8 @@ discord.on("interactionCreate", async (interaction) => {
 								files: [{
 									attachment: buffer,
 									name: `${type}_${day}.png`
-								}]
+								}],
+								ephemeral: false
 							});
 						});
 					}).catch((err) => {
