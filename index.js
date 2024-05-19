@@ -4,6 +4,7 @@ const config = require("./config.json");
 const wfos = require("./data/wfos.json");
 const blacklist = require("./data/blacklist.json");
 const events = require("./data/events.json");
+const outlookURLs = require("./data/outlook.json");
 const { client, xml } = require("@xmpp/client");
 const fetch = require("node-fetch");
 const html = require("html-entities")
@@ -39,6 +40,15 @@ const db = new sqlite3.Database("channels.db", (err) => {
 
 
 // Random funcs
+function toTitleCase(str) {
+	return str.replace(
+		/\w\S*/g,
+		function (txt) {
+			return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+		}
+	);
+}
+
 const parseProductID = function (product_id) {
 	const [timestamp, station, wmo, pil] = product_id.split("-");
 	return {
@@ -346,7 +356,7 @@ xmpp.on("stanza", (stanza) => {
 
 		// Send discord msg
 		let embed = {
-			description: `<t:${product_id.timestamp/1000}:T> <t:${product_id.timestamp/1000}:R> ${bodyData.string}`,
+			description: `<t:${product_id.timestamp / 1000}:T> <t:${product_id.timestamp / 1000}:R> ${bodyData.string}`,
 			color: parseInt(config.priorityColors[evt.priority].replace("#", ""), 16) || 0x000000,
 			timestamp: product_id.timestamp,
 			footer: {
@@ -691,6 +701,69 @@ discord.on('ready', async () => {
 			"name": "userlist",
 			"description": "List all subscribed alerts for this user",
 			"type": 1
+		},
+		{
+			"name": "outlook",
+			"description": "Get day 1-8 storm or fire outlook from the SPC",
+			"type": 1,
+			"options": [
+				{
+					"name": "day",
+					"description": "Day of outlook",
+					"type": 4,
+					"required": true,
+					"choices": [
+						{
+							"name": "Day 1",
+							"value": 0
+						},
+						{
+							"name": "Day 2",
+							"value": 1
+						},
+						{
+							"name": "Day 3",
+							"value": 2
+						},
+						{
+							"name": "Day 4",
+							"value": 3
+						},
+						{
+							"name": "Day 5",
+							"value": 4
+						},
+						{
+							"name": "Day 6",
+							"value": 5
+						},
+						{
+							"name": "Day 7",
+							"value": 6
+						},
+						{
+							"name": "Day 8",
+							"value": 7
+						}
+					]
+				},
+				{
+					"name": "type",
+					"description": "Type of outlook",
+					"type": 3,
+					"required": true,
+					"choices": [
+						{
+							"name": "Fire",
+							"value": "fire"
+						},
+						{
+							"name": "Storm",
+							"value": "storm"
+						}
+					]
+				}
+			]
 		}
 	];
 
@@ -781,7 +854,7 @@ discord.on('ready', async () => {
 				});
 			};
 		});
-	});	
+	});
 });
 
 discord.on("interactionCreate", async (interaction) => {
@@ -976,7 +1049,7 @@ discord.on("interactionCreate", async (interaction) => {
 						chunks.push(iem.slice(i, i + chunkSize));
 						console.log(iem.slice(i, i + chunkSize))
 					}
-					
+
 
 
 					chunks.forEach((chunk, index) => {
@@ -1147,42 +1220,68 @@ discord.on("interactionCreate", async (interaction) => {
 						}
 					});
 					break;
-			}
-			break;
-		case Discord.InteractionType.MessageComponent:
-			if (interaction.customId) {
-				const product_id = interaction.customId;
-				const url = `https://mesonet.agron.iastate.edu/api/1/nwstext/${product_id}`;
-				await interaction.deferReply({ ephemeral: true });
-				fetch(url).then((res) => {
-					if (res.status !== 200) {
-						interaction.reply({ content: "Failed to get product text", ephemeral: true });
-						return;
-					}
-					// Retruns raw text, paginate it into multiple embeds if needed
-					res.text().then(async (text) => {
-						const pages = text.match(/[\s\S]{1,2000}(?=\n|$)/g);
-						// const embeds = pages.map((page, ind) => ({
-						// 	title: `Product Text for ${product_id} Pg ${ind + 1}/${pages.length}`,
-						// 	description: `\`\`\`${page}\`\`\``,
-						// 	color: 0x00ff00
-						// }));
-						const messages = pages.map((page, ind) => {
-							return `\`\`\`${page}\`\`\``
-						})
-						messages.forEach(async (message) => {
-							interaction.followUp({ content: message, ephemeral: true });
-						})
+				case "outlook":
+					day = interaction.options.getInteger("day");
+					type = interaction.options.getString("type");
+					if (day < 0 || day > 7) return interaction.reply({ content: "Invalid day", ephemeral: true });
+					if (type !== "fire" && type !== "storm") return interaction.reply({ content: "Invalid type", ephemeral: true });
+					url = outlookURLs[type][day];
+					await interaction.deferReply({ ephemeral: true });
+					fetch(url).then((res) => {
+						if (res.status !== 200) {
+							interaction.editReply({ content: "Failed to get outlook", ephemeral: true });
+							return;
+						}
+						// Returns image, send embed with image as attachment (we need to bypass discord cache)
+						res.buffer().then(async (buffer) => {
+							const attachment = new Discord.MessageAttachment(buffer, `${type}_${day}.png`);
+							const embed = {
+								title: `${toTitleCase(type)} Outlook Day ${day}`,
+								image: {
+									url: `attachment://${type}_${day}.png`
+								},
+								color: 0x00ff00
+							}
+							interaction.editReply({ embeds: [embed], files: [attachment] });
+						});
+					}).catch((err) => {
+						interaction.editReply({ content: "Failed to get outlook", ephemeral: true });
 					});
-				}).catch((err) => {
-					interaction.reply({ content: "Failed to get product text", ephemeral: true });
-					console.log(`${colors.red("[ERROR]")} Failed to get product text: ${err.message}`);
-				});
+					break;
+				case Discord.InteractionType.MessageComponent:
+					if (interaction.customId) {
+						const product_id = interaction.customId;
+						const url = `https://mesonet.agron.iastate.edu/api/1/nwstext/${product_id}`;
+						await interaction.deferReply({ ephemeral: true });
+						fetch(url).then((res) => {
+							if (res.status !== 200) {
+								interaction.reply({ content: "Failed to get product text", ephemeral: true });
+								return;
+							}
+							// Retruns raw text, paginate it into multiple embeds if needed
+							res.text().then(async (text) => {
+								const pages = text.match(/[\s\S]{1,2000}(?=\n|$)/g);
+								// const embeds = pages.map((page, ind) => ({
+								// 	title: `Product Text for ${product_id} Pg ${ind + 1}/${pages.length}`,
+								// 	description: `\`\`\`${page}\`\`\``,
+								// 	color: 0x00ff00
+								// }));
+								const messages = pages.map((page, ind) => {
+									return `\`\`\`${page}\`\`\``
+								})
+								messages.forEach(async (message) => {
+									interaction.followUp({ content: message, ephemeral: true });
+								})
+							});
+						}).catch((err) => {
+							interaction.reply({ content: "Failed to get product text", ephemeral: true });
+							console.log(`${colors.red("[ERROR]")} Failed to get product text: ${err.message}`);
+						});
+					}
+					break;
 			}
-			break;
-	}
 
-});
+	});
 
 discord.on("guildCreate", (guild) => {
 	// Get the main guild

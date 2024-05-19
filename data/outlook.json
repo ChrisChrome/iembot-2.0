@@ -1,0 +1,22 @@
+{
+	"storm": [
+		"https://www.spc.noaa.gov/products/outlook/day1otlk.gif",
+		"https://www.spc.noaa.gov/products/outlook/day2otlk.gif",
+		"https://www.spc.noaa.gov/products/outlook/day3otlk.gif",
+		"https://www.spc.noaa.gov/products/exper/day4-8/day4prob.gif",
+		"https://www.spc.noaa.gov/products/exper/day4-8/day5prob.gif",
+		"https://www.spc.noaa.gov/products/exper/day4-8/day6prob.gif",
+		"https://www.spc.noaa.gov/products/exper/day4-8/day7prob.gif",
+		"https://www.spc.noaa.gov/products/exper/day4-8/day8prob.gif"
+	],
+	"fire": [
+		"https://www.spc.noaa.gov/products/exper/fire_wx/imgs/day1otlk_fire.gif",
+		"https://www.spc.noaa.gov/products/exper/fire_wx/imgs/day2otlk_fire.gif",
+		"https://www.spc.noaa.gov/products/exper/fire_wx/imgs/day3otlk_fire.gif",
+		"https://www.spc.noaa.gov/products/exper/fire_wx/imgs/day4otlk_fire.gif",
+		"https://www.spc.noaa.gov/products/exper/fire_wx/imgs/day5otlk_fire.gif",
+		"https://www.spc.noaa.gov/products/exper/fire_wx/imgs/day6otlk_fire.gif",
+		"https://www.spc.noaa.gov/products/exper/fire_wx/imgs/day7otlk_fire.gif",
+		"https://www.spc.noaa.gov/products/exper/fire_wx/imgs/day8otlk_fire.gif"
+	]
+}
