@@ -1288,7 +1288,7 @@
 		"text": "Space Environment Watch"
 	},
 	"WCN": {
-		"priority": 4,
+		"priority": 5,
 		"text": "Weather Watch Clearance Notification"
 	},
 	"WCR": {
@@ -1308,7 +1308,7 @@
 		"text": "Routine Space Environment Product Issued Weekly"
 	},
 	"WOU": {
-		"priority": 3,
+		"priority": 4,
 		"text": "Tornado/Severe Thunderstorm Watch"
 	},
 	"WS1": {
