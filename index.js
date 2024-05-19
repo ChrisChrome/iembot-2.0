@@ -1248,40 +1248,42 @@ discord.on("interactionCreate", async (interaction) => {
 						interaction.editReply({ content: "Failed to get outlook", ephemeral: true });
 					});
 					break;
-				case Discord.InteractionType.MessageComponent:
-					if (interaction.customId) {
-						const product_id = interaction.customId;
-						const url = `https://mesonet.agron.iastate.edu/api/1/nwstext/${product_id}`;
-						await interaction.deferReply({ ephemeral: true });
-						fetch(url).then((res) => {
-							if (res.status !== 200) {
-								interaction.reply({ content: "Failed to get product text", ephemeral: true });
-								return;
-							}
-							// Retruns raw text, paginate it into multiple embeds if needed
-							res.text().then(async (text) => {
-								const pages = text.match(/[\s\S]{1,2000}(?=\n|$)/g);
-								// const embeds = pages.map((page, ind) => ({
-								// 	title: `Product Text for ${product_id} Pg ${ind + 1}/${pages.length}`,
-								// 	description: `\`\`\`${page}\`\`\``,
-								// 	color: 0x00ff00
-								// }));
-								const messages = pages.map((page, ind) => {
-									return `\`\`\`${page}\`\`\``
-								})
-								messages.forEach(async (message) => {
-									interaction.followUp({ content: message, ephemeral: true });
-								})
-							});
-						}).catch((err) => {
-							interaction.reply({ content: "Failed to get product text", ephemeral: true });
-							console.log(`${colors.red("[ERROR]")} Failed to get product text: ${err.message}`);
-						});
-					}
-					break;
 			}
+		case Discord.InteractionType.MessageComponent:
+			if (interaction.customId) {
+				const product_id = interaction.customId;
+				const url = `https://mesonet.agron.iastate.edu/api/1/nwstext/${product_id}`;
+				await interaction.deferReply({ ephemeral: true });
+				fetch(url).then((res) => {
+					if (res.status !== 200) {
+						interaction.reply({ content: "Failed to get product text", ephemeral: true });
+						return;
+					}
+					// Retruns raw text, paginate it into multiple embeds if needed
+					res.text().then(async (text) => {
+						const pages = text.match(/[\s\S]{1,2000}(?=\n|$)/g);
+						// const embeds = pages.map((page, ind) => ({
+						// 	title: `Product Text for ${product_id} Pg ${ind + 1}/${pages.length}`,
+						// 	description: `\`\`\`${page}\`\`\``,
+						// 	color: 0x00ff00
+						// }));
+						const messages = pages.map((page, ind) => {
+							return `\`\`\`${page}\`\`\``
+						})
+						messages.forEach(async (message) => {
+							interaction.followUp({ content: message, ephemeral: true });
+						})
+					});
+				}).catch((err) => {
+					interaction.reply({ content: "Failed to get product text", ephemeral: true });
+					console.log(`${colors.red("[ERROR]")} Failed to get product text: ${err.message}`);
+				});
+			}
+			break;
+	}
 
-	});
+
+});
 
 discord.on("guildCreate", (guild) => {
 	// Get the main guild
