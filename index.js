@@ -1234,7 +1234,7 @@ discord.on("interactionCreate", async (interaction) => {
 						}
 						// Returns image, send embed with image as attachment (we need to bypass discord cache)
 						res.buffer().then(async (buffer) => {
-							const message = {
+							interaction.editReply({
 								embeds: [{
 									title: `${toTitleCase(type)} Outlook Day ${day}`,
 									image: {
@@ -1246,8 +1246,7 @@ discord.on("interactionCreate", async (interaction) => {
 									attachment: buffer,
 									name: `${type}_${day}.png`
 								}]
-							}
-							interaction.editReply({ embeds: [embed], files: [attachment] });
+							});
 						});
 					}).catch((err) => {
 						interaction.editReply({ content: "Failed to get outlook", ephemeral: true });
