@@ -1234,13 +1234,18 @@ discord.on("interactionCreate", async (interaction) => {
 						}
 						// Returns image, send embed with image as attachment (we need to bypass discord cache)
 						res.buffer().then(async (buffer) => {
-							const attachment = new Discord.MessageAttachment(buffer, `${type}_${day}.png`);
-							const embed = {
-								title: `${toTitleCase(type)} Outlook Day ${day}`,
-								image: {
-									url: `attachment://${type}_${day}.png`
-								},
-								color: 0x00ff00
+							const message = {
+								embeds: [{
+									title: `${toTitleCase(type)} Outlook Day ${day}`,
+									image: {
+										url: `attachment://${type}_${day}.png`
+									},
+									color: 0x00ff00
+								}],
+								files: [{
+									attachment: buffer,
+									name: `${type}_${day}.png`
+								}]
 							}
 							interaction.editReply({ embeds: [embed], files: [attachment] });
 						});
