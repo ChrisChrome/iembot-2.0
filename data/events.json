@@ -776,7 +776,7 @@
 		"text": "Post Storm Hurricane Report"
 	},
 	"PTS": {
-		"priority": 1,
+		"priority": 3,
 		"text": "Probabilistic Outlook Points"
 	},
 	"PWO": {
@@ -808,7 +808,7 @@
 		"text": "Record Report"
 	},
 	"RET": {
-		"priority": 1,
+		"priority": 5,
 		"text": "EAS Activation Request"
 	},
 	"RFD": {
