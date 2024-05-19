@@ -1226,7 +1226,7 @@ discord.on("interactionCreate", async (interaction) => {
 					if (day < 0 || day > 7) return interaction.reply({ content: "Invalid day", ephemeral: true });
 					if (type !== "fire" && type !== "storm") return interaction.reply({ content: "Invalid type", ephemeral: true });
 					url = outlookURLs[type][day];
-					await interaction.deferReply({ ephemeral: true });
+					await interaction.deferReply();
 					fetch(url).then((res) => {
 						if (res.status !== 200) {
 							interaction.editReply({ content: "Failed to get outlook", ephemeral: true });
@@ -1245,8 +1245,7 @@ discord.on("interactionCreate", async (interaction) => {
 								files: [{
 									attachment: buffer,
 									name: `${type}_${day}.png`
-								}],
-								ephemeral: false
+								}]
 							});
 						});
 					}).catch((err) => {
