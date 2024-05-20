@@ -1146,7 +1146,7 @@ discord.on("interactionCreate", async (interaction) => {
 					files = [];
 					sattelites[sat].forEach(async (imgData) => {
 						// Get a buffer for the data, and put that in imageBuffers with the "name" as the key
-						await fetch(imgData.url).then((res) => {
+						fetch(imgData.url).then((res) => {
 							if (res.status !== 200) {
 								interaction.editReply({ content: "Failed to get satellite images", ephemeral: true });
 								return;
