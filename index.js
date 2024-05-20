@@ -1232,16 +1232,13 @@ discord.on("interactionCreate", async (interaction) => {
 							interaction.editReply({ content: "Failed to get outlook", ephemeral: true });
 							return;
 						}
-						// get date and expires headers, convert them to Date objects
-						date = new Date(res.headers.get("date"));
-						expires = new Date(res.headers.get("expires"));
-
+						// debug log toLocalString of timestamps	
+						console.log(issued.toLocaleString());
 						// Returns image, send embed with image as attachment (we need to bypass discord cache)
 						res.buffer().then(async (buffer) => {
 							interaction.editReply({
 								embeds: [{
 									title: `${toTitleCase(type)} Outlook Day ${day + 1}`,
-									description: `Issued <t:${Math.floor(date.getTime() / 1000)}:R> <t:${Math.floor(date.getTime() / 1000)}:t>\nExpires <t:${Math.floor(expires.getTime() / 1000)}:R> <t:${Math.floor(expires.getTime() / 1000)}:t>`,
 									image: {
 										url: `attachment://${type}_${day}.png`
 									},
