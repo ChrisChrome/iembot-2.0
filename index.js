@@ -5,6 +5,7 @@ const wfos = require("./data/wfos.json");
 const blacklist = require("./data/blacklist.json");
 const events = require("./data/events.json");
 const outlookURLs = require("./data/outlook.json");
+const Jimp = require("jimp");
 const { client, xml } = require("@xmpp/client");
 const fetch = require("node-fetch");
 const html = require("html-entities")
@@ -546,226 +547,7 @@ discord.on('ready', async () => {
 	});
 
 	// Do slash command stuff
-	const commands = [
-		{
-			"name": "subscribe",
-			"description": "Subscribe to a weather.im room",
-			"default_member_permissions": 0,
-			"options": [
-				{
-					"name": "room",
-					"description": "The room/WFO you want to subscribe to",
-					"type": 3,
-					"required": true,
-					"autocomplete": false
-				},
-				{
-					"name": "message",
-					"description": "Custom message to send when alert is sent",
-					"type": 3,
-					"required": false
-				}
-			]
-		},
-		{
-			"name": "setmessage",
-			"description": "Set a custom message for a room",
-			"default_member_permissions": 0,
-			"options": [
-				{
-					"name": "room",
-					"description": "The room/WFO you want to set a message for",
-					"type": 3,
-					"required": true,
-					"autocomplete": false
-				},
-				{
-					"name": "message",
-					"description": "Custom message to send when alert is sent",
-					"type": 3,
-					"required": true
-				}
-			]
-		},
-		{
-			"name": "unsubscribe",
-			"description": "Unsubscribe from a weather.im room",
-			"default_member_permissions": 0,
-			"options": [
-				{
-					"name": "room",
-					"description": "The room/WFO you want to unsubscribe from",
-					"type": 3,
-					"required": true,
-					"autocomplete": false
-				},
-			]
-		},
-
-		{
-			"name": "list",
-			"description": "List all subscribed rooms for this channel",
-			"default_member_permissions": 0
-		},
-		{
-			"name": "about",
-			"description": "About this bot"
-		},
-		{
-			"name": "rooms",
-			"description": "List all available rooms"
-		},
-		{
-			"name": "setupall",
-			"description": "[OWNER ONLY] Setup channels in a category for all rooms",
-			"default_member_permissions": 0,
-			"type": 1
-		},
-		{
-			"name": "support",
-			"description": "Get support for the bot",
-			"type": 1
-		},
-		// User alert commands
-		{
-			"name": "usersubscribe",
-			"description": "Subscribe to alerts for a room",
-			"type": 1,
-			"options": [
-				{
-					"name": "room",
-					"description": "The room/WFO you want to subscribe to",
-					"type": 3,
-					"required": true
-				},
-				{
-					"name": "filter",
-					"description": "Filter for the alert",
-					"type": 3,
-					"required": false
-				},
-				{
-					"name": "minpriority",
-					"description": "Minimum priority to alert for",
-					"type": 4,
-					"required": false,
-					"choices": [
-						{
-							"name": "Any",
-							"value": 0,
-						},
-						{
-							"name": "Minimum",
-							"value": 1,
-						},
-						{
-							"name": "Low",
-							"value": 2,
-						},
-						{
-							"name": "Normal",
-							"value": 3,
-						},
-						{
-							"name": "High",
-							"value": 4,
-						},
-						{
-							"name": "Very High",
-							"value": 5,
-						}
-					]
-				},
-				{
-					"name": "filterevt",
-					"description": "Filter for event type",
-					"type": 3,
-					"required": false
-				}
-			]
-		},
-		{
-			"name": "userunsubscribe",
-			"description": "Unsubscribe from alerts for a room",
-			"type": 1,
-			"options": [
-				{
-					"name": "room",
-					"description": "The room/WFO you want to unsubscribe from",
-					"type": 3,
-					"required": true
-				}
-			]
-		},
-		{
-			"name": "userlist",
-			"description": "List all subscribed alerts for this user",
-			"type": 1
-		},
-		{
-			"name": "outlook",
-			"description": "Get day 1-8 storm or fire outlook from the SPC",
-			"type": 1,
-			"options": [
-				{
-					"name": "day",
-					"description": "Day of outlook",
-					"type": 4,
-					"required": true,
-					"choices": [
-						{
-							"name": "Day 1",
-							"value": 0
-						},
-						{
-							"name": "Day 2",
-							"value": 1
-						},
-						{
-							"name": "Day 3",
-							"value": 2
-						},
-						{
-							"name": "Day 4",
-							"value": 3
-						},
-						{
-							"name": "Day 5",
-							"value": 4
-						},
-						{
-							"name": "Day 6",
-							"value": 5
-						},
-						{
-							"name": "Day 7",
-							"value": 6
-						},
-						{
-							"name": "Day 8",
-							"value": 7
-						}
-					]
-				},
-				{
-					"name": "type",
-					"description": "Type of outlook",
-					"type": 3,
-					"required": true,
-					"choices": [
-						{
-							"name": "Fire",
-							"value": "fire"
-						},
-						{
-							"name": "Storm",
-							"value": "storm"
-						}
-					]
-				}
-			]
-		}
-	];
+	commands = require("./data/commands.json");
 
 	if (config.broadcastify.enabled) {
 		// Add commands to join vc, leave vc, and play stream
@@ -1232,26 +1014,74 @@ discord.on("interactionCreate", async (interaction) => {
 							interaction.editReply({ content: "Failed to get outlook", ephemeral: true });
 							return;
 						}
-						// debug log toLocalString of timestamps	
-						console.log(issued.toLocaleString());
-						// Returns image, send embed with image as attachment (we need to bypass discord cache)
 						res.buffer().then(async (buffer) => {
-							interaction.editReply({
-								embeds: [{
-									title: `${toTitleCase(type)} Outlook Day ${day + 1}`,
-									image: {
-										url: `attachment://${type}_${day}.png`
-									},
-									color: 0x00ff00
-								}],
-								files: [{
-									attachment: buffer,
-									name: `${type}_${day}.png`
-								}]
+							// Check all overlays and add them to image as selected using Jimp
+							overlays = ["population", "city", "cwa", "rfc", "interstate", "county", "tribal", "artcc", "fema"]
+							await Jimp.read(buffer).then((image) => {
+								outImg = image;
+								cnt = 0;
+								sendMsg = setTimeout(() => {
+									interaction.editReply({
+										embeds: [{
+											title: `${toTitleCase(type)} Outlook Day ${day + 1}`,
+											image: {
+												url: `attachment://${type}_${day}.png`
+											},
+											color: 0x00ff00
+										}],
+										files: [{
+											attachment: buffer,
+											name: `${type}_${day}.png`
+										}]
+									});
+								}, 150)
+								overlays.forEach((overlay) => {
+									if (interaction.options.getBoolean(`${overlay}_overlay`)) {
+										clearTimeout(sendMsg);
+										Jimp.read(`./images/overlays/${overlay}.png`).then((overlayImage) => {
+											outImg.composite(overlayImage, 0, 0);
+											sendMsg = setTimeout(() => {
+												outImg.getBufferAsync(Jimp.MIME_PNG).then((buffer) => {
+													interaction.editReply({
+														embeds: [{
+															title: `${toTitleCase(type)} Outlook Day ${day + 1}`,
+															image: {
+																url: `attachment://${type}_${day}.png`
+															},
+															color: 0x00ff00
+														}],
+														files: [{
+															attachment: buffer,
+															name: `${type}_${day}.png`
+														}]
+													});
+												});
+											}, 150)
+										});
+									}
+								})
+
+
+
+								// interaction.editReply({
+								// 	embeds: [{
+								// 		title: `${toTitleCase(type)} Outlook Day ${day + 1}`,
+								// 		image: {
+								// 			url: `attachment://${type}_${day}.png`
+								// 		},
+								// 		color: 0x00ff00
+								// 	}],
+								// 	files: [{
+								// 		attachment: buffer,
+								// 		name: `${type}_${day}.png`
+								// 	}]
+								// });
 							});
 						});
 					}).catch((err) => {
 						interaction.editReply({ content: "Failed to get outlook", ephemeral: true });
+						console.log(`${colors.red("[ERROR]")} Failed to get outlook: ${err.message}`);
+						console.error(err);
 					});
 					break;
 			}
