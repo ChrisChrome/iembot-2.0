@@ -1085,7 +1085,7 @@ discord.on("interactionCreate", async (interaction) => {
 					});
 					break;
 					case "alertmap":
-						url = "https://www.spc.noaa.gov/products/wwa/wwa_new.gif"
+						url = "https://forecast.weather.gov/wwamap/png/US.png"
 						await interaction.deferReply();
 						fetch(url).then((res) => {
 							if (res.status !== 200) {
@@ -1103,7 +1103,7 @@ discord.on("interactionCreate", async (interaction) => {
 									}],
 									files: [{
 										attachment: buffer,
-										name: `alerts}.png`
+										name: `alerts.png`
 									}]
 								});
 							});
