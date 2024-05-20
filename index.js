@@ -1006,7 +1006,7 @@ discord.on("interactionCreate", async (interaction) => {
 					day = interaction.options.getInteger("day");
 					type = interaction.options.getString("type");
 					if (day < 0 || day > 7) return interaction.reply({ content: "Invalid day", ephemeral: true });
-					if (type !== "fire" && type !== "storm") return interaction.reply({ content: "Invalid type", ephemeral: true });
+					if (type !== "fire" && type !== "convective") return interaction.reply({ content: "Invalid type", ephemeral: true });
 					url = outlookURLs[type][day];
 					await interaction.deferReply();
 					fetch(url).then((res) => {
