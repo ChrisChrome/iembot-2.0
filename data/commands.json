@@ -269,5 +269,10 @@
 				"required": false
 			}
 		]
+	},
+	{
+		"name": "alertmap",
+		"description": "Get a map of active alerts",
+		"type": 1
 	}
 ]

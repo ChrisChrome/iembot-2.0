@@ -1084,6 +1084,35 @@ discord.on("interactionCreate", async (interaction) => {
 						console.error(err);
 					});
 					break;
+					case "alertmap":
+						url = "https://www.spc.noaa.gov/products/wwa/wwa_new.gif"
+						await interaction.deferReply();
+						fetch(url).then((res) => {
+							if (res.status !== 200) {
+								interaction.editReply({ content: "Failed to get alert map", ephemeral: true });
+								return;
+							}
+							res.buffer().then(async (buffer) => {
+								interaction.editReply({
+									embeds: [{
+										title: `Alert Map`,
+										image: {
+											url: `attachment://alerts.png`
+										},
+										color: 0x00ff00
+									}],
+									files: [{
+										attachment: buffer,
+										name: `alerts}.png`
+									}]
+								});
+							});
+						}).catch((err) => {
+							interaction.editReply({ content: "Failed to get alert map", ephemeral: true });
+							console.log(`${colors.red("[ERROR]")} Failed to get alert map: ${err.message}`);
+							console.error(err);
+						});
+						break;
 			}
 		case Discord.InteractionType.MessageComponent:
 			if (interaction.customId) {
