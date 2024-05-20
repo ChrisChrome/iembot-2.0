@@ -759,21 +759,21 @@ discord.on("interactionCreate", async (interaction) => {
 								},
 								{
 									name: "Caught Messages",
-									value: `Got ${messages} messages since startup`,
+									value: `Got ${messages.toLocaleString()} messages since startup`,
 								},
 								{
 									name: "Guilds",
-									value: guilds,
+									value: guilds.toLocaleString(),
 									inline: true
 								},
 								{
 									name: "Subscribed Rooms",
-									value: channels,
+									value: channels.toLocaleString(),
 									inline: true
 								},
 								{
 									name: "Unique Channels",
-									value: uniques,
+									value: uniques.toLocaleString(),
 									inline: true
 								}
 							],
