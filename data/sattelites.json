@@ -1,0 +1,12 @@
+{
+	"GOES-16": [
+		{
+			"name": "GeoColor",
+			"url": "https://cdn.star.nesdis.noaa.gov/GOES16/ABI/CONUS/GEOCOLOR/latest.jpg"
+		},
+		{
+			"name": "Infrared",
+			"url": "https://cdn.star.nesdis.noaa.gov/GOES16/ABI/CONUS/13/latest.jpg"
+		}
+	]
+}

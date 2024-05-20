@@ -5,6 +5,7 @@ const wfos = require("./data/wfos.json");
 const blacklist = require("./data/blacklist.json");
 const events = require("./data/events.json");
 const outlookURLs = require("./data/outlook.json");
+const sattelites = require("./data/sattelites.json");
 const Jimp = require("jimp");
 const { client, xml } = require("@xmpp/client");
 const fetch = require("node-fetch");
@@ -548,6 +549,28 @@ discord.on('ready', async () => {
 
 	// Do slash command stuff
 	commands = require("./data/commands.json");
+	// Add dynamic commands (based on datas files)
+	satCommand = {
+		"name": "sattelite",
+		"description": "Get the latest sattelite images from a given sattelite",
+		"options": [
+			{
+				"name": "sattelite",
+				"description": "The sattelite to get images from",
+				"type": 3,
+				"required": true,
+				"choices": []
+			}
+		]
+	}
+	for (const key in sattelites) {
+		// Push the key to the choices array
+		satCommand.options[0].choices.push({
+			"name": key,
+			"value": key
+		});
+	}
+	commands.push(satCommand);
 
 	if (config.broadcastify.enabled) {
 		// Add commands to join vc, leave vc, and play stream
@@ -807,7 +830,7 @@ discord.on("interactionCreate", async (interaction) => {
 						roomList += `\`${room}\`: ${getWFOByRoom(room).location || "Unknown"}\n`;
 					});
 					const pages = roomList.match(/[\s\S]{1,2000}(?=\n|$)/g);
-					const embeds = pages.map((page, ind) => ({
+					embeds = pages.map((page, ind) => ({
 						title: `Available Rooms Pg ${ind + 1}/${pages.length}`,
 						description: page,
 						color: 0x00ff00
@@ -1084,35 +1107,82 @@ discord.on("interactionCreate", async (interaction) => {
 						console.error(err);
 					});
 					break;
-					case "alertmap":
-						url = "https://forecast.weather.gov/wwamap/png/US.png"
-						await interaction.deferReply();
-						fetch(url).then((res) => {
+				case "alertmap":
+					url = "https://forecast.weather.gov/wwamap/png/US.png"
+					await interaction.deferReply();
+					fetch(url).then((res) => {
+						if (res.status !== 200) {
+							interaction.editReply({ content: "Failed to get alert map", ephemeral: true });
+							return;
+						}
+						res.buffer().then(async (buffer) => {
+							interaction.editReply({
+								embeds: [{
+									title: `Alert Map`,
+									image: {
+										url: `attachment://alerts.png`
+									},
+									color: 0x00ff00
+								}],
+								files: [{
+									attachment: buffer,
+									name: `alerts.png`
+								}]
+							});
+						});
+					}).catch((err) => {
+						interaction.editReply({ content: "Failed to get alert map", ephemeral: true });
+						console.log(`${colors.red("[ERROR]")} Failed to get alert map: ${err.message}`);
+						console.error(err);
+					});
+					break;
+				case "sattelite": // Get satellite images
+					sat = interaction.options.getString("sattelite");
+					if (!sattelites[sat]) return interaction.reply({ content: "Invalid satellite", ephemeral: true });
+					// Fetch all the images
+					await interaction.deferReply();
+					imageBuffers = {};
+					embeds = [];
+					files = [];
+					sattelites[sat].forEach(async (imgData) => {
+						// Get a buffer for the data, and put that in imageBuffers with the "name" as the key
+						await fetch(imgData.url).then((res) => {
 							if (res.status !== 200) {
-								interaction.editReply({ content: "Failed to get alert map", ephemeral: true });
+								interaction.editReply({ content: "Failed to get satellite images", ephemeral: true });
 								return;
 							}
-							res.buffer().then(async (buffer) => {
-								interaction.editReply({
-									embeds: [{
-										title: `Alert Map`,
-										image: {
-											url: `attachment://alerts.png`
-										},
-										color: 0x00ff00
-									}],
-									files: [{
-										attachment: buffer,
-										name: `alerts.png`
-									}]
+							res.buffer().then((buffer) => {
+								imageBuffers[imgData.name] = buffer;
+								files.push({
+									attachment: buffer,
+									name: `${imgData.name}.png`
 								});
+								embeds.push({
+									title: `${sat} ${imgData.name}`,
+									image: {
+										url: `attachment://${imgData.name}.png`
+									}
+								});
+								// Check if we have all the images
+								if (Object.keys(imageBuffers).length === sattelites[sat].length) {
+									// Send the images
+									interaction.editReply({
+										embeds,
+										files
+									});
+								}
 							});
 						}).catch((err) => {
-							interaction.editReply({ content: "Failed to get alert map", ephemeral: true });
-							console.log(`${colors.red("[ERROR]")} Failed to get alert map: ${err.message}`);
+							interaction.editReply({ content: "Failed to get satellite images", ephemeral: true });
+							console.log(`${colors.red("[ERROR]")} Failed to get satellite images: ${err.message}`);
 							console.error(err);
 						});
-						break;
+					});
+					break;
+
+
+
+
 			}
 		case Discord.InteractionType.MessageComponent:
 			if (interaction.customId) {
