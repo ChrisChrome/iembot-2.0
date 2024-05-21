@@ -435,6 +435,7 @@ xmpp.on("stanza", (stanza) => {
 				// Parse filterEvt
 				if (!row.filterEvt) row.filterEvt = "";
 				let filterEvt = row.filterEvt.split(",");
+				let filters = row.filter.split(",");
 
 				let user = discord.users.cache.get(row.userid);
 				if (!user) return; // Will handle better later
@@ -447,7 +448,7 @@ xmpp.on("stanza", (stanza) => {
 				fetch(`https://mesonet.agron.iastate.edu/api/1/nwstext/${product_id_raw}`).then((res) => {
 					// If neither the body nor the product text contains the filter, ignore it
 					res.text().then((text) => {
-						if (!bodyData.string.toLowerCase().includes(row.filter) && !text.toLowerCase().includes(row.filter)) return;
+						if (!filters.some((filter) => body.includes(filter)) && !filters.some((filter) => text.includes(filter))) return;
 						thisMsg = JSON.parse(JSON.stringify(discordMsg));
 						user.send(thisMsg).catch((err) => {
 							console.error(err);
