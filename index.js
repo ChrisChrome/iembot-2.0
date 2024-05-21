@@ -981,7 +981,11 @@ discord.on("interactionCreate", async (interaction) => {
 						interaction.reply({ content: "Invalid room", ephemeral: true });
 						return;
 					}
-					filter = interaction.options.getString("filter").toLowerCase() || "";
+					if (interaction.options.getString("filter")) {
+						filter = interaction.options.getString("filter").toLowerCase();
+					} else {
+						filter = "";
+					}
 					minPriority = interaction.options.getInteger("minpriority");
 					filterEvt = interaction.options.getString("filterevt") || null;
 					db.run(`INSERT INTO userAlerts (userid, iemchannel, filter, minPriority, filterEvt) VALUES (?, ?, ?, ?, ?)`, [interaction.user.id, room, filter, minPriority, filterEvt], (err) => {
