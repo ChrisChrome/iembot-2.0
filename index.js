@@ -456,7 +456,6 @@ xmpp.on("stanza", (stanza) => {
 				// If the event type is not in th filter, ignore it. Make sure filterEvt isnt null
 				if (!filterEvt[0]) filterEvt = [];
 				if (!filterEvt.includes(evt.code.toLowerCase()) && !filterEvt.length == 0) return;
-
 				let user = discord.users.cache.get(row.userid);
 				if (!user) return console.log(`${colors.red("[ERROR]")} User ${row.userid} not found`);
 
@@ -676,6 +675,16 @@ discord.on('ready', async () => {
 					console.log(`${colors.cyan("[INFO]")} Deleted channel ${row.channelid} from database`);
 				});
 			};
+		});
+	});
+
+	// Get all users in userAlerts and fetch them
+	db.all(`SELECT userid FROM userAlerts`, (err, rows) => {
+		if (err) {
+			console.error(err.message);
+		}
+		rows.forEach((row) => {
+			discord.users.fetch(row.userid);
 		});
 	});
 });
