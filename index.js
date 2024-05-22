@@ -935,7 +935,7 @@ discord.on("interactionCreate", async (interaction) => {
 						}).then((newCategory) => {
 							console.log(`${colors.cyan("[INFO]")} Created category ${newCategory.name}`);
 							chunk.forEach((channel) => {
-								channelName = getWFOByRoom(channel.jid.split("@")[0]).location
+								channelName = `${channel.jid.split("@")[0]}_${getWFOByRoom(channel.jid.split("@")[0]).location}`
 								if (channelName == "Unknown") channelName = channel.jid.split("@")[0]
 								newCategory.guild.channels.create({
 									name: channelName,
