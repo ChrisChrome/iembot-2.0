@@ -18,7 +18,8 @@ const sqlite3 = require("sqlite3").verbose();
 const discord = new Discord.Client({
 	intents: [
 		"Guilds",
-		"GuildVoiceStates"
+		"GuildVoiceStates",
+		"DirectMessages"
 	]
 });
 const {
@@ -36,8 +37,8 @@ const db = new sqlite3.Database("channels.db", (err) => {
 	}
 	console.log(`${colors.cyan("[INFO]")} Connected to the database`);
 	// Create tables if they dont exist
-	db.run(`CREATE TABLE IF NOT EXISTS channels (channelid TEXT, iemchannel TEXT, custommessage TEXT)`);
-	db.run(`CREATE TABLE IF NOT EXISTS userAlerts (userid TEXT, iemchannel TEXT, filter TEXT, filterEvt TEXT, minPriority INT)`);
+	db.run(`CREATE TABLE IF NOT EXISTS channels (channelid TEXT, iemchannel TEXT, custommessage TEXT, minPriority INTEGER, "filter" TEXT, filterevt TEXT);`);
+	db.run(`CREATE TABLE IF NOT EXISTS userAlerts (userid TEXT, iemchannel TEXT, filter TEXT, filterEvt TEXT, minPriority INT, custommessage TEXT);`);
 });
 
 
@@ -398,60 +399,74 @@ xmpp.on("stanza", (stanza) => {
 				}
 			]
 		}
-
-		// Run through the database, and find all channels that are linked to the iem channel
-		db.all(`SELECT channelid, custommessage FROM channels WHERE iemchannel = ?`, [fromChannel], (err, rows) => {
+		// Discord Channel Handling
+		db.all(`SELECT * FROM channels WHERE iemchannel = ?`, [fromChannel], (err, rows) => {
 			if (err) {
 				console.error(err.message);
 			}
 			if (!rows) return; // No channels to alert
 			rows.forEach((row) => {
-				const channel = discord.channels.cache.get(row.channelid);
-				if (!channel) {
-					// Delete the channel from the database and return
-					return db.run(`DELETE FROM channels WHERE channelid = ?`, [row.channelid], (err) => {
-						if (err) {
-							console.error(err.message);
-						}
-						console.log(`${colors.cyan("[INFO]")} Deleted channel ${row.channelid} from database`);
-					});
-				};
-				thisMsg = JSON.parse(JSON.stringify(discordMsg));
-				thisMsg.content = row.custommessage;
-				channel.send(thisMsg).then((msg) => {
-					if (msg.channel.type === Discord.ChannelType.GuildAnnouncement) msg.crosspost();
-				}).catch((err) => {
-					console.log(`${colors.red("[ERROR]")} Failed to send message to channel ${row.channelid}: ${err.message}`);
-				});
-			});
-		});
-
-
-		// User DM alert handling
-		db.all(`SELECT userid, filter, minPriority, filterEvt FROM userAlerts WHERE iemchannel = ?`, [fromChannel], (err, rows) => {
-			if (err) {
-				console.error(err.message);
-			}
-			if (!rows) return; // No users to alert
-			rows.forEach((row) => {
-				// Parse filterEvt
+				// Get Filters as arrays
 				if (!row.filterEvt) row.filterEvt = "";
+				if (!row.filter) row.filter = "";
 				let filterEvt = row.filterEvt.split(",");
 				let filters = row.filter.split(",");
 
-				let user = discord.users.cache.get(row.userid);
-				if (!user) return; // Will handle better later
-				// If priority is less than the min priority, ignore it
 				if (evt.priority < row.minPriority) return;
 				// If the event type is not in th filter, ignore it. Make sure filterEvt isnt null
 				if (!filterEvt[0]) filterEvt = [];
 				if (!filterEvt.includes(evt.code) && !filterEvt.length == 0) return;
+
+				let channel = discord.channels.cache.get(row.channelid);
+				if (!channel) return console.log(`${colors.red("[ERROR]")} Channel ${row.channelid} not found`);
+
 				// fetch the product text
 				fetch(`https://mesonet.agron.iastate.edu/api/1/nwstext/${product_id_raw}`).then((res) => {
 					// If neither the body nor the product text contains the filter, ignore it
 					res.text().then((text) => {
 						if (!filters.some((filter) => body.includes(filter)) && !filters.some((filter) => text.includes(filter))) return;
 						thisMsg = JSON.parse(JSON.stringify(discordMsg));
+						thisMsg.content = row.custommessage || null;
+						channel.send(thisMsg).catch((err) => {
+							console.error(err);
+						}).then((msg) => {
+							if (msg.channel.type === Discord.ChannelType.GuildAnnouncement) msg.crosspost();
+						});
+					});
+				});
+			});
+		});
+
+
+		// User DM alert handling
+		db.all(`SELECT * FROM userAlerts WHERE iemchannel = ?`, [fromChannel], (err, rows) => {
+			if (err) {
+				console.error(err.message);
+			}
+			if (!rows) return; // No users to alert
+			rows.forEach((row) => {
+				// Get Filters as arrays
+				if (!row.filterEvt) row.filterEvt = "";
+				if (!row.filter) row.filter = "";
+				let filterEvt = row.filterEvt.split(",");
+				let filters = row.filter.split(",");
+
+				// If priority is less than the min priority, ignore it
+				if (evt.priority < row.minPriority) return;
+				// If the event type is not in th filter, ignore it. Make sure filterEvt isnt null
+				if (!filterEvt[0]) filterEvt = [];
+				if (!filterEvt.includes(evt.code) && !filterEvt.length == 0) return;
+
+				let user = discord.users.cache.get(row.userid);
+				if (!user) return console.log(`${colors.red("[ERROR]")} User ${row.userid} not found`);
+
+				// fetch the product text
+				fetch(`https://mesonet.agron.iastate.edu/api/1/nwstext/${product_id_raw}`).then((res) => {
+					// If neither the body nor the product text contains the filter, ignore it
+					res.text().then((text) => {
+						if (!filters.some((filter) => body.includes(filter)) && !filters.some((filter) => text.includes(filter))) return;
+						thisMsg = JSON.parse(JSON.stringify(discordMsg));
+						thisMsg.content = row.custommessage || null;
 						user.send(thisMsg).catch((err) => {
 							console.error(err);
 						});
@@ -668,11 +683,6 @@ discord.on('ready', async () => {
 discord.on("interactionCreate", async (interaction) => {
 	switch (interaction.type) {
 		case Discord.InteractionType.ApplicationCommand:
-			if (!interaction.channel) return interaction.reply({ content: "This command can only be run in a text channel", ephemeral: true });
-			if (interaction.channel.type !== Discord.ChannelType.GuildText && interaction.channel.type !== Discord.ChannelType.GuildAnnouncement) {
-				interaction.reply({ content: "This command can only be run in a text channel", ephemeral: true });
-				return;
-			}
 			switch (interaction.commandName) {
 				case "subscribe":
 					room = getWFOroom(interaction.options.getString("room"));
@@ -680,17 +690,23 @@ discord.on("interactionCreate", async (interaction) => {
 						interaction.reply({ content: "Invalid room", ephemeral: true });
 						return;
 					}
+					if (interaction.options.getString("filter")) {
+						filter = interaction.options.getString("filter").toLowerCase();
+					} else {
+						filter = "";
+					}
+					minPriority = interaction.options.getInteger("minpriority");
+					filterEvt = interaction.options.getString("filterevt") || null;
 					message = interaction.options.getString("message") || null;
-					// Check that the channel isn't already subbed to the room
-					db.get(`SELECT * FROM channels WHERE channelid = ? AND iemchannel = ?`, [interaction.channel.id, room], (err, row) => {
-						if (err) {
-							console.error(err.message);
-							interaction.reply({ content: "Failed to subscribe to room", ephemeral: true });
-						} else if (row) {
-							return interaction.reply({ content: `Already subscribed to \`${getWFOByRoom(room).location}\``, ephemeral: true });
-						} else {
-
-							db.run(`INSERT INTO channels (channelid, iemchannel, custommessage) VALUES (?, ?, ?)`, [interaction.channel.id, room, message], (err) => {
+					if (interaction.inGuild()) {
+						db.get(`SELECT * FROM channels WHERE channelid = ? AND iemchannel = ?`, [interaction.channel.id, room], (err, row) => {
+							if (err) {
+								console.error(err.message);
+								interaction.reply({ content: "Failed to subscribe to room", ephemeral: true });
+							} else if (row) {
+								return interaction.reply({ content: `Already subscribed to \`${getWFOByRoom(room).location}\`\nIf you want to update a subscribtion, please unsubscribe and resubscribe. This will be made a command eventually.`, ephemeral: true });
+							}
+							db.run(`INSERT INTO channels (channelid, iemchannel, custommessage, filter, filterevt, minPriority) VALUES (?, ?, ?, ? ,? ,?)`, [interaction.channel.id, room, message, filter, filterEvt, minPriority], (err) => {
 								if (err) {
 									console.error(err.message);
 									interaction.reply({ content: "Failed to subscribe to room", ephemeral: true });
@@ -698,8 +714,25 @@ discord.on("interactionCreate", async (interaction) => {
 									interaction.reply({ content: `Subscribed to \`${getWFOByRoom(room).location}\``, ephemeral: true });
 								}
 							});
-						}
-					});
+						});
+					} else { // We're in a DM
+						db.get(`SELECT * FROM userAlerts WHERE userid = ? AND iemchannel = ?`, [interaction.user.id, room], (err, row) => {
+							if (err) {
+								console.error(err.message);
+								interaction.reply({ content: "Failed to subscribe to room", ephemeral: true });
+							} else if (row) {
+								return interaction.reply({ content: `Already subscribed to \`${getWFOByRoom(room).location}\`\nIf you want to update a subscribtion, please unsubscribe and resubscribe. This will be made a command eventually.`, ephemeral: true });
+							}
+							db.run(`INSERT INTO userAlerts (userid, iemchannel, custommessage, filter, filterEvt, minPriority) VALUES (?, ?, ?, ? ,?, ?)`, [interaction.user.id, room, message, filter, filterEvt, minPriority], (err) => {
+								if (err) {
+									console.error(err.message);
+									interaction.reply({ content: "Failed to subscribe to room", ephemeral: true });
+								} else {
+									interaction.reply({ content: `Subscribed to \`${getWFOByRoom(room).location}\``, ephemeral: true });
+								}
+							});
+						});
+					}
 					break;
 				case "unsubscribe":
 					// Check that the room is valid
@@ -708,58 +741,92 @@ discord.on("interactionCreate", async (interaction) => {
 						interaction.reply({ content: "Invalid room", ephemeral: true });
 						return;
 					}
-					// Check that the channel is subbed to the room
-					db.get(`SELECT * FROM channels WHERE channelid = ? AND iemchannel = ?`, [interaction.channel.id, room], (err, row) => {
-						if (err) {
-							console.error(err.message);
-							interaction.reply({ content: "Failed to unsubscribe from room", ephemeral: true });
-						} else if (!row) {
-							return interaction.reply({ content: `Not subscribed to \`${getWFOByRoom(room).location}\``, ephemeral: true });
-						} else {
-
+					if (interaction.inGuild()) {
+						// Check if subbed
+						db.get(`SELECT * FROM channels WHERE channelid = ? AND iemchannel = ?`, [interaction.channel.id, room], (err, row) => {
+							if (err) {
+								console.error(err.message);
+								interaction.reply({ content: "Failed to unsubscribe from room", ephemeral: true });
+							}
+							if (!row) {
+								return interaction.reply({ content: `Not subscribed to \`${getWFOByRoom(room).location}\``, ephemeral: true });
+							}
 							db.run(`DELETE FROM channels WHERE channelid = ? AND iemchannel = ?`, [interaction.channel.id, room], (err) => {
 								if (err) {
 									console.error(err.message);
 									interaction.reply({ content: "Failed to unsubscribe from room", ephemeral: true });
-								} else {
-									interaction.reply({ content: `Unsubscribed from \`${getWFOByRoom(room).location}\``, ephemeral: true });
 								}
+								interaction.reply({ content: `Unsubscribed from \`${getWFOByRoom(room).location}\``, ephemeral: true });
 							});
-						}
-					});
+						});
+					} else {
+						db.get(`SELECT * FROM userAlerts WHERE userid = ? AND iemchannel = ?`, [interaction.user.id, room], (err, row) => {
+							if (err) {
+								console.error(err.message);
+								interaction.reply({ content: "Failed to unsubscribe from room", ephemeral: true });
+							}
+							if (!row) {
+								return interaction.reply({ content: `Not subscribed to \`${getWFOByRoom(room).location}\``, ephemeral: true });
+							}
+							db.run(`DELETE FROM userAlerts WHERE userid = ? AND iemchannel = ?`, [interaction.user.id, room], (err) => {
+								if (err) {
+									console.error(err.message);
+									interaction.reply({ content: "Failed to unsubscribe from room", ephemeral: true });
+								}
+								interaction.reply({ content: `Unsubscribed from \`${getWFOByRoom(room).location}\``, ephemeral: true });
+							});
+						});
+					}
 					break;
 				case "list":
-					db.all(`SELECT iemchannel, custommessage FROM channels WHERE channelid = ?`, [interaction.channel.id], (err, rows) => {
-						if (err) {
-							console.error(err.message);
-							interaction.reply({ content: "Failed to list subscribed rooms", ephemeral: true });
-						} else {
-							let message = "";
-							rows.forEach((row) => {
-								message += `\`${row.iemchannel}\`: ${getWFOByRoom(row.iemchannel).location || "Unknown"} Custom Message: \`${row.custommessage || "None"}\`\n`;
-							});
-							if (message === "") {
-								message = "No subscribed rooms";
+					// List all the subscribed rooms
+					if (interaction.inGuild()) {
+						db.all(`SELECT * FROM channels WHERE channelid = ?`, [interaction.channel.id], (err, rows) => {
+							if (err) {
+								console.error(err.message);
+								interaction.reply({ content: "Failed to get subscribed rooms", ephemeral: true });
 							}
-							interaction.reply({ content: message, ephemeral: true });
-						}
-					});
-					break;
-				case "setmessage":
-					room = getWFOroom(interaction.options.getString("room"));
-					if (!iem.find((channel) => channel.jid.split("@")[0] === room)) {
-						interaction.reply({ content: "Invalid room", ephemeral: true });
-						return;
+							if (!rows) {
+								return interaction.reply({ content: "No subscribed rooms", ephemeral: true });
+							}
+							let roomList = [];
+							rows.forEach((row) => {
+								roomList.push({
+									name: `${row.iemchannel}: ${getWFOByRoom(row.iemchannel).location}`,
+									value: `Message: \`\`${row.custommessage || "None"}\`\`\nFilter: \`\`${row.filter || "None"}\`\`\nEvent Filter: \`\`${row.filterEvt || "None"}\`\`\nMin Priority: \`\`${row.minPriority || "None"}\`\``
+								});
+							});
+							const embed = {
+								title: "Subscribed Rooms",
+								fields: roomList,
+								color: 0x00ff00
+							}
+							interaction.reply({ embeds: [embed], ephemeral: true });
+						});
+					} else {
+						db.all(`SELECT * FROM userAlerts WHERE userid = ?`, [interaction.user.id], (err, rows) => {
+							if (err) {
+								console.error(err.message);
+								interaction.reply({ content: "Failed to get subscribed rooms", ephemeral: true });
+							}
+							if (!rows) {
+								return interaction.reply({ content: "No subscribed rooms", ephemeral: true });
+							}
+							let roomList = [];
+							rows.forEach((row) => {
+								roomList.push({
+									name: `${row.iemchannel}: ${getWFOByRoom(row.iemchannel).location}`,
+									value: `Message: \`\`${row.custommessage || "None"}\`\`\nFilter: \`\`${row.filter || "None"}\`\`\nEvent Filter: \`\`${row.filterEvt || "None"}\`\`\nMin Priority: \`\`${row.minPriority || "None"}\`\``
+								});
+							});
+							const embed = {
+								title: "Subscribed Rooms",
+								fields: roomList,
+								color: 0x00ff00
+							}
+							interaction.reply({ embeds: [embed], ephemeral: true });
+						});
 					}
-					message = interaction.options.getString("message");
-					db.run(`UPDATE channels SET custommessage = ? WHERE channelid = ? AND iemchannel = ?`, [message, interaction.channel.id, room], (err) => {
-						if (err) {
-							console.error(err.message);
-							interaction.reply({ content: "Failed to set message", ephemeral: true });
-						} else {
-							interaction.reply({ content: `Message for ${getWFOByRoom(room).location} to \`${message}\``, ephemeral: true });
-						}
-					});
 					break;
 				case "about":
 					// Send an embed showing info about the bot, including number of guilds, number of subscribed rooms, etc
@@ -975,62 +1042,6 @@ discord.on("interactionCreate", async (interaction) => {
 					} else {
 						interaction.reply({ content: "Failed to set volume", ephemeral: true });
 					}
-					break;
-
-				case "usersubscribe":
-					room = getWFOroom(interaction.options.getString("room"));
-					if (!iem.find((channel) => channel.jid.split("@")[0] === room)) {
-						interaction.reply({ content: "Invalid room", ephemeral: true });
-						return;
-					}
-					if (interaction.options.getString("filter")) {
-						filter = interaction.options.getString("filter").toLowerCase();
-					} else {
-						filter = "";
-					}
-					minPriority = interaction.options.getInteger("minpriority");
-					filterEvt = interaction.options.getString("filterevt") || null;
-					db.run(`INSERT INTO userAlerts (userid, iemchannel, filter, minPriority, filterEvt) VALUES (?, ?, ?, ?, ?)`, [interaction.user.id, room, filter, minPriority, filterEvt], (err) => {
-						if (err) {
-							console.error(err.message);
-							interaction.reply({ content: "Failed to subscribe to alerts", ephemeral: true });
-						} else {
-							interaction.reply({ content: `Subscribed to alerts for \`${getWFOByRoom(room).location}\``, ephemeral: true });
-						}
-					});
-					break;
-				case "userunsubscribe":
-					room = getWFOroom(interaction.options.getString("room"));
-					if (!iem.find((channel) => channel.jid.split("@")[0] === room)) {
-						interaction.reply({ content: "Invalid room", ephemeral: true });
-						return;
-					}
-					db.run(`DELETE FROM userAlerts WHERE userid = ? AND iemchannel = ?`, [interaction.user.id, room], (err) => {
-						if (err) {
-							console.error(err.message);
-							interaction.reply({ content: "Failed to unsubscribe from alerts", ephemeral: true });
-						} else {
-							interaction.reply({ content: `Unsubscribed from alerts for \`${getWFOByRoom(room).location}\``, ephemeral: true });
-						}
-					});
-					break;
-				case "userlist":
-					db.all(`SELECT iemchannel, filter, minPriority, filterEvt FROM userAlerts WHERE userid = ?`, [interaction.user.id], (err, rows) => {
-						if (err) {
-							console.error(err.message);
-							interaction.reply({ content: "Failed to list subscribed alerts", ephemeral: true });
-						} else {
-							let message = "";
-							rows.forEach((row) => {
-								message += `\`${row.iemchannel}\`: ${getWFOByRoom(row.iemchannel).location || "Unknown"} Filter: \`${row.filter}\` Min Priority: \`${row.minPriority}\` Filter EVT: \`${row.filterEvt}\`\n`;
-							}
-							);
-							if (message === "") {
-								message = "No subscribed alerts";
-							}
-							interaction.reply({ content: message, ephemeral: true });
-						}
-					});
 					break;
 				case "outlook":
 					day = interaction.options.getInteger("day");

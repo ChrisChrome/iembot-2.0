@@ -16,26 +16,50 @@
 				"description": "Custom message to send when alert is sent",
 				"type": 3,
 				"required": false
-			}
-		]
-	},
-	{
-		"name": "setmessage",
-		"description": "Set a custom message for a room",
-		"default_member_permissions": 0,
-		"options": [
-			{
-				"name": "room",
-				"description": "The room/WFO you want to set a message for",
-				"type": 3,
-				"required": true,
-				"autocomplete": false
 			},
 			{
-				"name": "message",
-				"description": "Custom message to send when alert is sent",
+				"name": "filter",
+				"description": "Filter for the alert, you can comma separate multiple strings of text",
 				"type": 3,
-				"required": true
+				"required": false
+			},
+			{
+				"name": "minpriority",
+				"description": "Minimum priority to alert for",
+				"type": 4,
+				"required": false,
+				"choices": [
+					{
+						"name": "Any",
+						"value": 0
+					},
+					{
+						"name": "Minimum",
+						"value": 1
+					},
+					{
+						"name": "Low",
+						"value": 2
+					},
+					{
+						"name": "Normal",
+						"value": 3
+					},
+					{
+						"name": "High",
+						"value": 4
+					},
+					{
+						"name": "Very High",
+						"value": 5
+					}
+				]
+			},
+			{
+				"name": "filterevt",
+				"description": "Filter for event type, you can comma separate multiple strings of text",
+				"type": 3,
+				"required": false
 			}
 		]
 	},
@@ -76,81 +100,6 @@
 	{
 		"name": "support",
 		"description": "Get support for the bot",
-		"type": 1
-	},
-	{
-		"name": "usersubscribe",
-		"description": "Subscribe to alerts for a room",
-		"type": 1,
-		"options": [
-			{
-				"name": "room",
-				"description": "The room/WFO you want to subscribe to",
-				"type": 3,
-				"required": true
-			},
-			{
-				"name": "filter",
-				"description": "Filter for the alert",
-				"type": 3,
-				"required": false
-			},
-			{
-				"name": "minpriority",
-				"description": "Minimum priority to alert for",
-				"type": 4,
-				"required": false,
-				"choices": [
-					{
-						"name": "Any",
-						"value": 0
-					},
-					{
-						"name": "Minimum",
-						"value": 1
-					},
-					{
-						"name": "Low",
-						"value": 2
-					},
-					{
-						"name": "Normal",
-						"value": 3
-					},
-					{
-						"name": "High",
-						"value": 4
-					},
-					{
-						"name": "Very High",
-						"value": 5
-					}
-				]
-			},
-			{
-				"name": "filterevt",
-				"description": "Filter for event type",
-				"type": 3,
-				"required": false
-			}
-		]
-	},
-	{
-		"name": "userunsubscribe",
-		"description": "Unsubscribe from alerts for a room",
-		"type": 1,
-		"options": [
-			{
-				"name": "room",
-				"description": "The room/WFO you want to unsubscribe from",
-				"type": 3,
-				"required": true
-			}
-		]
-	},
-	{
-		"name": "userlist",
-		"description": "List all subscribed alerts for this user",
 		"type": 1
 	},
 	{
