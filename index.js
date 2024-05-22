@@ -348,28 +348,8 @@ xmpp.on("stanza", (stanza) => {
 					'Authorization': `Bearer ${config.ntfy.token}`
 				}
 			}).then((res) => {
-				if (config.debug >= 1) console.log(`${colors.magenta("[DEBUG]")} NTFY sent for ${config.ntfy.prefix}${fromChannel} with status ${res.status}`);
-				if (res.status === 429) {// Rate limited, wait 5 seconds then try again
-					setTimeout(() => {
-						ntfyBody = {
-							"topic": `${config.ntfy.prefix}${fromChannel}`,
-							"message": bodyData.string,
-							"tags": [`Timestamp: ${product_id.timestamp}`, `Station: ${product_id.station}`, `WMO: ${product_id.wmo}`, `PIL: ${product_id.pil}`, `Channel: ${fromChannel}`],
-							"priority": evt.priority,
-							"actions": [{ "action": "view", "label": "Product", "url": bodyData.url }, { "action": "view", "label": "Product Text", "url": `https://mesonet.agron.iastate.edu/api/1/nwstext/${product_id_raw}` }]
-						}
-						if (stanza.getChild("x").attrs.twitter_media) {
-							ntfyBody.attach = stanza.getChild("x").attrs.twitter_media;
-						}
-						fetch(config.ntfy.server, {
-							method: 'POST',
-							body: JSON.stringify(ntfyBody),
-							headers: {
-								'Authorization': `Bearer ${config.ntfy.token}`
-							}
-						})
-					}, 5000)
-				}
+				if (config.debug >= 1) console.log(`${colors.magenta("[DEBUG]")} NTFY sent for ${config.ntfy.prefix}${fromChannel} with status ${res.status} ${res.statusText}`);
+				if (res.status !== 200) console.log(`${colors.red("[ERROR]")} NTFY failed for ${config.ntfy.prefix}${fromChannel} with status ${res.status} ${res.statusText}`
 
 
 			}).catch((err) => {
