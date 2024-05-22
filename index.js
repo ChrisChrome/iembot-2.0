@@ -349,7 +349,7 @@ xmpp.on("stanza", (stanza) => {
 				}
 			}).then((res) => {
 				if (config.debug >= 1) console.log(`${colors.magenta("[DEBUG]")} NTFY sent for ${config.ntfy.prefix}${fromChannel} with status ${res.status} ${res.statusText}`);
-				if (res.status !== 200) console.log(`${colors.red("[ERROR]")} NTFY failed for ${config.ntfy.prefix}${fromChannel} with status ${res.status} ${res.statusText}`
+				if (res.status !== 200) console.log(`${colors.red("[ERROR]")} NTFY failed for ${config.ntfy.prefix}${fromChannel} with status ${res.status} ${res.statusText}`);
 
 
 			}).catch((err) => {
