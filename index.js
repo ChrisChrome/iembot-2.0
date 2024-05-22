@@ -421,19 +421,26 @@ xmpp.on("stanza", (stanza) => {
 				if (!channel) return console.log(`${colors.red("[ERROR]")} Channel ${row.channelid} not found`);
 
 				// fetch the product text
-				fetch(`https://mesonet.agron.iastate.edu/api/1/nwstext/${product_id_raw}`).then((res) => {
-					// If neither the body nor the product text contains the filter, ignore it
-					res.text().then((text) => {
-						if (!filters.some((filter) => body.toLowerCase().includes(filter)) && !filters.some((filter) => text.toLowerCase().includes(filter))) return;
-						thisMsg = JSON.parse(JSON.stringify(discordMsg));
-						thisMsg.content = row.custommessage || null;
-						channel.send(thisMsg).catch((err) => {
-							console.error(err);
-						}).then((msg) => {
-							if (msg.channel.type === Discord.ChannelType.GuildAnnouncement) msg.crosspost();
+				trySend = () => {
+					fetch(`https://mesonet.agron.iastate.edu/api/1/nwstext/${product_id_raw}`).then((res) => {
+						// If neither the body nor the product text contains the filter, ignore it
+						res.text().then((text) => {
+							if (!filters.some((filter) => body.toLowerCase().includes(filter)) && !filters.some((filter) => text.toLowerCase().includes(filter))) return;
+							thisMsg = JSON.parse(JSON.stringify(discordMsg));
+							thisMsg.content = row.custommessage || null;
+							channel.send(thisMsg).catch((err) => {
+								console.error(err);
+							}).then((msg) => {
+								if (msg.channel.type === Discord.ChannelType.GuildAnnouncement) msg.crosspost();
+							});
 						});
+					}).catch((err) => {
+						setTimeout(() => {
+							console.log(`${colors.red("[ERROR]")} Failed to fetch product text, retrying... ${err}`)
+							trySend();
+						})
 					});
-				});
+				}
 			});
 		});
 
@@ -460,18 +467,24 @@ xmpp.on("stanza", (stanza) => {
 				if (!user) return console.log(`${colors.red("[ERROR]")} User ${row.userid} not found`);
 
 				// fetch the product text
-				fetch(`https://mesonet.agron.iastate.edu/api/1/nwstext/${product_id_raw}`).then((res) => {
-					// If neither the body nor the product text contains the filter, ignore it
-					res.text().then((text) => {
-						if (!filters.some((filter) => body.toLowerCase().includes(filter)) && !filters.some((filter) => text.toLowerCase().includes(filter))) return;
-						thisMsg = JSON.parse(JSON.stringify(discordMsg));
-						thisMsg.content = row.custommessage || null;
-						user.send(thisMsg).catch((err) => {
-							console.error(err);
+				trySend = () => {
+					fetch(`https://mesonet.agron.iastate.edu/api/1/nwstext/${product_id_raw}`).then((res) => {
+						// If neither the body nor the product text contains the filter, ignore it
+						res.text().then((text) => {
+							if (!filters.some((filter) => body.toLowerCase().includes(filter)) && !filters.some((filter) => text.toLowerCase().includes(filter))) return;
+							thisMsg = JSON.parse(JSON.stringify(discordMsg));
+							thisMsg.content = row.custommessage || null;
+							user.send(thisMsg).catch((err) => {
+								console.error(err);
+							});
 						});
-					});
-				});
-
+					}).catch((err) => {
+						setTimeout(() => {
+							console.log(`${colors.red("[ERROR]")} Failed to fetch product text, retrying... ${err}`)
+							trySend();
+						})
+					});;
+				}
 			});
 		});
 	}
