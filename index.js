@@ -402,7 +402,7 @@ xmpp.on("stanza", (stanza) => {
 		// Discord Channel Handling
 		db.all(`SELECT * FROM channels WHERE iemchannel = ?`, [fromChannel], (err, rows) => {
 			if (err) {
-				console.error(err.message);
+				console.log(`${colors.red("[ERROR]")} ${err.message}`);
 			}
 			if (!rows) return; // No channels to alert
 			rows.forEach((row) => {
@@ -411,7 +411,6 @@ xmpp.on("stanza", (stanza) => {
 				if (!row.filter) row.filter = "";
 				let filterEvt = row.filterEvt.toLowerCase().split(",");
 				let filters = row.filter.toLowerCase().split(",");
-
 				if (evt.priority < row.minPriority) return;
 				// If the event type is not in th filter, ignore it. Make sure filterEvt isnt null
 				if (!filterEvt[0]) filterEvt = [];
@@ -441,6 +440,7 @@ xmpp.on("stanza", (stanza) => {
 						})
 					});
 				}
+				trySend();
 			});
 		});
 
@@ -485,6 +485,7 @@ xmpp.on("stanza", (stanza) => {
 						})
 					});;
 				}
+				trySend();
 			});
 		});
 	}
