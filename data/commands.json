@@ -19,7 +19,7 @@
 			},
 			{
 				"name": "filter",
-				"description": "Filter for the alert, you can comma separate multiple strings of text. Don't use spaces between the commas",
+				"description": "Filter for the alert, you can comma separate multiple strings of text",
 				"type": 3,
 				"required": false
 			},
@@ -57,7 +57,7 @@
 			},
 			{
 				"name": "filterevt",
-				"description": "Filter for event type, you can comma separate multiple strings of text. Don't use spaces between the commas",
+				"description": "Filter for event type, you can comma separate multiple strings of text",
 				"type": 3,
 				"required": false
 			}
