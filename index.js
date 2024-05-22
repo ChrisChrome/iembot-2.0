@@ -409,13 +409,13 @@ xmpp.on("stanza", (stanza) => {
 				// Get Filters as arrays
 				if (!row.filterEvt) row.filterEvt = "";
 				if (!row.filter) row.filter = "";
-				let filterEvt = row.filterEvt.split(",");
-				let filters = row.filter.split(",");
+				let filterEvt = row.filterEvt.toLowerCase().split(",");
+				let filters = row.filter.toLowerCase().split(",");
 
 				if (evt.priority < row.minPriority) return;
 				// If the event type is not in th filter, ignore it. Make sure filterEvt isnt null
 				if (!filterEvt[0]) filterEvt = [];
-				if (!filterEvt.includes(evt.code) && !filterEvt.length == 0) return;
+				if (!filterEvt.includes(evt.code.toLowerCase()) && !filterEvt.length == 0) return;
 
 				let channel = discord.channels.cache.get(row.channelid);
 				if (!channel) return console.log(`${colors.red("[ERROR]")} Channel ${row.channelid} not found`);
@@ -424,7 +424,7 @@ xmpp.on("stanza", (stanza) => {
 				fetch(`https://mesonet.agron.iastate.edu/api/1/nwstext/${product_id_raw}`).then((res) => {
 					// If neither the body nor the product text contains the filter, ignore it
 					res.text().then((text) => {
-						if (!filters.some((filter) => body.includes(filter)) && !filters.some((filter) => text.includes(filter))) return;
+						if (!filters.some((filter) => body.toLowerCase().includes(filter)) && !filters.some((filter) => text.toLowerCase().includes(filter))) return;
 						thisMsg = JSON.parse(JSON.stringify(discordMsg));
 						thisMsg.content = row.custommessage || null;
 						channel.send(thisMsg).catch((err) => {
@@ -448,14 +448,14 @@ xmpp.on("stanza", (stanza) => {
 				// Get Filters as arrays
 				if (!row.filterEvt) row.filterEvt = "";
 				if (!row.filter) row.filter = "";
-				let filterEvt = row.filterEvt.split(",");
-				let filters = row.filter.split(",");
+				let filterEvt = row.filterEvt.toLowerCase().split(",");
+				let filters = row.filter.toLowerCase().split(",");
 
 				// If priority is less than the min priority, ignore it
 				if (evt.priority < row.minPriority) return;
 				// If the event type is not in th filter, ignore it. Make sure filterEvt isnt null
 				if (!filterEvt[0]) filterEvt = [];
-				if (!filterEvt.includes(evt.code) && !filterEvt.length == 0) return;
+				if (!filterEvt.includes(evt.code.toLowerCase()) && !filterEvt.length == 0) return;
 
 				let user = discord.users.cache.get(row.userid);
 				if (!user) return console.log(`${colors.red("[ERROR]")} User ${row.userid} not found`);
@@ -464,7 +464,7 @@ xmpp.on("stanza", (stanza) => {
 				fetch(`https://mesonet.agron.iastate.edu/api/1/nwstext/${product_id_raw}`).then((res) => {
 					// If neither the body nor the product text contains the filter, ignore it
 					res.text().then((text) => {
-						if (!filters.some((filter) => body.includes(filter)) && !filters.some((filter) => text.includes(filter))) return;
+						if (!filters.some((filter) => body.toLowerCase().includes(filter)) && !filters.some((filter) => text.toLowerCase().includes(filter))) return;
 						thisMsg = JSON.parse(JSON.stringify(discordMsg));
 						thisMsg.content = row.custommessage || null;
 						user.send(thisMsg).catch((err) => {
