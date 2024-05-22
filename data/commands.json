@@ -16,78 +16,6 @@
 				"description": "Custom message to send when alert is sent",
 				"type": 3,
 				"required": false
-			}
-		]
-	},
-	{
-		"name": "setmessage",
-		"description": "Set a custom message for a room",
-		"default_member_permissions": 0,
-		"options": [
-			{
-				"name": "room",
-				"description": "The room/WFO you want to set a message for",
-				"type": 3,
-				"required": true,
-				"autocomplete": false
-			},
-			{
-				"name": "message",
-				"description": "Custom message to send when alert is sent",
-				"type": 3,
-				"required": true
-			}
-		]
-	},
-	{
-		"name": "unsubscribe",
-		"description": "Unsubscribe from a weather.im room",
-		"default_member_permissions": 0,
-		"options": [
-			{
-				"name": "room",
-				"description": "The room/WFO you want to unsubscribe from",
-				"type": 3,
-				"required": true,
-				"autocomplete": false
-			}
-		]
-	},
-
-	{
-		"name": "list",
-		"description": "List all subscribed rooms for this channel",
-		"default_member_permissions": 0
-	},
-	{
-		"name": "about",
-		"description": "About this bot"
-	},
-	{
-		"name": "rooms",
-		"description": "List all available rooms"
-	},
-	{
-		"name": "setupall",
-		"description": "[OWNER ONLY] Setup channels in a category for all rooms",
-		"default_member_permissions": 0,
-		"type": 1
-	},
-	{
-		"name": "support",
-		"description": "Get support for the bot",
-		"type": 1
-	},
-	{
-		"name": "usersubscribe",
-		"description": "Subscribe to alerts for a room",
-		"type": 1,
-		"options": [
-			{
-				"name": "room",
-				"description": "The room/WFO you want to subscribe to",
-				"type": 3,
-				"required": true
 			},
 			{
 				"name": "filter",
@@ -136,21 +64,42 @@
 		]
 	},
 	{
-		"name": "userunsubscribe",
-		"description": "Unsubscribe from alerts for a room",
-		"type": 1,
+		"name": "unsubscribe",
+		"description": "Unsubscribe from a weather.im room",
+		"default_member_permissions": 0,
 		"options": [
 			{
 				"name": "room",
 				"description": "The room/WFO you want to unsubscribe from",
 				"type": 3,
-				"required": true
+				"required": true,
+				"autocomplete": false
 			}
 		]
 	},
+
 	{
-		"name": "userlist",
-		"description": "List all subscribed alerts for this user",
+		"name": "list",
+		"description": "List all subscribed rooms for this channel",
+		"default_member_permissions": 0
+	},
+	{
+		"name": "about",
+		"description": "About this bot"
+	},
+	{
+		"name": "rooms",
+		"description": "List all available rooms"
+	},
+	{
+		"name": "setupall",
+		"description": "[OWNER ONLY] Setup channels in a category for all rooms",
+		"default_member_permissions": 0,
+		"type": 1
+	},
+	{
+		"name": "support",
+		"description": "Get support for the bot",
 		"type": 1
 	},
 	{
