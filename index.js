@@ -931,6 +931,7 @@ discord.on("interactionCreate", async (interaction) => {
 					interaction.reply({ embeds, ephemeral: true });
 					break;
 				case "setupall":
+					if (!interaction.inGuild()) return interaction.reply({ content: "This command can only be used in a guild", ephemeral: true });
 					if (!config.discord.owner) return interaction.reply({ content: "Owner not set in config", ephemeral: true });
 					if (interaction.user.id !== config.discord.owner) return interaction.reply({ content: "You are not the owner", ephemeral: true });
 					await interaction.deferReply({ ephemeral: true })
@@ -995,6 +996,7 @@ discord.on("interactionCreate", async (interaction) => {
 					break;
 
 				case "playbcfy": // Play broadcastify stream
+				if (!interaction.inGuild()) return interaction.reply({ content: "This command can only be used in a guild", ephemeral: true });
 					if (!config.broadcastify.enabled) return interaction.reply({ content: "Broadcastify is not enabled", ephemeral: true });
 					streamID = interaction.options.getString("id");
 					// Check if the stream ID is valid (up to 10 digit alphanumeric)
@@ -1014,6 +1016,7 @@ discord.on("interactionCreate", async (interaction) => {
 					break;
 
 				case "play": // Play generic stream
+				if (!interaction.inGuild()) return interaction.reply({ content: "This command can only be used in a guild", ephemeral: true });
 					// Get the URL
 					url = interaction.options.getString("url");
 					// Sanity check URL for funny stuff
@@ -1031,6 +1034,7 @@ discord.on("interactionCreate", async (interaction) => {
 					break;
 
 				case "leave": // Leave broadcastify stream
+					if (!interaction.inGuild()) return interaction.reply({ content: "This command can only be used in a guild", ephemeral: true });
 					if (!config.broadcastify.enabled) return interaction.reply({ content: "Broadcastify is not enabled", ephemeral: true });
 					channel = interaction.member.voice.channel;
 					if (!channel) return interaction.reply({ content: "You need to be in a voice channel", ephemeral: true });
@@ -1043,6 +1047,7 @@ discord.on("interactionCreate", async (interaction) => {
 
 					break;
 				case "pause": // Pause/unpause stream
+				if (!interaction.inGuild()) return interaction.reply({ content: "This command can only be used in a guild", ephemeral: true });
 					channel = interaction.member.voice.channel;
 					if (!channel) return interaction.reply({ content: "You need to be in a voice channel", ephemeral: true });
 					res = toggleVoicePause(channel)
@@ -1053,6 +1058,7 @@ discord.on("interactionCreate", async (interaction) => {
 					}
 					break;
 				case "volume": // Set volume
+				if (!interaction.inGuild()) return interaction.reply({ content: "This command can only be used in a guild", ephemeral: true });
 					channel = interaction.member.voice.channel;
 					if (!channel) return interaction.reply({ content: "You need to be in a voice channel", ephemeral: true });
 					volume = interaction.options.getInteger("volume") / 100;
