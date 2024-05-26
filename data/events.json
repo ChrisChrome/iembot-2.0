@@ -228,7 +228,7 @@
 		"text": "Average 6 To 10 Day Weather Outlook (Local)"
 	},
 	"EQI": {
-		"priority": 1,
+		"priority": 3,
 		"text": "Tsunami Bulletin"
 	},
 	"EQR": {
@@ -365,7 +365,7 @@
 	},
 	"FFW": {
 		"text": "Flash Flood Warning",
-		"priority": 5
+		"priority": 4
 	},
 	"FLN": {
 		"priority": 1,
@@ -392,7 +392,7 @@
 		"text": "Natl Marine Fisheries Administrative Service Message"
 	},
 	"FTM": {
-		"priority": 2,
+		"priority": 3,
 		"text": "WSR-88D Radar Outage Notification / Free Text Message"
 	},
 	"FTP": {
@@ -600,7 +600,7 @@
 		"text": "Low Temperatures"
 	},
 	"LSR": {
-		"priority": 2,
+		"priority": 3,
 		"text": "Local Storm Report"
 	},
 	"LTG": {
@@ -772,7 +772,7 @@
 		"text": "Preliminary Forecasts"
 	},
 	"PSH": {
-		"priority": 1,
+		"priority": 2,
 		"text": "Post Storm Hurricane Report"
 	},
 	"PTS": {
@@ -1108,7 +1108,7 @@
 		"priority": 3
 	},
 	"SWO": {
-		"priority": 3,
+		"priority": 4,
 		"text": "Severe Storm Outlook Narrative (AC)"
 	},
 	"SWS": {
@@ -1164,7 +1164,7 @@
 		"text": "Tropical Cyclone Watch/Warning Break Points"
 	},
 	"TIB": {
-		"priority": 2,
+		"priority": 3,
 		"text": "Tsunami Bulletin"
 	},
 	"TID": {
@@ -1188,7 +1188,7 @@
 		"text": "Temperature Precipitation Table (Natl and Intnl)"
 	},
 	"TSU": {
-		"priority": 1,
+		"priority": 5,
 		"text": "Tsunami Watch/Warning"
 	},
 	"TUV": {
@@ -1224,7 +1224,7 @@
 		"text": "Ultraviolet Index"
 	},
 	"VAA": {
-		"priority": 1,
+		"priority": 3,
 		"text": "Volcanic Activity Advisory"
 	},
 	"VER": {
@@ -1497,11 +1497,11 @@
 	},
 	"WFA": {
 		"text": "Wild Fire Watch",
-		"priority": 4
+		"priority": 3
 	},
 	"WFW": {
 		"text": "Wild Fire Warning",
-		"priority": 4
+		"priority": 3
 	},
 	"NMN": {
 		"text": "Network Message Notification",
