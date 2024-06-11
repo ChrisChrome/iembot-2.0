@@ -1205,12 +1205,12 @@ discord.on("interactionCreate", async (interaction) => {
 								imageBuffers[imgData.name] = buffer;
 								files.push({
 									attachment: buffer,
-									name: `${imgData.name}.png`
+									name: `${imgData.name}.jpg`
 								});
 								embeds.push({
 									title: `${sat} ${imgData.name}`,
 									image: {
-										url: `attachment://${imgData.name}.png`
+										url: `attachment://${imgData.name}.jpg`
 									}
 								});
 								// Check if we have all the images
