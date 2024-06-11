@@ -1510,5 +1510,9 @@
 	"AHD": {
 		"text": "Area Hydrological Discussion",
 		"priority": 1
+	},
+	"GMT": {
+		"text": "AIRMET",
+		"priority": 1
 	}
 }
