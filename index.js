@@ -607,11 +607,6 @@ discord.on('ready', async () => {
 		// Add commands to join vc, leave vc, and play stream
 		commands.push(
 			{
-				"name": "leave",
-				"description": "Leave the current voice chat",
-				"default_member_permissions": 0
-			},
-			{
 				"name": "playbcfy",
 				"description": "Play the broadcastify stream",
 				"options": [
@@ -622,6 +617,16 @@ discord.on('ready', async () => {
 						"required": true
 					}
 				]
+			}
+		)
+	}
+	if (config.voice_enabled) {
+		// Add commands to join vc, leave vc, and play stream
+		commands.push(
+			{
+				"name": "leave",
+				"description": "Leave the current voice chat",
+				"default_member_permissions": 0
 			},
 			{
 				"name": "play",
@@ -654,7 +659,6 @@ discord.on('ready', async () => {
 			}
 		)
 	}
-
 	await (async () => {
 		try {
 			//Global
@@ -1035,7 +1039,6 @@ discord.on("interactionCreate", async (interaction) => {
 
 				case "leave": // Leave broadcastify stream
 					if (!interaction.inGuild()) return interaction.reply({ content: "This command can only be used in a guild", ephemeral: true });
-					if (!config.broadcastify.enabled) return interaction.reply({ content: "Broadcastify is not enabled", ephemeral: true });
 					channel = interaction.member.voice.channel;
 					if (!channel) return interaction.reply({ content: "You need to be in a voice channel", ephemeral: true });
 					res = LeaveVoiceChannel(channel)

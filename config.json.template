@@ -26,6 +26,8 @@
 		"username": "YOUR_USERNAME",
 		"password": "YOUR_PASSWORD"
 	},
+	"voice_enabled": true,
+	
 	"uptime-kuma": {
 		"enabled": false,
 		"url": "",
