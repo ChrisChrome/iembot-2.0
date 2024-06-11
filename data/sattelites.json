@@ -10,7 +10,7 @@
 		},
 		{
 			"name": "Full Disk",
-			"url": "https://cdn.star.nesdis.noaa.gov/GOES16/ABI/FD/GEOCOLOR/latest.jpg"
+			"url": "https://cdn.star.nesdis.noaa.gov/GOES16/ABI/FD/GEOCOLOR/678x678.jpg"
 		}
 	],
 	"GOES-18": [
@@ -24,7 +24,7 @@
 		},
 		{
 			"name": "Full Disk",
-			"url": "https://cdn.star.nesdis.noaa.gov/GOES18/ABI/FD/GEOCOLOR/latest.jpg"
+			"url": "https://cdn.star.nesdis.noaa.gov/GOES18/ABI/FD/GEOCOLOR/678x678.jpg"
 		}
 	]
 }
