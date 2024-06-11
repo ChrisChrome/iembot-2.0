@@ -7,6 +7,10 @@
 		{
 			"name": "Infrared",
 			"url": "https://cdn.star.nesdis.noaa.gov/GOES16/ABI/CONUS/13/latest.jpg"
+		},
+		{
+			"name": "Full Disk",
+			"url": "https://cdn.star.nesdis.noaa.gov/GOES16/ABI/FD/GEOCOLOR/latest.jpg"
 		}
 	],
 	"GOES-18": [
@@ -17,6 +21,10 @@
 		{
 			"name": "Infrared",
 			"url": "https://cdn.star.nesdis.noaa.gov/GOES18/ABI/CONUS/13/latest.jpg"
+		},
+		{
+			"name": "Full Disk",
+			"url": "https://cdn.star.nesdis.noaa.gov/GOES18/ABI/FD/GEOCOLOR/latest.jpg"
 		}
 	]
 }
